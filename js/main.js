@@ -337,28 +337,39 @@
     $('select').niceSelect();
   });
 
-  // prise slider 
+  var dlgControl = function () {
+    console.log('here')
+    this.submitOrder = function (postdata, onSuccess, onError) {
+      $.post('http://localhost:5000/videos/create', postdata, onSuccess);
+    }
+  };
 
-  $(function(){
-    $('.make-order-btn').click(function(){
+
+
+  //dialog order
+
+  $(function () {
+    $('.make-order-btn').click(function () {
       console.log('here')
       $('.order-dlg').show();
     })
 
-    $('.order-dlg .save-btn').click(function(){
-      var s = $('.order-dlg form').serialize();
-      console.log('gonna send', s);
+    $('.order-dlg .save-btn').click(function () {
+      let form = $('.order-dlg form');
+      var kid = form.find('#ddlNames').val();
+      console.log('gonna send', kid);
+      let postdata = {
+        name: kid
+      };
+      new dlgControl().submitOrder(postdata, function(resp){
+        console.log('got resp', resp);
+      });
       $('.order-dlg').hide();
     });
 
-    $('.order-dlg .close-btn').click(function(){
+    $('.order-dlg .close-btn').click(function () {
       $('.order-dlg').hide();
     });
   });
-
-  
-
-
-
 
 })(jQuery);
