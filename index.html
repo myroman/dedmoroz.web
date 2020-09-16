@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Travelo</title>
+    <title>Подарок от Деда Мороза</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,6 +28,7 @@
 
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
 </head>
 
 <body>
@@ -842,23 +843,34 @@
                                 </select>
                             </div>
 
+                        </fieldset>
+                    </form>
+
+                    <form action="http://localhost:5000/filestash" method="POST" 
+                    enctype="multipart/form-data" class="image-upload-form" data-picno="pic1">
+                        <fieldset>
                             <div class="form-group">
                                 <label for="picture1">Фотография ребенка</label>
-                                <input type="file" class="form-control-file" id="photo1" name="photo1">
-                              </div>
-
-
+                                <input type="file" name="file" />
+                            </div>
                         </fieldset>
+                        
+                        <div class="modal-footer">
+                            <input type="input" class="btn btn-secondary btn-upload-file" value="Загрузить" />
+                        </div>
                     </form>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary save-btn">Save changes</button>
-                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary place-order-btn">Отправить заказ</button>
+                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="fileuploader">Upload</div>
+
     <!-- link that opens popup -->
     <!--     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -885,7 +897,6 @@
     <script src="js/plugins.js"></script>
     <script src="js/gijgo.min.js"></script>
     <script src="js/slick.min.js"></script>
-
 
 
     <!--contact js-->

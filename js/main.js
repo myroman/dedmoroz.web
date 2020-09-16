@@ -344,6 +344,11 @@
     }
   };
 
+  let orderState = {
+    name: null,
+    pictures: {}
+  };
+
 
 
   //dialog order
@@ -354,14 +359,19 @@
       $('.order-dlg').show();
     })
 
-    $('.order-dlg .save-btn').click(function () {
+    $('#ddlNames').change(function () {
+      orderState.name = $(this).val();
+    });
+
+    //place order
+    $('.order-dlg .place-order-btn').click(function () {
       let form = $('.order-dlg form');
-      var kid = form.find('#ddlNames').val();
-      console.log('gonna send', kid);
-      let postdata = {
-        name: kid
-      };
-      new dlgControl().submitOrder(postdata, function(resp){
+      
+      if (!orderState.name) {
+        orderState.name = $('#ddlNames').val();
+      }
+
+      new dlgControl().submitOrder(orderState, function (resp) {
         console.log('got resp', resp);
       });
       $('.order-dlg').hide();
@@ -369,6 +379,22 @@
 
     $('.order-dlg .close-btn').click(function () {
       $('.order-dlg').hide();
+    });
+
+    $(".btn-upload-file").click(function () {
+      var formdata = new FormData($('.image-upload-form')[0]);
+      let picno = $('.image-upload-form').data('picno');
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:5000/filestash',
+        data: formdata,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+          orderState.pictures[picno] = data.filename;
+        },
+      });
     });
   });
 
