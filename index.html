@@ -23,10 +23,11 @@
     <link rel="stylesheet" href="css/gijgo.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/slicknav.css">    
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 
 </head>
@@ -116,7 +117,7 @@
                             <div class="slider_text text-center">
                                 <h3>Indonesia</h3>
                                 <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3 make-order-btn">Сделать заказ</a>
+                                <a href="#" class="boxed-btn3 start-order-btn">Сделать заказ</a>
                             </div>
                         </div>
                     </div>
@@ -816,53 +817,88 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Заказ видео - данные</h5>
+                    <h5 class="modal-title">Заказать видео</h5>
                     <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p>Предоставьте данные о ребенке</p>
-                    <form>
-                        <fieldset>
-                            <div class="form-group">
-                                <label for="ddlNames">имя</label>
-                                <select class="form-control" id="ddlNames" name="ddlNames">
-                                    <option value="ksyusha">Ксюша</option>
-                                    <option value="serafima">Серафима</option>
-                                    <option value="bogdan">Богдан</option>
-                                    <option value="andryushenka">Андрюшенька</option>
-                                </select>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="ddlSex">Пол</label>
-                                <select class="form-control" id="ddlSex" name="ddlSex">
-                                    <option value="boy">Мальчик</option>
-                                    <option value="girl">Девочка</option>
-                                </select>
-                            </div>
+                    <div class="alert alert-dismissible alert-warning wizard-warning" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h4 class="alert-heading">Пожалуйста введите необходимые данные</h4>
+                        <p class="mb-0"></p>
+                    </div>
 
-                        </fieldset>
-                    </form>
+                    <div class="wizard-step-panel wizard-step-panel_step0">
+                        <form>
+                            <fieldset>
+                                <div class="form-group row">
+                                    <label for="ddlName" class="col-sm-2 col-form-label">Имя *</label>
+                                    <select class="form-control ddl-names" id="ddlName" name="ddlName">
+                                        <option value="">Выберите имя</option>
+                                        <option value="ksyusha">Ксюша</option>
+                                        <option value="serafima">Серафима</option>
+                                        <option value="bogdan">Богдан</option>
+                                        <option value="andryushenka">Андрюшенька</option>
+                                    </select>
+                                </div>
 
-                    <form action="http://localhost:5000/filestash" method="POST" 
-                    enctype="multipart/form-data" class="image-upload-form" data-picno="pic1">
-                        <fieldset>
-                            <div class="form-group">
-                                <label for="picture1">Фотография ребенка</label>
-                                <input type="file" name="file" />
+                                <div class="form-group row">
+                                    <label for="ddlSex" class="col-sm-2 col-form-label ddl-sex">Пол *</label>
+                                    <select class="form-control" id="ddlSex" name="ddlSex">
+                                        <option value="">Выберите пол</option>
+                                        <option value="boy">Мальчик</option>
+                                        <option value="girl">Девочка</option>
+                                    </select>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div class="wizard-step-panel wizard-step-panel_step1" style="display: none;">
+                        <form action="http://localhost:5000/filestash" method="POST" enctype="multipart/form-data"
+                            class="image-upload-form" data-picno="pic0">
+                            <fieldset>
+                                
+                                <div class="form-group">
+                                    <label for="filePicture1">Фотография #1</label>
+                                    <input type="file" id="filePicture1" name="file" /> 
+                                    <span class="photo-uploaded">Фотография загружена<i class="fa fa-check-circle"></i></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ddlCommentPic1" class="label">Имя *</label>
+                                    <select class="form-control ddl-comment" id="ddlCommentPic1" name="ddlCommentPic1">
+                                        <option value="">Выберите комментарий</option>
+                                        <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
+                                    </select>
+                                </div>
+                            </fieldset>
+
+                            <div class="modal-footer">
+                                <input type="input" class="btn btn-secondary btn-upload-file" disabled value="Загрузить" />
                             </div>
-                        </fieldset>
-                        
-                        <div class="modal-footer">
-                            <input type="input" class="btn btn-secondary btn-upload-file" value="Загрузить" />
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="wizard-step-panel wizard-step-panel_step10 wizard-finished" style="display: none;">
+                        <p class="order-status"></p>
+                        <div class="alert alert-dismissible alert-success order-status">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <span></span>
+                          </div>
+
+                    </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary place-order-btn">Отправить заказ</button>
+                    <button type="button" class="btn btn-secondary prev-btn" style="display: none">Назад</button>
+                    <button type="button" class="btn btn-primary next-btn" style="display: none">Вперед</button>
+                    <button type="button" class="btn btn-primary goto-payment-btn" style="display: none">Перейти к
+                        оплате</button>
                     <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>

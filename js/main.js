@@ -344,9 +344,27 @@
     }
   };
 
-  let orderState = {
-    name: null,
-    pictures: {}
+  let steps = {
+    name: 0,
+    photo1: 1,
+
+    finished: 10
+  }
+
+  function initOrderState() {
+    return {
+      step: steps.name,
+      name: null,
+      sex: null,
+      pictures: {}
+    };
+  }
+
+  let orderState = initOrderState();
+
+  let videoProcStatuses = {
+    submitted: "submitted",
+    ready: "ready"
   };
 
 
@@ -354,34 +372,26 @@
   //dialog order
 
   $(function () {
-    $('.make-order-btn').click(function () {
-      console.log('here')
+    $('.start-order-btn').click(function () {
+      orderState = initOrderState();
+      
+      refreshControlByOrderStep();
       $('.order-dlg').show();
     })
 
-    $('#ddlNames').change(function () {
+    $('#ddlName').change(function () {
       orderState.name = $(this).val();
     });
 
     //place order
-    $('.order-dlg .place-order-btn').click(function () {
-      let form = $('.order-dlg form');
-      
-      if (!orderState.name) {
-        orderState.name = $('#ddlNames').val();
-      }
-
-      new dlgControl().submitOrder(orderState, function (resp) {
-        console.log('got resp', resp);
-      });
-      $('.order-dlg').hide();
-    });
+    $('.order-dlg .goto-payment-btn').click(gotoPayment);
 
     $('.order-dlg .close-btn').click(function () {
       $('.order-dlg').hide();
     });
 
     $(".btn-upload-file").click(function () {
+      
       var formdata = new FormData($('.image-upload-form')[0]);
       let picno = $('.image-upload-form').data('picno');
       $.ajax({
@@ -392,10 +402,110 @@
         cache: false,
         processData: false,
         success: function (data) {
+          $('.photo-uploaded').show();
           orderState.pictures[picno] = data.filename;
         },
       });
     });
+
+    $('#filePicture1').change(function(){
+      $('.btn-upload-file').removeAttr('disabled');
+    })
+
+    $('.prev-btn').click(function () {
+      if (orderState.step == 0) return;
+      orderState.step--;
+      refreshControlByOrderStep();;
+    });
+
+    $('.next-btn').click(function () {
+      let errors = validateInput(orderState.step);
+      if (errors.length) {
+        $('.wizard-warning').show();
+        $('.wizard-warning p').text(errors.join('. '))
+        return;
+      } else {
+        $('.wizard-warning').hide();
+      }
+
+      orderState.step++;
+      refreshControlByOrderStep();;
+    });
+
+    function validateInput(step) {
+      let errors = [];
+      switch (orderState.step) {
+        case steps.name:
+          let name = $('#ddlName').val();
+          if (!name) {
+            errors.push('Введите имя');
+          }
+          let sex = $('#ddlSex').val();
+          if (!sex) {
+            errors.push('Введите пол');
+          }
+          return errors;
+        case steps.photo1:
+          if (!orderState.pictures[0]) {
+            errors.push('Загрузите как минимум 1 фотографию');
+          }
+          if (!$('#ddlCommentPic1').val()) {
+            errors.push('Выберите комментарий для фотографии')
+          }
+          return errors;
+        default:
+          return [];
+      }
+    }
+
+    function gotoPayment() {
+      if (!orderState.name) {
+        orderState.name = $('#ddlName').val();
+      }
+
+      new dlgControl().submitOrder(orderState, function (resp) {
+        console.log('got resp', resp);
+        orderState.step = steps.finished;
+        refreshControlByOrderStep();;
+
+        $('.wizard-finished').show();
+        if (resp.status == videoProcStatuses.submitted) {
+          $('.order-status span').text('Видео в процессе, пожалуйста подождите');
+        } else if (resp.status == videoProcStatuses.ready){
+          $('.order-status span').text('Видео готово, пожалуйста проверьте свою почту');
+        }
+        
+      });
+    }
+
+    function refreshControlByOrderStep() {
+      let step = orderState.step;
+      switch (step) {
+        case steps.name:
+          $('.goto-payment-btn').hide();
+          $('.next-btn').show();
+          $('.prev-btn').hide();
+          $('.wizard-step-panel').hide();
+          $('.wizard-step-panel_step' + step).show();
+          break;
+        case steps.photo1:
+          $('.goto-payment-btn').show();
+          $('.next-btn').hide();
+          $('.prev-btn').show();
+          $('.wizard-step-panel').hide();
+          $('.wizard-step-panel_step' + step).show();
+          break;
+        case steps.finished:
+          $('.goto-payment-btn').hide();
+          $('.next-btn').hide();
+          $('.prev-btn').hide();
+          $('.wizard-step-panel').hide();
+          $('.wizard-step-panel_step' + step).show();
+          break;
+      }
+    }
+
+    refreshControlByOrderStep();
   });
 
 })(jQuery);
