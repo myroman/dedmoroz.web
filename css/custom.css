@@ -105,3 +105,13 @@
 .order-dlg .modal-dialog {
     max-width: 900px;
 }
+
+.bs-stepper-label {
+    font-size: 14px;
+}
+.bs-stepper .line, .bs-stepper-line {
+    flex: 1 0 12px;
+}
+.bs-stepper .step-trigger {
+    padding: 20px 4px;
+}

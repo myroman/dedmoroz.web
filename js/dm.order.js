@@ -4,10 +4,14 @@ var stepper1;
 
     //custom functionality
 
+    var settings = {
+        baseurl: 'http://localhost:5000'
+    };
+
     var dlgControl = function () {
         console.log('here')
         this.submitOrder = function (postdata, onSuccess, onError) {
-            $.post('http://localhost:5000/videos/create', postdata, onSuccess);
+            $.post(settings.baseurl + '/videos/create', postdata, onSuccess);
         }
     };
 
@@ -66,6 +70,27 @@ var stepper1;
         $('.start-order-btn').click(function () {
             orderState = initOrderState();
 
+            function loadMasterdata() {
+                $.get(settings.baseurl + '/md/photocomments?applicable_for=0', function(resp) {
+                    var $comments = $(".ddl-comment");
+                    $.each(resp, function() {
+                        $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
+                    });
+                });
+
+                $.get(settings.baseurl + '/md/names?sex='+orderState.sex, function(resp) {
+                    var $ddl = $(".ddl-names");
+                    $ddl.html('');
+                    $ddl.append($("<option />").val('').text('Выберите имя'));
+
+                    $.each(resp, function() {
+                        $ddl.append($("<option />").val(this.id).text(this.displayname));
+                    });
+                });
+            }
+
+            loadMasterdata();
+
             // refreshControlByOrderStep();
             $('.order-dlg').show();
         });
@@ -83,7 +108,7 @@ var stepper1;
             let picno = $('.image-upload-form').data('picno');
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/filestash',
+                url: settings.baseurl + '/filestash',
                 data: formdata,
                 contentType: false,
                 cache: false,
@@ -238,19 +263,25 @@ var stepper1;
                     orderInfo.images.push(orderState.imageMap[key]);
                 }
             }
-            
+
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/orders',
+                url: settings.baseurl + '/orders',
                 data: JSON.stringify(orderInfo),
                 contentType: 'application/json',
                 success: function (data) {
-                    console.log('success, redirecting to wait page')
-                    setTimeout(function () {
-
-                    }, 1000);
+                    console.log('success, redirecting to wait page', data);
+                    let ordernumber = data.ordernumber;
+                    if (ordernumber) {
+                        setTimeout(function () {
+                            window.location.replace("inprogress.html?ordernumber=" + ordernumber + "&vt=1");
+                        }, 1000);
+                    } else {
+                        showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
+                    }
                 },
                 error: function (resp) {
+                    console.log('some error during submitting order', resp);
                     if (resp.responseJSON && resp.responseJSON.message) {
                         showError(resp.responseJSON.message);
                     } else {
@@ -270,7 +301,7 @@ var stepper1;
 
 
 
-        $('.start-order-btn').click();
+        $('#startOrderBtn').click();
         stepper1.next();
         stepper1.next();
     });

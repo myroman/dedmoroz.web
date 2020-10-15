@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Видео в процессе...</title>
+  <title>Смотреть видеопоздравление</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,23 +23,32 @@
 
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
-  <link rel="stylesheet" href="css/custom.css">
+
+  <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
+  <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+  <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/custom.css">
-  <link rel="stylesheet" href="css/inprogress.css">
-  <link rel="stylesheet" href="css/bs-stepper.min.css">
+  <link rel="stylesheet" href="css/watch.css">
 </head>
 
 <body>
+
   <div class="my-full-page-container">
     <div class="container centered-container">
       <div class="waiting-info">
-        Мы сейчас создаем демо видео, пожалуйста подождите. 
+        <video id="my-video" class="video-js" controls preload="auto" width="640" height="360" data-setup="{}">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
       </div>
-  
+
       <div class="payment-page-link">
         <p>
           Либо можете пропустить этот шаг и сразу направиться к <a href="payment.html">оплате</a>
@@ -75,7 +84,7 @@
   <script src="js/google-map.js"></script>
   <script src="js/bs-stepper.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/inprogress.js"></script>
+  <script src="js/watch.js"></script>
 
 </body>
 

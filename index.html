@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>WebHost - Free Bootstrap 4 Template by Colorlib</title>
+  <title>Заказ персональных видеопоздравлений от Деда Мороза!</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -22,14 +22,14 @@
   <link rel="stylesheet" href="css/ionicons.min.css">
 
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/bs-stepper.min.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
-  <link rel="stylesheet" href="css/custom.css">
-
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
+  
   <link rel="stylesheet" href="css/custom.css">
-  <link rel="stylesheet" href="css/bs-stepper.min.css">
+  
 </head>
 
 <body>
@@ -71,7 +71,7 @@
               Закажите именное видеопоздравление от настоящего Деда Мороза из Великого Устюга!
             </p>
             <p>
-              <a href="#" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn">
+              <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn">
                 Попробовать бесплатно
               </a>
               <a href="#" class="btn btn-primary btn-primary-2 p-3 px-xl-5 py-xl-3 secondary-btn">Посмотреть пример</a>
@@ -777,24 +777,52 @@
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3"
                   aria-selected="true">
                   <span class="bs-stepper-circle">3</span>
-                  <span class="bs-stepper-label">Фотография</span>
+                  <span class="bs-stepper-label">Фотографии</span>
                 </button>
               </div>
 
-
               <div class="bs-stepper-line"></div>
+
               <div class="step" data-target="#test-l-4">
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger4" aria-controls="test-l-4"
-                  aria-selected="false" disabled="disabled">
+                  aria-selected="true">
                   <span class="bs-stepper-circle">4</span>
+                  <span class="bs-stepper-label">Письмо</span>
+                </button>
+              </div>
+
+              <div class="bs-stepper-line"></div>
+
+              <div class="step" data-target="#test-l-5">
+                <button type="button" class="step-trigger" role="tab" id="stepper1trigger5" aria-controls="test-l-5"
+                  aria-selected="true">
+                  <span class="bs-stepper-circle">5</span>
+                  <span class="bs-stepper-label">Похвала</span>
+                </button>
+              </div>
+
+              <div class="bs-stepper-line"></div>
+
+              <div class="step" data-target="#test-l-6">
+                <button type="button" class="step-trigger" role="tab" id="stepper1trigger6" aria-controls="test-l-6"
+                  aria-selected="true">
+                  <span class="bs-stepper-circle">6</span>
+                  <span class="bs-stepper-label">Поведение</span>
+                </button>
+              </div>
+
+              <div class="bs-stepper-line"></div>
+
+              <div class="step" data-target="#test-l-7">
+                <button type="button" class="step-trigger" role="tab" id="stepper1trigger7" aria-controls="test-l-7"
+                  aria-selected="false" disabled="disabled">
+                  <span class="bs-stepper-circle">7</span>
                   <span class="bs-stepper-label">Проверить</span>
                 </button>
               </div>
             </div>
             <div class="bs-stepper-content">
               <div class="bs-stepper-content">
-
-
                 <div id="test-l-1" role="tabpanel" class="bs-stepper-pane active dstepper-block"
                   aria-labelledby="stepper1trigger1">
 
@@ -823,11 +851,6 @@
                   <div class="form-group">
                     <label for="ddlName">Имя ребенка</label>
                     <select class="form-control ddl-names" id="ddlName" name="ddlName">
-                      <option value="">Выберите имя</option>
-                      <option value="ksyusha">Ксюша</option>
-                      <option value="serafima">Серафима</option>
-                      <option value="bogdan">Богдан</option>
-                      <option value="andryushenka">Андрюшенька</option>
                     </select>
                   </div>
                   <button class="btn btn-primary prev-btn">Назад</button>
@@ -839,16 +862,16 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
                   </div>
-                  
+
                   <div class="pic-wrapper pic-wrapper_1 mb-4">
                     <form class="image-upload-form" data-picno="pic0">
                       <div class="form-group row">
                         <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #1</label>
                         <div class="col-sm-3">
                           <input type="file" id="filePicture1" class="form-control filestyle" name="file"
-                          data-btnClass="btn btn-primary" data-input="false" 
-                          data-size="sm" data-text="Выбрать файл" />
-                          
+                            data-btnClass="btn btn-primary" data-input="false" data-size="sm"
+                            data-text="Выбрать файл" />
+
                         </div>
                         <div class="col-sm-3">
                           <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
@@ -866,7 +889,6 @@
                         </select>
                       </div>
 
-                      
                     </form>
                     <div class="form-group row">
                       <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
@@ -899,19 +921,39 @@
                     </form>
                   </div>
 
-
                   <button class="btn btn-primary prev-btn">Назад</button>
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-4" role="tabpanel" class="bs-stepper-pane text-center"
-                  aria-labelledby="stepper1trigger4">
+                <div id="test-l-4" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger4">
+                  <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p class="mb-0"></p>
+                  </div>
+                </div>
+
+                <div id="test-l-5" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger5">
+                  <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p class="mb-0"></p>
+                  </div>
+                </div>
+
+                <div id="test-l-6" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger6">
+                  <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p class="mb-0"></p>
+                  </div>
+                </div>
+
+                <div id="test-l-7" role="tabpanel" class="bs-stepper-pane text-center"
+                  aria-labelledby="stepper1trigger7">
 
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
                   </div>
-                  
+
                   <div class="review-form">
                     <div class="form-group row">
                       <label for="" class="col-sm-2 col-form-label">Пол</label>
@@ -938,6 +980,24 @@
                         <input type="text" name="kidname" class="form-control comment1" readonly>
                       </div>
                     </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Письмо загружено?</label>
+                      <div class="col-sm-10">
+                        <span>Да</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Похвала</label>
+                      <div class="col-sm-10">
+                        <span>текст похвалы</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Поведение</label>
+                      <div class="col-sm-10">
+                        <span>Поведение</span>
+                      </div>
+                    </div>
 
 
                     <button class="btn btn-primary prev-btn">Назад</button>
@@ -949,7 +1009,7 @@
             </div>
           </div>
         </div>
-       </div>     
+      </div>
     </div>
   </div>
   </div>
@@ -957,7 +1017,7 @@
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" strok e="#eeeeee" />
       <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
         stroke="#F96D00" /></svg></div>
 
@@ -982,7 +1042,7 @@
   <script src="js/google-map.js"></script>
   <script src="js/bs-stepper.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/dm.order.js"></script>
+  <script src="js/dm.order.js" crossorigin="anonymous"></script>
 
 </body>
 
