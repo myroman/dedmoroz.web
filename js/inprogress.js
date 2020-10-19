@@ -1,10 +1,10 @@
  (function ($) {
 
-	 "use strict";
-	 
-	 var settings = {
-        baseurl: 'http://localhost:5000'
-    };
+ 	"use strict";
+
+ 	var settings = {
+ 		baseurl: 'http://localhost:5000'
+ 	};
 
  	function getURLParameter(sParam) {
  		var sPageURL = window.location.search.substring(1);

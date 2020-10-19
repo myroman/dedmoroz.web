@@ -1,6 +1,10 @@
  (function ($) {
 
- 	"use strict";
+	 "use strict";
+	 
+	 var settings = {
+		baseurl: 'http://localhost:5000'
+	};
 
  	function getURLParameter(sParam) {
  		var sPageURL = window.location.search.substring(1);
@@ -17,7 +21,7 @@
  	$(function () {
  		let ordernumber = getURLParameter('ordernumber');
  		let videotype = getURLParameter('vt') ? 1 : 0;
- 		let videoUrl = 'http://127.0.0.1:5000/files/test.mp4';
+ 		let videoUrl = settings.baseurl + '/orders/'+ordernumber+'/videos?vt='+videotype;
  		if (ordernumber) {
  			$.ajax({
  				method: 'GET',
