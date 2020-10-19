@@ -1,6 +1,10 @@
  (function ($) {
 
- 	"use strict";
+	 "use strict";
+	 
+	 var settings = {
+        baseurl: 'http://localhost:5000'
+    };
 
  	function getURLParameter(sParam) {
  		var sPageURL = window.location.search.substring(1);
@@ -25,7 +29,7 @@
  		if (!videotype) videotype = 0;
  		console.log('waiting order #' + ordernumber + " for video type " + videotype);
 
- 		let statusUrl = 'http://127.0.0.1:5000/orders/status?ordernumber=' + ordernumber;
+ 		let statusUrl = settings.baseurl + '/orders/' + ordernumber;
  		checkAndRedirect(statusUrl, ordernumber, videotype);
 
  		function checkAndRedirect(statusUrl, ordernumber, videotype) {

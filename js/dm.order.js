@@ -5,7 +5,7 @@ var stepper1;
     //custom functionality
 
     var settings = {
-        baseurl: 'http://localhost:5000'
+        baseurl: 'http://127.0.0.1:5000'
     };
 
     var dlgControl = function () {
@@ -19,7 +19,10 @@ var stepper1;
         sex: 0,
         kidname: 1,
         photos: 2,
-        review: 3,
+        letter: 3,
+        praise: 4,
+        behavior: 5,
+        review: 6,
 
         finished: 10
     }
@@ -28,8 +31,8 @@ var stepper1;
 
     function initOrderState() {
         let result = {
-            step: steps.photos,
-            kidname: 'bogdan',
+            step: steps.sex,
+            kidname: '',
             sex: '0',
             letter_filename: null,
             praiseid: 19,
@@ -53,6 +56,8 @@ var stepper1;
         ready: "ready"
     };
 
+    let masterData = {};
+
     //dialog order
 
     $(function () {
@@ -67,33 +72,79 @@ var stepper1;
             $('.wizard-warning').hide();
         }
 
-        $('.start-order-btn').click(function () {
-            orderState = initOrderState();
-
-            function loadMasterdata() {
-                $.get(settings.baseurl + '/md/photocomments?applicable_for=0', function(resp) {
-                    var $comments = $(".ddl-comment");
-                    $.each(resp, function() {
-                        $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
-                    });
+        function loadComments(sex) {
+            masterData.comments = [];
+            $.get(settings.baseurl + '/md/photocomments?applicable_for='+sex, function (resp) {
+                var $comments = $(".ddl-comment");
+                $.each(resp, function () {
+                    $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
+                    masterData.comments.push(this);
                 });
+            });
+        }
 
-                $.get(settings.baseurl + '/md/names?sex='+orderState.sex, function(resp) {
+        function loadNames(sex) {
+            masterData.names = [];
+                $.get(settings.baseurl + '/md/names?sex=' + sex, function (resp) {
                     var $ddl = $(".ddl-names");
                     $ddl.html('');
                     $ddl.append($("<option />").val('').text('Выберите имя'));
 
-                    $.each(resp, function() {
+                    $.each(resp, function () {
                         $ddl.append($("<option />").val(this.id).text(this.displayname));
+                        masterData.names.push(this);
                     });
                 });
+        }
+
+        function loadPraises(sex) {
+            masterData.praises = [];
+                $.get(settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
+                    var $ddl = $(".ddl-praise");
+                    $ddl.html('');
+                    $ddl.append($("<option />").val('').text('Выберите похвалу'));
+
+                    $.each(resp, function () {
+                        $ddl.append($("<option />").val(this.id).text(this.displayname));
+                        masterData.praises.push(this);
+                    });
+                });
+        }
+
+        $('.start-order-btn').click(startOrder);
+
+        function startOrder() {
+            orderState = initOrderState();
+
+            //load static masterdata
+            function loadMasterdata() {                
+
+                masterData.sexes = [{
+                    id: 0,
+                    text: 'Мальчик'
+                }, {
+                    id: 1,
+                    text: 'Девочка'
+                }];
+
+                masterData.behaviors = [{
+                    id: 1,
+                    text: 'Хорошее'
+                }, {
+                    id: 2,
+                    text: 'Плохое или неоднозначное'
+                }];
             }
 
             loadMasterdata();
 
             // refreshControlByOrderStep();
             $('.order-dlg').show();
-        });
+
+            // stepper1.next();
+            // stepper1.next();
+            // orderState.step = 2;
+        }
 
         //place order
         $('.order-dlg .goto-payment-btn').click(gotoPayment);
@@ -108,7 +159,7 @@ var stepper1;
             let picno = $('.image-upload-form').data('picno');
             $.ajax({
                 type: 'POST',
-                url: settings.baseurl + '/filestash',
+                url: settings.baseurl + '/images',
                 data: formdata,
                 contentType: false,
                 cache: false,
@@ -166,12 +217,12 @@ var stepper1;
                     }
                     return errors;
                 case steps.photos:
-                    if (!orderState.imageMap['pic0']) {
-                        errors.push('Загрузите как минимум 1 фотографию');
-                    }
-                    if (!$('#ddlCommentPic0').val()) {
-                        errors.push('Выберите комментарий для фотографии')
-                    }
+                    // if (!orderState.imageMap['pic0']) {
+                    //     errors.push('Загрузите как минимум 1 фотографию');
+                    // }
+                    // if (!$('#ddlCommentPic0').val()) {
+                    //     errors.push('Выберите комментарий для фотографии')
+                    // }
                     (function () {
                         let i = 0;
                         for (i = 1; i < MaxPictures; i++) {
@@ -195,9 +246,11 @@ var stepper1;
             switch (step) {
                 case steps.sex:
                     orderState.sex = $('#ddlSex').val();
+                    loadNames(orderState.sex);
                     break;
                 case steps.kidname:
                     orderState.kidname = $('#ddlName').val();
+                    loadComments(orderState.sex);
                     break;
                 case steps.photos:
                     let i = 0;
@@ -207,22 +260,52 @@ var stepper1;
                             orderState.imageMap[picId].commentid = $('#ddlCommentPic' + i).val();
                         }
                     }
-
+                    break;
+                case steps.letter:
+                    loadPraises(orderState.sex);
+                    break;
+                case steps.praise:
+                    orderState.praiseid = $('#ddlPraise').val();
+                    break;
+                case steps.behavior:
+                    orderState.behaviorid = $('input[name="behavior"]:checked').val();
                     break;
             }
         }
 
         function initReviewForm() {
-            $('.review-form .sex').val(orderState.sex);
-            $('.review-form .kidname').val(orderState.kidname);
+            let sex = masterData.sexes.find(x => x.id == orderState.sex).text;
+            $('.review-form .sex-text').text(sex);
+
+            let kidname = masterData.names.find(x => x.id == orderState.kidname).displayname;
+            $('.review-form .name-text').text(kidname);
+
+            $('.review-form .letter-text').text(orderState.letter_filename ? 'Да' : 'Нет');
+
+            let praise = masterData.praises.find(x => x.id == orderState.praiseid);
+            if (praise) {
+                $('.review-form .praise-text').text(praise.displayname);
+            }
+
+            let behavior = masterData.behaviors.find(x => x.id == orderState.behaviorid);
+            if (behavior) {
+                $('.review-form .behavior-text').text(behavior.text);
+            }
+
             let i = 0;
+            let photosUploaded = 0;
             for (i = 0; i < MaxPictures; i++) {
                 let picid = 'pic' + i;
                 if (orderState.imageMap[picid] && orderState.imageMap[picid].commentid) {
-                    let commentSelector = '.review-form .comment' + i;
-                    $(commentSelector).val(orderState.imageMap[picid].commentid).show();
+                    let commentSelector = '.review-form .comment' + i + '-text';
+                    $(commentSelector).text(orderState.imageMap[picid].commentid).show();
+                    photosUploaded++;
                 }
             }
+
+            $('.review-form .photos-number-text').text(photosUploaded);
+
+
         }
 
         function gotoPayment() {
@@ -248,11 +331,13 @@ var stepper1;
         $('.submit-order').click(function () {
             let orderInfo = {
                 kidname: orderState.kidname,
-                sex: +orderState.sex,
-                images: [],
+                sex: !!orderState.sex,
+                images: {
+                    content: []
+                },
                 letter_filename: orderState.letter_filename,
-                praiseid: orderState.praiseid,
-                behaviorid: orderState.behaviorid,
+                praiseid: +orderState.praiseid,
+                behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
                 customeremail: orderState.customeremail
             };
@@ -260,13 +345,13 @@ var stepper1;
             for (i = 0; i < MaxPictures; i++) {
                 let key = 'pic' + i;
                 if (orderState.imageMap[key] && orderState.imageMap[key].name) {
-                    orderInfo.images.push(orderState.imageMap[key]);
+                    orderInfo.images.content.push(orderState.imageMap[key]);
                 }
             }
 
             $.ajax({
                 type: 'POST',
-                url: settings.baseurl + '/orders',
+                url: settings.baseurl + '/orders/',
                 data: JSON.stringify(orderInfo),
                 contentType: 'application/json',
                 success: function (data) {
@@ -301,8 +386,6 @@ var stepper1;
 
 
 
-        $('#startOrderBtn').click();
-        stepper1.next();
-        stepper1.next();
+        $('#startOrderBtn').click();        
     });
 })(jQuery);

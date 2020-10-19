@@ -106,12 +106,34 @@
     max-width: 900px;
 }
 
+.review-form {
+    max-height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  }
+
 .bs-stepper-label {
     font-size: 14px;
 }
-.bs-stepper .line, .bs-stepper-line {
-    flex: 1 0 12px;
-}
+
 .bs-stepper .step-trigger {
     padding: 20px 4px;
+}
+
+.dlg-order-wrapper {
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px 14px;
 }

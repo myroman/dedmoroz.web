@@ -27,9 +27,9 @@
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
-  
+
   <link rel="stylesheet" href="css/custom.css">
-  
+
 </head>
 
 <body>
@@ -831,13 +831,15 @@
                     <p class="mb-0"></p>
                   </div>
 
-                  <div class="form-group row">
-                    <label for="ddlSex" class="col-sm-2 col-form-label ddl-sex">Пол *</label>
-                    <select class="form-control" id="ddlSex" name="ddlSex">
-                      <option value="">Выберите пол</option>
-                      <option value="0">Мальчик</option>
-                      <option value="1">Девочка</option>
-                    </select>
+                  <div class="dlg-order-wrapper">
+                    <div class="form-group">
+                      <label for="ddlSex" class="col-sm-2 col-form-label ddl-sex">Пол *</label>
+                      <select class="form-control" id="ddlSex" name="ddlSex">
+                        <option value="">Выберите пол</option>
+                        <option value="0">Мальчик</option>
+                        <option value="1">Девочка</option>
+                      </select>
+                    </div>
                   </div>
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
@@ -848,10 +850,14 @@
                     <p class="mb-0"></p>
                   </div>
 
-                  <div class="form-group">
-                    <label for="ddlName">Имя ребенка</label>
-                    <select class="form-control ddl-names" id="ddlName" name="ddlName">
-                    </select>
+                  <div class="dlg-order-wrapper">
+
+                    <div class="form-group">
+                      <label for="ddlName">Имя ребенка</label>
+                      <select class="form-control ddl-names" id="ddlName" name="ddlName">
+                      </select>
+                    </div>
+
                   </div>
                   <button class="btn btn-primary prev-btn">Назад</button>
                   <button class="btn btn-primary next-btn">Вперед</button>
@@ -863,62 +869,68 @@
                     <p class="mb-0"></p>
                   </div>
 
-                  <div class="pic-wrapper pic-wrapper_1 mb-4">
-                    <form class="image-upload-form" data-picno="pic0">
-                      <div class="form-group row">
-                        <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #1</label>
-                        <div class="col-sm-3">
-                          <input type="file" id="filePicture1" class="form-control filestyle" name="file"
-                            data-btnClass="btn btn-primary" data-input="false" data-size="sm"
-                            data-text="Выбрать файл" />
+                  <div class="dlg-order-wrapper">
 
+                    <div class="pic-wrapper pic-wrapper_1 mb-4">
+                      <form class="image-upload-form" data-picno="pic0">
+                        <div class="form-group row">
+                          <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #1</label>
+                          <div class="col-sm-3">
+                            <input type="file" id="filePicture1" class="form-control filestyle" name="file"
+                              data-btnClass="btn btn-primary" data-input="false" data-size="sm"
+                              data-text="Выбрать файл" />
+                            <input type="hidden" value="0" name="index" />
+
+                          </div>
+                          <div class="col-sm-3">
+                            <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
+                              disabled />
+                          </div>
+                          <p>
+                            <span class="photo-uploaded">Фотография загружена</span>
+                          </p>
                         </div>
-                        <div class="col-sm-3">
-                          <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
-                            disabled />
+                        <div class="form-group row">
+                          <label for="ddlCommentPic0" class="col-sm-3 col-form-label">Комментарий *</label>
+                          <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic0" name="ddlCommentPic0">
+                            <option value="">Выберите комментарий</option>
+                            <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
+                          </select>
                         </div>
-                        <p>
-                          <span class="photo-uploaded">Фотография загружена</span>
-                        </p>
-                      </div>
+
+                      </form>
                       <div class="form-group row">
-                        <label for="ddlCommentPic0" class="col-sm-3 col-form-label">Комментарий *</label>
-                        <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic0" name="ddlCommentPic0">
-                          <option value="">Выберите комментарий</option>
-                          <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
-                        </select>
+                        <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
                       </div>
 
-                    </form>
-                    <div class="form-group row">
-                      <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
                     </div>
 
-                  </div>
+                    <div class="pic-wrapper pic-wrapper_2 mb-4" style="display: none">
+                      <form class="image-upload-form" data-picno="pic1">
+                        <div class="form-group row">
+                          <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #2</label>
+                          <div class="col-sm-3">
+                            <input type="file" id="filePicture2" class="form-control" name="file" />
+                            <input type="hidden" value="1" name="index" />
+                          </div>
+                          <div class="col-sm-3">
+                            <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
+                              disabled />
+                          </div>
+                          <p>
+                            <span class="photo-uploaded">Фотография загружена</span>
+                          </p>
+                        </div>
+                        <div class="form-group row">
+                          <label for="ddlCommentPic1" class="col-sm-3 col-form-label">Комментарий *</label>
+                          <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic1" name="ddlCommentPic1">
+                            <option value="">Выберите комментарий</option>
+                            <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
 
-                  <div class="pic-wrapper pic-wrapper_2 mb-4" style="display: none">
-                    <form class="image-upload-form" data-picno="pic1">
-                      <div class="form-group row">
-                        <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #2</label>
-                        <div class="col-sm-3">
-                          <input type="file" id="filePicture2" class="form-control" name="file" />
-                        </div>
-                        <div class="col-sm-3">
-                          <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
-                            disabled />
-                        </div>
-                        <p>
-                          <span class="photo-uploaded">Фотография загружена</span>
-                        </p>
-                      </div>
-                      <div class="form-group row">
-                        <label for="ddlCommentPic1" class="col-sm-3 col-form-label">Комментарий *</label>
-                        <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic1" name="ddlCommentPic1">
-                          <option value="">Выберите комментарий</option>
-                          <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
-                        </select>
-                      </div>
-                    </form>
                   </div>
 
                   <button class="btn btn-primary prev-btn">Назад</button>
@@ -930,20 +942,56 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
                   </div>
+
+                  <div class="dlg-order-wrapper"></div>
+
+                  <button class="btn btn-primary prev-btn">Назад</button>
+                  <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-5" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger5">
+                <div id="test-l-5" role="tabpanel" class="bs-stepper-pane stepper-pane-praise"
+                  aria-labelledby="stepper1trigger5">
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
                   </div>
+
+                  <div class="dlg-order-wrapper">
+
+                    <div class="form-group">
+                      <label for="ddlName">Похвала</label>
+                      <select class="form-control ddl-praise" id="ddlPraise" name="ddlPraise">
+                      </select>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary prev-btn">Назад</button>
+                  <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-6" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger6">
+                <div id="test-l-6" role="tabpanel" class="bs-stepper-pane stepper-pane-behavior"
+                  aria-labelledby="stepper1trigger6">
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
                   </div>
+
+                  <div class="dlg-order-wrapper">
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="behavior" id="good_behavior" value="1" checked>
+                      <label class="form-check-label" for="good_behavior">
+                        Хорошее
+                      </label>
+                    </div>
+                    <div class="form-check behavior-group">
+                      <input class="form-check-input" type="radio" name="behavior" id="bad_behavior" value="2">
+                      <label class="form-check-label" for="bad_behavior">
+                        Плохое или неоднозначное
+                      </label>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary prev-btn">Назад</button>
+                  <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
                 <div id="test-l-7" role="tabpanel" class="bs-stepper-pane text-center"
@@ -956,53 +1004,58 @@
 
                   <div class="review-form">
                     <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label">Пол</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="sex" class="form-control sex" readonly>
+                      <label for="" class="col-sm-3 col-form-label">Пол</label>
+                      <div class="col-sm-9">
+                        <span class="sex-text"></span>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label">Имя</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="kidname" class="form-control kidname" readonly>
+                      <label for="" class="col-sm-3 col-form-label">Имя</label>
+                      <div class="col-sm-9">
+                        <span class="name-text"></span>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label">Комментарий 1</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="kidname" class="form-control comment0" readonly>
+                      <label for="" class="col-sm-3 col-form-label">Фотографий загружено</label>
+                      <div class="col-sm-9">
+                        <span class="photos-number-text"></span>
                       </div>
                     </div>
                     <div class="form-group row" style="display: none;">
-                      <label for="" class="col-sm-2 col-form-label">Комментарий 2</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="kidname" class="form-control comment1" readonly>
+                      <label for="" class="col-sm-3 col-form-label">Комментарий 1</label>
+                      <div class="col-sm-9">
+                        <span class="comment1-text"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row" style="display: none;">
+                      <label for="" class="col-sm-3 col-form-label">Комментарий 2</label>
+                      <div class="col-sm-9">
+                        <span class="comment1-text"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row letter-wrapper">
+                      <label for="" class="col-sm-3 col-form-label">Письмо загружено?</label>
+                      <div class="col-sm-9">
+                        <span class="letter-text"></span>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label">Письмо загружено?</label>
-                      <div class="col-sm-10">
-                        <span>Да</span>
+                      <label class="col-sm-3 col-form-label">Похвала</label>
+                      <div class="col-sm-9">
+                        <span class="praise-text"></span>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label">Похвала</label>
-                      <div class="col-sm-10">
-                        <span>текст похвалы</span>
+                      <label for="" class="col-sm-3 col-form-label">Поведение</label>
+                      <div class="col-sm-9">
+                        <span class="behavior-text">Поведение</span>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label">Поведение</label>
-                      <div class="col-sm-10">
-                        <span>Поведение</span>
-                      </div>
-                    </div>
-
-
-                    <button class="btn btn-primary prev-btn">Назад</button>
-                    <button class="btn btn-primary submit-order">Создать заказ</button>
                   </div>
+
+                  <button class="btn btn-primary prev-btn">Назад</button>
+                  <button class="btn btn-primary submit-order">Создать заказ</button>
                 </div>
 
               </div>
