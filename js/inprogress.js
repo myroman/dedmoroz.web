@@ -29,7 +29,7 @@
  		if (!videotype) videotype = 0;
  		console.log('waiting order #' + ordernumber + " for video type " + videotype);
 
- 		let statusUrl = settings.baseurl + '/orders/' + ordernumber;
+ 		let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;
  		checkAndRedirect(statusUrl, ordernumber, videotype);
 
  		function checkAndRedirect(statusUrl, ordernumber, videotype) {

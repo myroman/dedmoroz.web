@@ -21,7 +21,7 @@
  	$(function () {
  		let ordernumber = getURLParameter('ordernumber');
  		let videotype = getURLParameter('vt') ? 1 : 0;
- 		let videoUrl = settings.baseurl + '/orders/'+ordernumber+'/videos?vt='+videotype;
+ 		let videoUrl = Dm.settings.baseurl + '/orders/'+ordernumber+'/videos?vt='+videotype;
  		if (ordernumber) {
  			$.ajax({
  				method: 'GET',

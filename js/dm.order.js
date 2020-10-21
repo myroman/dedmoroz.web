@@ -11,7 +11,7 @@ var stepper1;
     var dlgControl = function () {
         console.log('here')
         this.submitOrder = function (postdata, onSuccess, onError) {
-            $.post(settings.baseurl + '/videos/create', postdata, onSuccess);
+            $.post(Dm.settings.baseurl + '/videos/create', postdata, onSuccess);
         }
     };
 
@@ -74,7 +74,7 @@ var stepper1;
 
         function loadComments(sex) {
             masterData.comments = [];
-            $.get(settings.baseurl + '/md/photocomments?applicable_for='+sex, function (resp) {
+            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for='+sex, function (resp) {
                 var $comments = $(".ddl-comment");
                 $.each(resp, function () {
                     $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
@@ -85,7 +85,7 @@ var stepper1;
 
         function loadNames(sex) {
             masterData.names = [];
-                $.get(settings.baseurl + '/md/names?sex=' + sex, function (resp) {
+                $.get(Dm.settings.baseurl + '/md/names?sex=' + sex, function (resp) {
                     var $ddl = $(".ddl-names");
                     $ddl.html('');
                     $ddl.append($("<option />").val('').text('Выберите имя'));
@@ -99,7 +99,7 @@ var stepper1;
 
         function loadPraises(sex) {
             masterData.praises = [];
-                $.get(settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
+                $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
                     var $ddl = $(".ddl-praise");
                     $ddl.html('');
                     $ddl.append($("<option />").val('').text('Выберите похвалу'));
@@ -159,7 +159,7 @@ var stepper1;
             let picno = $('.image-upload-form').data('picno');
             $.ajax({
                 type: 'POST',
-                url: settings.baseurl + '/images',
+                url: Dm.settings.baseurl + '/images',
                 data: formdata,
                 contentType: false,
                 cache: false,
@@ -351,7 +351,7 @@ var stepper1;
 
             $.ajax({
                 type: 'POST',
-                url: settings.baseurl + '/orders/',
+                url: Dm.settings.baseurl + '/orders/',
                 data: JSON.stringify(orderInfo),
                 contentType: 'application/json',
                 success: function (data) {
@@ -386,6 +386,6 @@ var stepper1;
 
 
 
-        $('#startOrderBtn').click();        
+        // $('#startOrderBtn').click();        
     });
 })(jQuery);
