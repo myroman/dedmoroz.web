@@ -3,11 +3,6 @@ var stepper1;
 (function ($) {
 
     //custom functionality
-
-    var settings = {
-        baseurl: 'http://127.0.0.1:5000'
-    };
-
     var dlgControl = function () {
         console.log('here')
         this.submitOrder = function (postdata, onSuccess, onError) {
