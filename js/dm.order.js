@@ -351,7 +351,7 @@ var stepper1;
 
             $.ajax({
                 type: 'POST',
-                url: Dm.settings.baseurl + '/orders/',
+                url: Dm.settings.baseurl + '/orders',
                 data: JSON.stringify(orderInfo),
                 contentType: 'application/json',
                 success: function (data) {
@@ -384,7 +384,8 @@ var stepper1;
             $('.pic-wrapper_3').show();
         });
 
-
+        //allows to see response data before redirect
+        window.onunload = function() { debugger; }
 
         // $('#startOrderBtn').click();        
     });

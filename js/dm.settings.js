@@ -1,10 +1,12 @@
 function createDmSettings(env) {
     let local = {
-        baseurl: 'http://127.0.0.1:5000'
+        baseurl: 'http://127.0.0.1:5000',
+        env: 'local'
     };
 
     let test = {
-        baseurl: 'https://p3r5o5x4x2.execute-api.us-east-1.amazonaws.com/dev'
+        baseurl: 'https://p3r5o5x4x2.execute-api.us-east-1.amazonaws.com/dev',
+        env: 'test'
     };
 
 
