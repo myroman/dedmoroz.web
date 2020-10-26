@@ -21,7 +21,7 @@ var stepper1;
         finished: 10
     }
 
-    let MaxPictures = 2;
+    let MaxPictures = 3;
 
     function initOrderState(sex) {
         let result = {
@@ -58,11 +58,11 @@ var stepper1;
         $('.order-dlg .goto-payment-btn').click(gotoPayment);
         $('.order-dlg .close-btn').click(closeDlg);
         $(".btn-upload-file").click(onFileUploadClick);
-        $('#filePicture1').change(onFileChanged);
+        $('.file-picture').change(onFileChanged);
         $('.prev-btn').click(goBack);
         $(document).on('click', '.bs-stepper-pane.active .next-btn', goForward);
         $('.submit-order').click(submitOrder);
-        
+
 
         function showError(message) {
             $('.wizard-warning').show();
@@ -111,7 +111,7 @@ var stepper1;
                 });
             });
         }
-        
+
         function closeDlg() {
             $('.order-dlg').hide();
         }
@@ -140,8 +140,9 @@ var stepper1;
         }
 
         function onFileUploadClick() {
-            var formdata = new FormData($('.image-upload-form')[0]);
-            let picno = $('.image-upload-form').data('picno');
+            let $form = $(this).parents('.image-upload-form');
+            var formdata = new FormData($form[0]);
+            let picno = $form.data('picno');
             $.ajax({
                 type: 'POST',
                 url: Dm.settings.baseurl + '/images',
@@ -150,8 +151,8 @@ var stepper1;
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    $('.photo-uploaded').show();
-                    orderState.imageMap[picno] = {
+                    $('#photo-uploaded-' + picno).show();
+                    orderState.imageMap['pic' + picno] = {
                         name: data.filename
                     };
                 },
@@ -159,12 +160,17 @@ var stepper1;
         }
 
         function onFileChanged() {
-            $('.btn-upload-file').removeAttr('disabled');
+            let parentForm = $(this).parents('form');
+            let picNo = parentForm.data('picno');
+            let btnUploadId = 'btnUploadFile' + picNo;
+            $('#' + btnUploadId).removeAttr('disabled');
         }
+
         function goBack() {
             stepper1.previous();
             orderState.step--;
         }
+
         function goForward() {
             let errors = validateInput(orderState.step);
             if (errors.length) {
@@ -195,13 +201,11 @@ var stepper1;
                     if (!orderState.imageMap['pic0']) {
                         errors.push('Необходимо загрузить хотя бы одну фотографию');
                     }
-                    if (!$('#ddlCommentPic0').val()) {
-                        errors.push('Выберите комментарий для фотографии')
-                    }
                     (function validateCommentsAreEnteredForUploadedPics() {
                         let i = 0;
-                        for (i = 1; i < MaxPictures; i++) {
-                            if (orderState.imageMap['pic' + i] && orderState.imageMap['pic' + i].name) {
+                        for (i = 0; i < MaxPictures; i++) {
+                            let imageInfo = orderState.imageMap['pic' + i];
+                            if (imageInfo && imageInfo.name) {
                                 if (!$('#ddlCommentPic' + i).val()) {
                                     errors.push('Выберите комментарий для фотографии ' + (i + 1));
                                 }
@@ -293,9 +297,22 @@ var stepper1;
             let photosUploaded = 0;
             for (i = 0; i < MaxPictures; i++) {
                 let picid = 'pic' + i;
-                if (orderState.imageMap[picid] && orderState.imageMap[picid].commentid) {
+                let imageInfo = orderState.imageMap[picid];
+                if (imageInfo && imageInfo.commentid) {
                     let commentSelector = '.review-form .comment' + i + '-text';
-                    $(commentSelector).text(orderState.imageMap[picid].commentid).show();
+
+                    function findCommentByFilepath(filepath) {
+                        if (!filepath) return '';
+                        let j;
+                        for (j = 0; j < masterData.comments.length; j++) {
+                            if (masterData.comments[j].filepath == filepath) {
+                                return masterData.comments[j].displayname;
+                            }
+                        }
+                        return ''
+                    }
+                    $(commentSelector).text(findCommentByFilepath(imageInfo.commentid));
+                    $(commentSelector).parents('.comment-wrapper').show();
                     photosUploaded++;
                 }
             }
@@ -321,7 +338,7 @@ var stepper1;
                 }
 
             });
-        }        
+        }
 
         function submitOrder() {
             let orderInfo = {
@@ -372,11 +389,11 @@ var stepper1;
         }
 
 
+        $('.add-photo1-btn').click(function () {
+            $('.pic-wrapper_1').show();
+        });
         $('.add-photo2-btn').click(function () {
             $('.pic-wrapper_2').show();
-        });
-        $('.add-photo3-btn').click(function () {
-            $('.pic-wrapper_3').show();
         });
 
         //allows to see response data before redirect

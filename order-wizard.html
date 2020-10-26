@@ -250,61 +250,94 @@
 
                   <div class="dlg-order-wrapper">
 
-                    <div class="pic-wrapper pic-wrapper_1 mb-4">
-                      <form class="image-upload-form" data-picno="pic0">
+                    <div class="pic-wrapper pic-wrapper_0 mb-4">
+                      <form class="image-upload-form" data-picno="0">
                         <div class="form-group row">
-                          <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #1</label>
+                          <label for="filePicture0" class="col-sm-3 col-form-label">Фотография #1</label>
                           <div class="col-sm-3">
-                            <input type="file" id="filePicture1" class="form-control filestyle" name="file"
+                            <input type="file" id="filePicture0" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
                             <input type="hidden" value="0" name="index" />
-
                           </div>
                           <div class="col-sm-3">
-                            <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
+                            <input type="button" id="btnUploadFile0" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
                               disabled />
                           </div>
                           <p>
-                            <span class="photo-uploaded">Фотография загружена</span>
+                            <span id="photo-uploaded-0" class="photo-uploaded">Фотография загружена</span>
                           </p>
                         </div>
                         <div class="form-group row">
                           <label for="ddlCommentPic0" class="col-sm-3 col-form-label">Комментарий *</label>
                           <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic0" name="ddlCommentPic0">
                             <option value="">Выберите комментарий</option>
-                            <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
+                            <!-- <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option> -->
                           </select>
                         </div>
 
                       </form>
                       <div class="form-group row">
-                        <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
+                        <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo1-btn" />
                       </div>
 
                     </div>
 
-                    <div class="pic-wrapper pic-wrapper_2 mb-4" style="display: none">
-                      <form class="image-upload-form" data-picno="pic1">
+                    <div class="pic-wrapper pic-wrapper_1 mb-4" style="display: none">
+                      <form class="image-upload-form" data-picno="1">
                         <div class="form-group row">
                           <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #2</label>
                           <div class="col-sm-3">
-                            <input type="file" id="filePicture2" class="form-control" name="file" />
+                            <input type="file" id="filePicture1" class="form-control filestyle file-picture" name="file"
+                              data-btnClass="btn btn-primary" data-input="false" data-size="sm"
+                              data-text="Выбрать файл" />
                             <input type="hidden" value="1" name="index" />
                           </div>
                           <div class="col-sm-3">
-                            <input type="button" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
+                            <input type="button" id="btnUploadFile1" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
                               disabled />
                           </div>
                           <p>
-                            <span class="photo-uploaded">Фотография загружена</span>
+                            <span id="photo-uploaded-1" class="photo-uploaded">Фотография загружена</span>
                           </p>
                         </div>
                         <div class="form-group row">
                           <label for="ddlCommentPic1" class="col-sm-3 col-form-label">Комментарий *</label>
                           <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic1" name="ddlCommentPic1">
                             <option value="">Выберите комментарий</option>
-                            <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option>
+                            <!-- <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option> -->
+                          </select>
+                        </div>
+                      </form>
+
+                      <div class="form-group row">
+                        <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
+                      </div>
+                    </div>
+
+                    <div class="pic-wrapper pic-wrapper_2 mb-4" style="display: none">
+                      <form class="image-upload-form" data-picno="2">
+                        <div class="form-group row">
+                          <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #3</label>
+                          <div class="col-sm-3">
+                            <input type="file" id="filePicture2" class="form-control filestyle file-picture" name="file"
+                              data-btnClass="btn btn-primary" data-input="false" data-size="sm"
+                              data-text="Выбрать файл" />
+                            <input type="hidden" value="2" name="index" />
+                          </div>
+                          <div class="col-sm-3">
+                            <input type="button" id="btnUploadFile2" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
+                              disabled />
+                          </div>
+                          <p>
+                            <span id="photo-uploaded-2" class="photo-uploaded">Фотография загружена</span>
+                          </p>
+                        </div>
+                        <div class="form-group row">
+                          <label for="ddlCommentPic2" class="col-sm-3 col-form-label">Комментарий *</label>
+                          <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic2" name="ddlCommentPic2">
+                            <option value="">Выберите комментарий</option>
+                            <!-- <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option> -->
                           </select>
                         </div>
                       </form>
@@ -414,22 +447,22 @@
                         <span class="photos-number-text"></span>
                       </div>
                     </div>
-                    <div class="form-group row" style="display: none;">
+                    <div class="form-group row comment-wrapper" style="display: none;">
                       <label for="" class="col-sm-3 col-form-label">Комментарий 1</label>
                       <div class="col-sm-9">
-                        <span class="comment1-text"></span>
+                        <span class="comment0-text"></span>
                       </div>
                     </div>
-                    <div class="form-group row" style="display: none;">
+                    <div class="form-group row comment-wrapper" style="display: none;">
                       <label for="" class="col-sm-3 col-form-label">Комментарий 2</label>
                       <div class="col-sm-9">
                         <span class="comment1-text"></span>
                       </div>
                     </div>
-                    <div class="form-group row" style="display: none;">
+                    <div class="form-group row comment-wrapper" style="display: none;">
                       <label for="" class="col-sm-3 col-form-label">Комментарий 3</label>
                       <div class="col-sm-9">
-                        <span class="comment1-text"></span>
+                        <span class="comment2-text"></span>
                       </div>
                     </div>
                     <div class="form-group row letter-wrapper">
