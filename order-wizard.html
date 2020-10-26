@@ -232,7 +232,7 @@
                   <div class="dlg-order-wrapper">
 
                     <div class="form-group">
-                      <label for="ddlName">Имя ребенка</label>
+                      <label for="ddlName">Имя ребенка *</label>
                       <select class="form-control ddl-names" id="ddlName" name="ddlName">
                       </select>
                     </div>
@@ -338,7 +338,7 @@
                   <div class="dlg-order-wrapper">
 
                     <div class="form-group">
-                      <label for="ddlName">Похвала</label>
+                      <label for="ddlPraise">Похвала *</label>
                       <select class="form-control ddl-praise" id="ddlPraise" name="ddlPraise">
                       </select>
                     </div>
@@ -370,17 +370,15 @@
                   </div>
 
                   <div class="dlg-order-wrapper">
-
-
                     <div class="form-group">
-                      <label for="txtCustomerName">Customer name</label>
-                      <input type="text" class="form-control" id="txtCustomerName">
+                      <label for="txtCustomerName">Ваше имя *</label>
+                      <input type="text" class="form-control" id="txtCustomerName" name="customerName">
                     </div>
 
                     <div class="form-group">
-                      <label for="txtCustomerEmail">Email address</label>
-                      <input type="email" class="form-control" id="txtCustomerEmail" aria-describedby="emailHelp">
-                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                      <label for="txtCustomerEmail">Ваш электронный адрес *</label>
+                      <input type="email" class="form-control" name="customerEmail" id="txtCustomerEmail" aria-describedby="emailHelp">
+                      <small id="emailHelp" class="form-text text-muted">Мы никогда никому не передадим вашу электронную почту.</small>
                     </div>
 
                   </div>

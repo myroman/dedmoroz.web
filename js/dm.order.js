@@ -41,7 +41,7 @@ var stepper1;
         return result;
     }
 
-    let orderState = null;//initOrderState();
+    let orderState = null;
 
     let videoProcStatuses = {
         submitted: "submitted",
@@ -50,12 +50,7 @@ var stepper1;
 
     let masterData = {};
 
-    //dialog order
-
     $(function () {
-        stepper1 = new Stepper($('.bs-stepper')[0])
-
-
         $('.start-order-btn').click(function () {
             let sex = $(this).data('sex');
             startOrder(sex);
@@ -122,6 +117,7 @@ var stepper1;
         }
 
         function startOrder(sex) {
+            stepper1 = new Stepper($('.bs-stepper')[0]);
             orderState = initOrderState(sex);
 
             loadNames(sex);
@@ -140,12 +136,7 @@ var stepper1;
 
             loadMasterdata();
 
-            // refreshControlByOrderStep();
             $('.order-dlg').show();
-
-            // stepper1.next();
-            // stepper1.next();
-            // orderState.step = 2;
         }
 
         function onFileUploadClick() {
@@ -191,7 +182,6 @@ var stepper1;
             }
         }
 
-
         function validateInput(step) {
             let errors = [];
             switch (step) {
@@ -203,12 +193,12 @@ var stepper1;
                     return errors;
                 case steps.photos:
                     if (!orderState.imageMap['pic0']) {
-                        errors.push('Загрузите как минимум 1 фотографию');
+                        errors.push('Необходимо загрузить хотя бы одну фотографию');
                     }
                     if (!$('#ddlCommentPic0').val()) {
                         errors.push('Выберите комментарий для фотографии')
                     }
-                    (function () {
+                    (function validateCommentsAreEnteredForUploadedPics() {
                         let i = 0;
                         for (i = 1; i < MaxPictures; i++) {
                             if (orderState.imageMap['pic' + i] && orderState.imageMap['pic' + i].name) {
@@ -219,13 +209,25 @@ var stepper1;
                         }
                     })();
 
-
+                    return errors;
+                case steps.additionalOptions:
+                    let praise = $('#ddlPraise').val();
+                    if (!praise) {
+                        errors.push('Введите похвалу');
+                    }
+                    return errors;
+                case steps.customerDetails:
+                    if (!$('#txtCustomerName').val()) {
+                        errors.push('Введите Ваше имя');
+                    }
+                    if (!$('#txtCustomerEmail').val()) {
+                        errors.push('Введите Ваш электронный адрес');
+                    }
                     return errors;
                 default:
                     return [];
             }
         }
-
 
         function saveDataToOrder(step) {
             switch (step) {
@@ -261,13 +263,10 @@ var stepper1;
                 switch (sex) {
                     case 0:
                         return "Мальчик";
-                        break;
                     case 1:
                         return "Девочка";
-                        break;
                     case 2:
                         return "Двое детей";
-                        break;
                 }
             }
             $('.review-form .sex-text').text(getForWhom(orderState.sex));
