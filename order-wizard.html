@@ -272,7 +272,7 @@
                           <label for="ddlCommentPic0" class="col-sm-3 col-form-label">Комментарий *</label>
                           <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic0" name="ddlCommentPic0">
                             <option value="">Выберите комментарий</option>
-                            <!-- <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option> -->
+                            
                           </select>
                         </div>
 
@@ -305,7 +305,7 @@
                           <label for="ddlCommentPic1" class="col-sm-3 col-form-label">Комментарий *</label>
                           <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic1" name="ddlCommentPic1">
                             <option value="">Выберите комментарий</option>
-                            <!-- <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option> -->
+                            
                           </select>
                         </div>
                       </form>
@@ -337,7 +337,7 @@
                           <label for="ddlCommentPic2" class="col-sm-3 col-form-label">Комментарий *</label>
                           <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic2" name="ddlCommentPic2">
                             <option value="">Выберите комментарий</option>
-                            <!-- <option value="kakoi_ti_bolshoi_stal">Какой ты большой стал!</option> -->
+                            
                           </select>
                         </div>
                       </form>
@@ -355,7 +355,28 @@
                     <p class="mb-0"></p>
                   </div>
 
-                  <div class="dlg-order-wrapper"></div>
+                  <div class="dlg-order-wrapper">
+                    <div class="pic-wrapper pic-wrapper_0 mb-4">
+                      <form class="image-upload-form" data-picno="0">
+                        <div class="form-group row">
+                          <label for="fileLetter0" class="col-sm-3 col-form-label">Письмо</label>
+                          <div class="col-sm-3">
+                            <input type="file" id="fileLetter0" class="form-control filestyle file-letter" name="file"
+                              data-btnClass="btn btn-primary" data-input="false" data-size="sm"
+                              data-text="Выбрать файл" />
+                          </div>
+                          <div class="col-sm-3">
+                            <input type="button" id="btnUploadLetterFile" value="Загрузить" 
+                            class="btn btn-secondary btn-sm btn-upload-file"
+                              disabled />
+                          </div>
+                          <p>
+                            <span id="letter-uploaded" class="photo-uploaded">Письмо загружено</span>
+                          </p>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
 
                   <button class="btn btn-primary prev-btn">Назад</button>
                   <button class="btn btn-primary next-btn">Вперед</button>

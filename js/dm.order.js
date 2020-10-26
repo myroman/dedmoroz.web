@@ -57,8 +57,9 @@ var stepper1;
         });
         $('.order-dlg .goto-payment-btn').click(gotoPayment);
         $('.order-dlg .close-btn').click(closeDlg);
-        $(".btn-upload-file").click(onFileUploadClick);
         $('.file-picture').change(onFileChanged);
+        $('.file-letter').change(onLetterFileChanged);
+        $(".btn-upload-file").click(onFileUploadClick);
         $('.prev-btn').click(goBack);
         $(document).on('click', '.bs-stepper-pane.active .next-btn', goForward);
         $('.submit-order').click(submitOrder);
@@ -140,9 +141,21 @@ var stepper1;
         }
 
         function onFileUploadClick() {
+            let thisId = $(this).attr('id');
             let $form = $(this).parents('.image-upload-form');
             var formdata = new FormData($form[0]);
             let picno = $form.data('picno');
+            let onPhotoUploaded = function(data) {
+                $('#photo-uploaded-' + picno).show();
+                orderState.imageMap['pic' + picno] = {
+                    name: data.filename
+                };
+            }
+            let onLetterUploaded = function(data) {
+                $('#letter-uploaded').show();
+                orderState.letter_filename = data.filename;
+            }
+            let successHandler = thisId == 'btnUploadLetterFile' ? onLetterUploaded : onPhotoUploaded;
             $.ajax({
                 type: 'POST',
                 url: Dm.settings.baseurl + '/images',
@@ -150,12 +163,7 @@ var stepper1;
                 contentType: false,
                 cache: false,
                 processData: false,
-                success: function (data) {
-                    $('#photo-uploaded-' + picno).show();
-                    orderState.imageMap['pic' + picno] = {
-                        name: data.filename
-                    };
-                },
+                success: successHandler,
             });
         }
 
@@ -163,6 +171,11 @@ var stepper1;
             let parentForm = $(this).parents('form');
             let picNo = parentForm.data('picno');
             let btnUploadId = 'btnUploadFile' + picNo;
+            $('#' + btnUploadId).removeAttr('disabled');
+        }
+
+        function onLetterFileChanged() {
+            let btnUploadId = 'btnUploadLetterFile';
             $('#' + btnUploadId).removeAttr('disabled');
         }
 
