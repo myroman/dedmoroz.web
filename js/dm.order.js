@@ -11,24 +11,23 @@ var stepper1;
     };
 
     let steps = {
-        sex: 0,
-        kidname: 1,
-        photos: 2,
-        letter: 3,
-        praise: 4,
-        behavior: 5,
-        review: 6,
+        kidname: 0,
+        photos: 1,
+        letter: 2,
+        additionalOptions: 3,
+        customerDetails: 4,
+        review: 5,
 
         finished: 10
     }
 
     let MaxPictures = 2;
 
-    function initOrderState() {
+    function initOrderState(sex) {
         let result = {
-            step: steps.sex,
+            step: 0,
             kidname: '',
-            sex: '0',
+            sex: sex,
             letter_filename: null,
             praiseid: 19,
             behaviorid: 1,
@@ -37,14 +36,12 @@ var stepper1;
 
             imageMap: {}
         };
-
-        $('#ddlSex').val(result.sex)
         $('#ddlName').val(result.kidname)
 
         return result;
     }
 
-    let orderState = initOrderState();
+    let orderState = null;//initOrderState();
 
     let videoProcStatuses = {
         submitted: "submitted",
@@ -58,6 +55,20 @@ var stepper1;
     $(function () {
         stepper1 = new Stepper($('.bs-stepper')[0])
 
+
+        $('.start-order-btn').click(function () {
+            let sex = $(this).data('sex');
+            startOrder(sex);
+        });
+        $('.order-dlg .goto-payment-btn').click(gotoPayment);
+        $('.order-dlg .close-btn').click(closeDlg);
+        $(".btn-upload-file").click(onFileUploadClick);
+        $('#filePicture1').change(onFileChanged);
+        $('.prev-btn').click(goBack);
+        $(document).on('click', '.bs-stepper-pane.active .next-btn', goForward);
+        $('.submit-order').click(submitOrder);
+        
+
         function showError(message) {
             $('.wizard-warning').show();
             $('.wizard-warning p').text(message)
@@ -69,7 +80,7 @@ var stepper1;
 
         function loadComments(sex) {
             masterData.comments = [];
-            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for='+sex, function (resp) {
+            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + sex, function (resp) {
                 var $comments = $(".ddl-comment");
                 $.each(resp, function () {
                     $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
@@ -80,47 +91,43 @@ var stepper1;
 
         function loadNames(sex) {
             masterData.names = [];
-                $.get(Dm.settings.baseurl + '/md/names?sex=' + sex, function (resp) {
-                    var $ddl = $(".ddl-names");
-                    $ddl.html('');
-                    $ddl.append($("<option />").val('').text('Выберите имя'));
+            $.get(Dm.settings.baseurl + '/md/names?sex=' + sex, function (resp) {
+                var $ddl = $(".ddl-names");
+                $ddl.html('');
+                $ddl.append($("<option />").val('').text('Выберите имя'));
 
-                    $.each(resp, function () {
-                        $ddl.append($("<option />").val(this.id).text(this.displayname));
-                        masterData.names.push(this);
-                    });
+                $.each(resp, function () {
+                    $ddl.append($("<option />").val(this.id).text(this.displayname));
+                    masterData.names.push(this);
                 });
+            });
         }
 
         function loadPraises(sex) {
             masterData.praises = [];
-                $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
-                    var $ddl = $(".ddl-praise");
-                    $ddl.html('');
-                    $ddl.append($("<option />").val('').text('Выберите похвалу'));
+            $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
+                var $ddl = $(".ddl-praise");
+                $ddl.html('');
+                $ddl.append($("<option />").val('').text('Выберите похвалу'));
 
-                    $.each(resp, function () {
-                        $ddl.append($("<option />").val(this.id).text(this.displayname));
-                        masterData.praises.push(this);
-                    });
+                $.each(resp, function () {
+                    $ddl.append($("<option />").val(this.id).text(this.displayname));
+                    masterData.praises.push(this);
                 });
+            });
+        }
+        
+        function closeDlg() {
+            $('.order-dlg').hide();
         }
 
-        $('.start-order-btn').click(startOrder);
+        function startOrder(sex) {
+            orderState = initOrderState(sex);
 
-        function startOrder() {
-            orderState = initOrderState();
+            loadNames(sex);
 
             //load static masterdata
-            function loadMasterdata() {                
-
-                masterData.sexes = [{
-                    id: 0,
-                    text: 'Мальчик'
-                }, {
-                    id: 1,
-                    text: 'Девочка'
-                }];
+            function loadMasterdata() {
 
                 masterData.behaviors = [{
                     id: 1,
@@ -141,15 +148,7 @@ var stepper1;
             // orderState.step = 2;
         }
 
-        //place order
-        $('.order-dlg .goto-payment-btn').click(gotoPayment);
-
-        $('.order-dlg .close-btn').click(function () {
-            $('.order-dlg').hide();
-        });
-
-        $(".btn-upload-file").click(function () {
-
+        function onFileUploadClick() {
             var formdata = new FormData($('.image-upload-form')[0]);
             let picno = $('.image-upload-form').data('picno');
             $.ajax({
@@ -166,18 +165,16 @@ var stepper1;
                     };
                 },
             });
-        });
+        }
 
-        $('#filePicture1').change(function () {
+        function onFileChanged() {
             $('.btn-upload-file').removeAttr('disabled');
-        })
-
-        $('.prev-btn').click(function () {
+        }
+        function goBack() {
             stepper1.previous();
             orderState.step--;
-        });
-
-        $(document).on('click', '.bs-stepper-pane.active .next-btn', function () {
+        }
+        function goForward() {
             let errors = validateInput(orderState.step);
             if (errors.length) {
                 showError(errors.join('. '));
@@ -192,19 +189,12 @@ var stepper1;
             if (orderState.step == steps.review) {
                 initReviewForm();
             }
-        });
+        }
 
 
         function validateInput(step) {
             let errors = [];
             switch (step) {
-                case steps.sex:
-                    let sex = $('#ddlSex').val();
-                    if (!sex) {
-                        errors.push('Введите пол');
-                    }
-                    return errors;
-
                 case steps.kidname:
                     let kidname = $('#ddlName').val();
                     if (!kidname) {
@@ -212,12 +202,12 @@ var stepper1;
                     }
                     return errors;
                 case steps.photos:
-                    // if (!orderState.imageMap['pic0']) {
-                    //     errors.push('Загрузите как минимум 1 фотографию');
-                    // }
-                    // if (!$('#ddlCommentPic0').val()) {
-                    //     errors.push('Выберите комментарий для фотографии')
-                    // }
+                    if (!orderState.imageMap['pic0']) {
+                        errors.push('Загрузите как минимум 1 фотографию');
+                    }
+                    if (!$('#ddlCommentPic0').val()) {
+                        errors.push('Выберите комментарий для фотографии')
+                    }
                     (function () {
                         let i = 0;
                         for (i = 1; i < MaxPictures; i++) {
@@ -239,10 +229,6 @@ var stepper1;
 
         function saveDataToOrder(step) {
             switch (step) {
-                case steps.sex:
-                    orderState.sex = $('#ddlSex').val();
-                    loadNames(orderState.sex);
-                    break;
                 case steps.kidname:
                     orderState.kidname = $('#ddlName').val();
                     loadComments(orderState.sex);
@@ -259,18 +245,32 @@ var stepper1;
                 case steps.letter:
                     loadPraises(orderState.sex);
                     break;
-                case steps.praise:
+                case steps.additionalOptions:
                     orderState.praiseid = $('#ddlPraise').val();
-                    break;
-                case steps.behavior:
                     orderState.behaviorid = $('input[name="behavior"]:checked').val();
+                    break;
+                case steps.customerDetails:
+                    orderState.customername = $('#txtCustomerName').val();
+                    orderState.customeremail = $('#txtCustomerEmail').val();
                     break;
             }
         }
 
         function initReviewForm() {
-            let sex = masterData.sexes.find(x => x.id == orderState.sex).text;
-            $('.review-form .sex-text').text(sex);
+            function getForWhom(sex) {
+                switch (sex) {
+                    case 0:
+                        return "Мальчик";
+                        break;
+                    case 1:
+                        return "Девочка";
+                        break;
+                    case 2:
+                        return "Двое детей";
+                        break;
+                }
+            }
+            $('.review-form .sex-text').text(getForWhom(orderState.sex));
 
             let kidname = masterData.names.find(x => x.id == orderState.kidname).displayname;
             $('.review-form .name-text').text(kidname);
@@ -287,6 +287,9 @@ var stepper1;
                 $('.review-form .behavior-text').text(behavior.text);
             }
 
+            $('.review-form .customer-name-text').text(orderState.customername);
+            $('.review-form .customer-email-text').text(orderState.customeremail);
+
             let i = 0;
             let photosUploaded = 0;
             for (i = 0; i < MaxPictures; i++) {
@@ -299,8 +302,6 @@ var stepper1;
             }
 
             $('.review-form .photos-number-text').text(photosUploaded);
-
-
         }
 
         function gotoPayment() {
@@ -321,9 +322,9 @@ var stepper1;
                 }
 
             });
-        }
+        }        
 
-        $('.submit-order').click(function () {
+        function submitOrder() {
             let orderInfo = {
                 kidname: orderState.kidname,
                 sex: !!orderState.sex,
@@ -369,7 +370,7 @@ var stepper1;
                     }
                 }
             });
-        });
+        }
 
 
         $('.add-photo2-btn').click(function () {
@@ -380,7 +381,9 @@ var stepper1;
         });
 
         //allows to see response data before redirect
-        window.onunload = function() { debugger; }
+        window.onunload = function () {
+            debugger;
+        }
 
         // $('#startOrderBtn').click();        
     });

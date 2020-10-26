@@ -22,7 +22,6 @@
   <link rel="stylesheet" href="css/ionicons.min.css">
 
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/custom.css">
 
   <link rel="stylesheet" href="css/flaticon.css">
@@ -63,13 +62,13 @@
       </div> -->
       <p>Для кого создаем видео поздравление?</p>
   
-      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn">
+      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-sex="0">
         Для мальчика
       </a>
-      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn">
+      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-sex="1">
         Для девочки
       </a>
-      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn">
+      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-sex="2">
         Для двух детей
       </a>      
       
@@ -161,20 +160,23 @@
         <div class="modal-body">
           <div class="bs-stepper">
             <div class="bs-stepper-header" role="tablist">
-              <div class="step active" data-target="#test-l-1">
+              
+
+              <div class="step" data-target="#test-l-1">
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1"
                   aria-selected="true">
                   <span class="bs-stepper-circle">1</span>
-                  <span class="bs-stepper-label">Для кого</span>
+                  <span class="bs-stepper-label">Имя</span>
                 </button>
               </div>
+
               <div class="bs-stepper-line"></div>
 
               <div class="step" data-target="#test-l-2">
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2"
                   aria-selected="true">
                   <span class="bs-stepper-circle">2</span>
-                  <span class="bs-stepper-label">Имя</span>
+                  <span class="bs-stepper-label">Фотографии</span>
                 </button>
               </div>
 
@@ -184,7 +186,7 @@
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3"
                   aria-selected="true">
                   <span class="bs-stepper-circle">3</span>
-                  <span class="bs-stepper-label">Фотографии</span>
+                  <span class="bs-stepper-label">Письмо</span>
                 </button>
               </div>
 
@@ -194,7 +196,7 @@
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger4" aria-controls="test-l-4"
                   aria-selected="true">
                   <span class="bs-stepper-circle">4</span>
-                  <span class="bs-stepper-label">Письмо</span>
+                  <span class="bs-stepper-label">Опции</span>
                 </button>
               </div>
 
@@ -204,7 +206,7 @@
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger5" aria-controls="test-l-5"
                   aria-selected="true">
                   <span class="bs-stepper-circle">5</span>
-                  <span class="bs-stepper-label">Похвала</span>
+                  <span class="bs-stepper-label">Ваши данные</span>
                 </button>
               </div>
 
@@ -212,46 +214,16 @@
 
               <div class="step" data-target="#test-l-6">
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger6" aria-controls="test-l-6"
-                  aria-selected="true">
-                  <span class="bs-stepper-circle">6</span>
-                  <span class="bs-stepper-label">Поведение</span>
-                </button>
-              </div>
-
-              <div class="bs-stepper-line"></div>
-
-              <div class="step" data-target="#test-l-7">
-                <button type="button" class="step-trigger" role="tab" id="stepper1trigger7" aria-controls="test-l-7"
                   aria-selected="false" disabled="disabled">
-                  <span class="bs-stepper-circle">7</span>
+                  <span class="bs-stepper-circle">6</span>
                   <span class="bs-stepper-label">Проверить</span>
                 </button>
               </div>
             </div>
             <div class="bs-stepper-content">
               <div class="bs-stepper-content">
-                <div id="test-l-1" role="tabpanel" class="bs-stepper-pane active dstepper-block"
-                  aria-labelledby="stepper1trigger1">
 
-                  <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p class="mb-0"></p>
-                  </div>
-
-                  <div class="dlg-order-wrapper">
-                    <div class="form-group">
-                      <label for="ddlSex" class="col-sm-2 col-form-label ddl-sex">Пол *</label>
-                      <select class="form-control" id="ddlSex" name="ddlSex">
-                        <option value="">Выберите пол</option>
-                        <option value="0">Мальчик</option>
-                        <option value="1">Девочка</option>
-                      </select>
-                    </div>
-                  </div>
-                  <button class="btn btn-primary next-btn">Вперед</button>
-                </div>
-
-                <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
+                <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
@@ -266,11 +238,11 @@
                     </div>
 
                   </div>
-                  <button class="btn btn-primary prev-btn">Назад</button>
+                  
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger3">
+                <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
@@ -344,7 +316,7 @@
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-4" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger4">
+                <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger3">
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
@@ -356,8 +328,8 @@
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-5" role="tabpanel" class="bs-stepper-pane stepper-pane-praise"
-                  aria-labelledby="stepper1trigger5">
+                <div id="test-l-4" role="tabpanel" class="bs-stepper-pane stepper-pane-praise"
+                  aria-labelledby="stepper1trigger4">
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class="mb-0"></p>
@@ -370,24 +342,12 @@
                       <select class="form-control ddl-praise" id="ddlPraise" name="ddlPraise">
                       </select>
                     </div>
-                  </div>
-                  <button class="btn btn-primary prev-btn">Назад</button>
-                  <button class="btn btn-primary next-btn">Вперед</button>
-                </div>
 
-                <div id="test-l-6" role="tabpanel" class="bs-stepper-pane stepper-pane-behavior"
-                  aria-labelledby="stepper1trigger6">
-                  <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p class="mb-0"></p>
-                  </div>
-
-                  <div class="dlg-order-wrapper">
-
+                    <label>Поведение</label>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="behavior" id="good_behavior" value="1" checked>
                       <label class="form-check-label" for="good_behavior">
-                        Хорошее
+                        Хорошее 
                       </label>
                     </div>
                     <div class="form-check behavior-group">
@@ -396,13 +356,40 @@
                         Плохое или неоднозначное
                       </label>
                     </div>
+
                   </div>
                   <button class="btn btn-primary prev-btn">Назад</button>
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
-                <div id="test-l-7" role="tabpanel" class="bs-stepper-pane text-center"
-                  aria-labelledby="stepper1trigger7">
+                <div id="test-l-5" role="tabpanel" class="bs-stepper-pane stepper-pane-behavior"
+                  aria-labelledby="stepper1trigger5">
+                  <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p class="mb-0"></p>
+                  </div>
+
+                  <div class="dlg-order-wrapper">
+
+
+                    <div class="form-group">
+                      <label for="txtCustomerName">Customer name</label>
+                      <input type="text" class="form-control" id="txtCustomerName">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="txtCustomerEmail">Email address</label>
+                      <input type="email" class="form-control" id="txtCustomerEmail" aria-describedby="emailHelp">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+
+                  </div>
+                  <button class="btn btn-primary prev-btn">Назад</button>
+                  <button class="btn btn-primary next-btn">Вперед</button>
+                </div>
+
+                <div id="test-l-6" role="tabpanel" class="bs-stepper-pane text-center"
+                  aria-labelledby="stepper1trigger6">
 
                   <div class="alert alert-dismissible alert-danger wizard-warning" style="display: none">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -441,6 +428,12 @@
                         <span class="comment1-text"></span>
                       </div>
                     </div>
+                    <div class="form-group row" style="display: none;">
+                      <label for="" class="col-sm-3 col-form-label">Комментарий 3</label>
+                      <div class="col-sm-9">
+                        <span class="comment1-text"></span>
+                      </div>
+                    </div>
                     <div class="form-group row letter-wrapper">
                       <label for="" class="col-sm-3 col-form-label">Письмо загружено?</label>
                       <div class="col-sm-9">
@@ -456,7 +449,19 @@
                     <div class="form-group row">
                       <label for="" class="col-sm-3 col-form-label">Поведение</label>
                       <div class="col-sm-9">
-                        <span class="behavior-text">Поведение</span>
+                        <span class="behavior-text"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Ваше имя</label>
+                      <div class="col-sm-9">
+                        <span class="customer-name-text"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Ваш электронный адрес</label>
+                      <div class="col-sm-9">
+                        <span class="customer-email-text"></span>
                       </div>
                     </div>
                   </div>
@@ -493,7 +498,6 @@
   <script src="js/jquery.animateNumber.min.js"></script>
   <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
   <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
   </script>
