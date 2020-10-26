@@ -23,11 +23,11 @@ var stepper1;
 
     let MaxPictures = 3;
 
-    function initOrderState(sex) {
+    function initOrderState(gender) {
         let result = {
             step: 0,
             kidname: '',
-            sex: sex,
+            gender: gender,
             letter_filename: null,
             praiseid: 19,
             behaviorid: 1,
@@ -52,8 +52,8 @@ var stepper1;
 
     $(function () {
         $('.start-order-btn').click(function () {
-            let sex = $(this).data('sex');
-            startOrder(sex);
+            let gender = $(this).data('gender');
+            startOrder(gender);
         });
         $('.order-dlg .goto-payment-btn').click(gotoPayment);
         $('.order-dlg .close-btn').click(closeDlg);
@@ -74,10 +74,10 @@ var stepper1;
             $('.wizard-warning').hide();
         }
 
-        function loadComments(sex) {
+        function loadComments(gender) {
             masterData.comments = [];
             Dm.showLoader();
-            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + sex,
+            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + gender,
                     function (resp) {
                         var $comments = $(".ddl-comment");
                         $.each(resp, function () {
@@ -91,10 +91,10 @@ var stepper1;
                 });
         }
 
-        function loadNames(sex) {
+        function loadNames(gender) {
             masterData.names = [];
             Dm.showLoader();
-            $.get(Dm.settings.baseurl + '/md/names?sex=' + sex,
+            $.get(Dm.settings.baseurl + '/md/names?gender=' + gender,
                     function (resp) {
                         var $ddl = $(".ddl-names");
                         $ddl.html('');
@@ -110,10 +110,10 @@ var stepper1;
                 });;
         }
 
-        function loadPraises(sex) {
+        function loadPraises(gender) {
             masterData.praises = [];
             Dm.showLoader();
-            $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
+            $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
                 var $ddl = $(".ddl-praise");
                 $ddl.html('');
                 $ddl.append($("<option />").val('').text('Выберите похвалу'));
@@ -132,11 +132,11 @@ var stepper1;
             $('.order-dlg').hide();
         }
 
-        function startOrder(sex) {
+        function startOrder(gender) {
             stepper1 = new Stepper($('.bs-stepper')[0]);
-            orderState = initOrderState(sex);
+            orderState = initOrderState(gender);
 
-            loadNames(sex);
+            loadNames(gender);
 
             //load static masterdata
             function loadMasterdata() {
@@ -269,7 +269,7 @@ var stepper1;
             switch (step) {
                 case steps.kidname:
                     orderState.kidname = $('#ddlName').val();
-                    loadComments(orderState.sex);
+                    loadComments(orderState.gender);
                     break;
                 case steps.photos:
                     let i = 0;
@@ -281,7 +281,7 @@ var stepper1;
                     }
                     break;
                 case steps.letter:
-                    loadPraises(orderState.sex);
+                    loadPraises(orderState.gender);
                     break;
                 case steps.additionalOptions:
                     orderState.praiseid = $('#ddlPraise').val();
@@ -295,8 +295,8 @@ var stepper1;
         }
 
         function initReviewForm() {
-            function getForWhom(sex) {
-                switch (sex) {
+            function getForWhom(gender) {
+                switch (gender) {
                     case 0:
                         return "Мальчик";
                     case 1:
@@ -305,7 +305,7 @@ var stepper1;
                         return "Двое детей";
                 }
             }
-            $('.review-form .sex-text').text(getForWhom(orderState.sex));
+            $('.review-form .gender-text').text(getForWhom(orderState.gender));
 
             let kidname = masterData.names.find(x => x.id == orderState.kidname).displayname;
             $('.review-form .name-text').text(kidname);
@@ -375,7 +375,7 @@ var stepper1;
         function submitOrder() {
             let orderInfo = {
                 kidname: orderState.kidname,
-                sex: !!orderState.sex,
+                gender: orderState.gender,
                 images: {
                     content: []
                 },
