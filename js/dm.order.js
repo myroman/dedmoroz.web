@@ -76,31 +76,43 @@ var stepper1;
 
         function loadComments(sex) {
             masterData.comments = [];
-            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + sex, function (resp) {
-                var $comments = $(".ddl-comment");
-                $.each(resp, function () {
-                    $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
-                    masterData.comments.push(this);
+            Dm.showLoader();
+            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + sex,
+                    function (resp) {
+                        var $comments = $(".ddl-comment");
+                        $.each(resp, function () {
+                            $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
+                            masterData.comments.push(this);
+                        });
+
+                    })
+                .always(function () {
+                    Dm.hideLoader();
                 });
-            });
         }
 
         function loadNames(sex) {
             masterData.names = [];
-            $.get(Dm.settings.baseurl + '/md/names?sex=' + sex, function (resp) {
-                var $ddl = $(".ddl-names");
-                $ddl.html('');
-                $ddl.append($("<option />").val('').text('Выберите имя'));
+            Dm.showLoader();
+            $.get(Dm.settings.baseurl + '/md/names?sex=' + sex,
+                    function (resp) {
+                        var $ddl = $(".ddl-names");
+                        $ddl.html('');
+                        $ddl.append($("<option />").val('').text('Выберите имя'));
 
-                $.each(resp, function () {
-                    $ddl.append($("<option />").val(this.id).text(this.displayname));
-                    masterData.names.push(this);
-                });
-            });
+                        $.each(resp, function () {
+                            $ddl.append($("<option />").val(this.id).text(this.displayname));
+                            masterData.names.push(this);
+                        });
+                    })
+                .always(function () {
+                    Dm.hideLoader();
+                });;
         }
 
         function loadPraises(sex) {
             masterData.praises = [];
+            Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + sex, function (resp) {
                 var $ddl = $(".ddl-praise");
                 $ddl.html('');
@@ -110,7 +122,10 @@ var stepper1;
                     $ddl.append($("<option />").val(this.id).text(this.displayname));
                     masterData.praises.push(this);
                 });
-            });
+            })
+            .always(function () {
+                Dm.hideLoader();
+            });;
         }
 
         function closeDlg() {
@@ -145,17 +160,18 @@ var stepper1;
             let $form = $(this).parents('.image-upload-form');
             var formdata = new FormData($form[0]);
             let picno = $form.data('picno');
-            let onPhotoUploaded = function(data) {
+            let onPhotoUploaded = function (data) {
                 $('#photo-uploaded-' + picno).show();
                 orderState.imageMap['pic' + picno] = {
                     name: data.filename
                 };
             }
-            let onLetterUploaded = function(data) {
+            let onLetterUploaded = function (data) {
                 $('#letter-uploaded').show();
                 orderState.letter_filename = data.filename;
             }
             let successHandler = thisId == 'btnUploadLetterFile' ? onLetterUploaded : onPhotoUploaded;
+            Dm.showLoader();
             $.ajax({
                 type: 'POST',
                 url: Dm.settings.baseurl + '/images',
@@ -164,6 +180,9 @@ var stepper1;
                 cache: false,
                 processData: false,
                 success: successHandler,
+                complete: function() {
+                    Dm.hideLoader();
+                }
             });
         }
 
@@ -374,6 +393,7 @@ var stepper1;
                 }
             }
 
+            Dm.showLoader();
             $.ajax({
                 type: 'POST',
                 url: Dm.settings.baseurl + '/orders',
@@ -397,6 +417,8 @@ var stepper1;
                     } else {
                         showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
                     }
+
+                    Dm.hideLoader();
                 }
             });
         }

@@ -24,3 +24,10 @@ Dm = {};
 //env can be local, test, prod
 Dm.settings = createDmSettings('local');
 // Dm.settings = createDmSettings('test');
+
+Dm.showLoader = function() {
+    $('#ftco-loader').addClass('show');
+};
+Dm.hideLoader = function() {
+    $('#ftco-loader').removeClass('show');
+};

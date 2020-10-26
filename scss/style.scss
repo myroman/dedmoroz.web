@@ -2461,6 +2461,7 @@ textarea.form-control {
 	transition: opacity .4s ease-out, visibility 0s linear 0s;
 	visibility: visible;
 	opacity: 1;
+	z-index: 5000;
 }
 
 #ftco-loader .circular {
