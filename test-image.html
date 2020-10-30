@@ -21,17 +21,19 @@
     <div id="demo-basic">
     </div>
 
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="imageAspect" id="rbPortraitImage" value="portrait" checked>
-        <label class="form-check-label" for="rbPortraitImage">
-            Портретный формат
-        </label>
-    </div>
-    <div class="form-check behavior-group">
-        <input class="form-check-input" type="radio" name="imageAspect" id="rbLandscapeImage" value="landscape">
-        <label class="form-check-label" for="rbLandscapeImage">
-            Ландшафтный формат
-        </label>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input image-aspect" type="radio" name="imageAspect" id="rbPortraitImage" value="portrait" checked>
+            <label class="form-check-label" for="rbPortraitImage">
+                Вертикально
+            </label>
+        </div>
+        <div class="form-check behavior-group">
+            <input class="form-check-input image-aspect" type="radio" name="imageAspect" id="rbLandscapeImage" value="landscape">
+            <label class="form-check-label" for="rbLandscapeImage">
+                Горизонтально
+            </label>
+        </div>
     </div>
 
 
@@ -74,11 +76,11 @@
                 function createCroppie(elem, ratio) {
                     let viewport = null;
                     let boundary = {
-                        width: 400,
-                        height: 400
+                        width: 200,
+                        height: 200
                     };
                     let long_side = 300, short_side = 200
-                    let reducCoef = 0.7
+                    let reducCoef = 0.5
                     long_side *= reducCoef
                     short_side *= reducCoef
                     if (ratio == 'landscape') {
@@ -102,9 +104,7 @@
 
             //but we don't want blob, need base64, so that API gateway can handle it
             $('#upload-btn').click(function () {
-                let resultOpts = {
-                    type: 'base64'
-                };
+                let resultOpts = { type: 'base64' };
 
                 croppie.result(resultOpts).then(function (imgEncoded) {
                     let data = {

@@ -137,3 +137,11 @@
     overflow-y: auto;
     padding: 10px 14px;
 }
+
+.croppie-container {
+    height: auto;
+    min-height: 200px;
+
+
+    
+}

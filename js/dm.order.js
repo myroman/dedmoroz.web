@@ -104,6 +104,9 @@ var stepper1;
                             $ddl.append($("<option />").val(this.id).text(this.displayname));
                             masterData.names.push(this);
                         });
+
+                        $ddl.val('bogdan')
+
                     })
                 .always(function () {
                     Dm.hideLoader();
@@ -114,18 +117,18 @@ var stepper1;
             masterData.praises = [];
             Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
-                var $ddl = $(".ddl-praise");
-                $ddl.html('');
-                $ddl.append($("<option />").val('').text('Выберите похвалу'));
+                    var $ddl = $(".ddl-praise");
+                    $ddl.html('');
+                    $ddl.append($("<option />").val('').text('Выберите похвалу'));
 
-                $.each(resp, function () {
-                    $ddl.append($("<option />").val(this.id).text(this.displayname));
-                    masterData.praises.push(this);
-                });
-            })
-            .always(function () {
-                Dm.hideLoader();
-            });;
+                    $.each(resp, function () {
+                        $ddl.append($("<option />").val(this.id).text(this.displayname));
+                        masterData.praises.push(this);
+                    });
+                })
+                .always(function () {
+                    Dm.hideLoader();
+                });;
         }
 
         function closeDlg() {
@@ -155,7 +158,7 @@ var stepper1;
             $('.order-dlg').show();
         }
 
-        function onFileUploadClick() {
+        function onFileUploadClick_old() {
             let thisId = $(this).attr('id');
             let $form = $(this).parents('.image-upload-form');
             var formdata = new FormData($form[0]);
@@ -180,18 +183,144 @@ var stepper1;
                 cache: false,
                 processData: false,
                 success: successHandler,
-                complete: function() {
+                complete: function () {
                     Dm.hideLoader();
                 }
             });
         }
 
-        function onFileChanged() {
-            let parentForm = $(this).parents('form');
-            let picNo = parentForm.data('picno');
-            let btnUploadId = 'btnUploadFile' + picNo;
-            $('#' + btnUploadId).removeAttr('disabled');
+        function onFileUploadClick() {
+            let thisId = $(this).attr('id');
+            let picno = getPicNo(this);
+            let successHandler;
+            if (thisId == 'btnUploadLetterFile') {
+                successHandler = function (data) {
+                    $('#letter-uploaded').show();
+                    orderState.letter_filename = data.filename;
+                };
+            } else {
+                successHandler = function (data) {
+                    $('#photo-uploaded-' + picno).show();
+                    orderState.imageMap['pic' + picno] = {
+                        name: data.filename
+                    };
+                }
+            }
+            Dm.showLoader();
+
+            let resultOpts = {
+                type: 'base64'
+            };
+            let croppie = imageCache[picno].croppie;
+            croppie.result(resultOpts).then(function (imgEncoded) {
+                let data = {
+                    'content': imgEncoded
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: Dm.settings.baseurl + '/images/base64',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: successHandler,
+                    complete: function () {
+                        Dm.hideLoader();
+                    }
+                });
+            });
         }
+
+        function getPicNo(elem) {
+            let $parent = $(elem).parents('.pic-wrapper');
+            return +$parent.data('picno');
+        }
+
+        function onFileChanged() {
+            let $parent = $(this).parents('.pic-wrapper');
+            let picNo = getPicNo(this);
+            let that = this;
+
+            $('#btnUploadFile' + picNo).removeAttr('disabled');
+
+            $parent.find('.croppie-container').show();
+            let holder = $parent.find('.croppie-holder')[0];
+            readFile(this, holder, function (imageUrl) {
+                let picNo = getPicNo(that);
+                console.log('refreshing image for', picNo)
+                imageCache[picNo].imageUrl = imageUrl;
+                refreshCroppieImage(holder, imageUrl, null);
+            });
+        }
+
+        function readFile(input, holder, success) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    success(e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                swal("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+        let imageCache = [{}, {}, {}];
+
+        function refreshCroppieImage(elem, image_url, aspect) {
+            let imageInfo = imageCache[getPicNo(elem)];
+            if (imageInfo.croppie) {
+                imageInfo.croppie.destroy();
+            }
+
+            let croppie;
+            croppie = imageInfo.croppie = createCroppie(elem, aspect);
+            
+            croppie.bind({
+                url: image_url
+            });
+
+            let $parent = $(elem).parents('.pic-wrapper');
+            $parent.find('input[type=radio]').removeAttr('disabled')
+
+            function createCroppie(elem, ratio) {
+                let viewport = null;
+                let boundary = {
+                    width: 200,
+                    height: 200
+                };
+                let long_side = 300,
+                    short_side = 200
+                let reducCoef = 0.5
+                long_side *= reducCoef
+                short_side *= reducCoef
+                if (ratio == 'landscape') {
+                    viewport = {
+                        width: long_side,
+                        height: short_side
+                    }
+                } else {
+                    viewport = {
+                        width: short_side,
+                        height: long_side
+                    }
+                }
+                return new Croppie(elem, {
+                    viewport: viewport,
+                    boundary: boundary,
+                    enableOrientation: true
+                });
+            }
+        }
+
+        $('.image-aspect').change(function () {
+            let picNo = getPicNo(this);
+            let loadedImageUrl = imageCache[picNo].imageUrl;
+            let $parent = $(this).parents('.pic-wrapper');
+            let elem = $parent.find('.croppie-holder')[0]
+            refreshCroppieImage(elem, loadedImageUrl, this.value);
+        });
+
 
         function onLetterFileChanged() {
             let btnUploadId = 'btnUploadLetterFile';
@@ -436,7 +565,8 @@ var stepper1;
             debugger;
         }
 
-        // $('#startOrderBtn').click();    
-       
+        $('.start-order-btn_boy').click();
+
+        $('.image-aspect').attr('disabled', 'disabled');
     });
 })(jQuery);

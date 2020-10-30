@@ -22,7 +22,9 @@
   <link rel="stylesheet" href="css/ionicons.min.css">
 
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" integrity="sha512-2eMmukTZtvwlfQoG8ztapwAH5fXaQBzaMqdljLopRSA0i6YKM8kBAOrSSykxu9NN9HrtD45lIqfONLII2AFL/Q==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css"
+    integrity="sha512-2eMmukTZtvwlfQoG8ztapwAH5fXaQBzaMqdljLopRSA0i6YKM8kBAOrSSykxu9NN9HrtD45lIqfONLII2AFL/Q=="
+    crossorigin="anonymous" />
   <link rel="stylesheet" href="css/custom.css">
 
   <link rel="stylesheet" href="css/flaticon.css">
@@ -61,19 +63,21 @@
       <!-- <div class="waiting-info">
         Мы сейчас создаем демо видео, пожалуйста подождите. 
       </div> -->
-      
+
       <p>Для кого создаем видео поздравление?</p>
-  
-      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-gender="0">
+
+      <a href="#" id="startOrderBtn"
+        class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn start-order-btn_boy" data-gender="0">
         Для мальчика
       </a>
-      <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-gender="1">
+      <a href="#" id="startOrderBtn"
+        class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn start-order-btn_girl" data-gender="1">
         Для девочки
       </a>
       <!-- <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-gender="2">
         Для двух детей
       </a>       -->
-      
+
     </div>
   </div>
 
@@ -162,7 +166,7 @@
         <div class="modal-body">
           <div class="bs-stepper">
             <div class="bs-stepper-header" role="tablist">
-              
+
 
               <div class="step" data-target="#test-l-1">
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1"
@@ -240,7 +244,7 @@
                     </div>
 
                   </div>
-                  
+
                   <button class="btn btn-primary next-btn">Вперед</button>
                 </div>
 
@@ -252,97 +256,167 @@
 
                   <div class="dlg-order-wrapper">
 
-                    <div class="pic-wrapper pic-wrapper_0 mb-4">
-                      <form class="image-upload-form" data-picno="0" enctype="multipart/form-data">
-                        <div class="form-group row">
-                          <label for="filePicture0" class="col-sm-3 col-form-label">Фотография #1</label>
-                          <div class="col-sm-3">
+                    <div class="upload-panel">
+                      <div class="pic-wrapper pic-wrapper_0 mb-4" data-picno="0">
+
+                        <div>
+                          <div class="croppie-container">
+                            <div class="croppie-holder"></div>
+
+                            <div class="form-group">
+                              <div class="form-check">
+                                <input class="form-check-input image-aspect" type="radio" name="imageAspect0" id="rbPortraitImage"
+                                  value="portrait" checked>
+                                <label class="form-check-label" for="rbPortraitImage">
+                                  Вертикально
+                                </label>
+                              </div>
+                              <div class="form-check behavior-group">
+                                <input class="form-check-input image-aspect" type="radio" name="imageAspect0" id="rbLandscapeImage"
+                                  value="landscape">
+                                <label class="form-check-label" for="rbLandscapeImage">
+                                  Горизонтально
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div >
                             <input type="file" id="filePicture0" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
-                            <!-- <input type="hidden" value="0" name="index" /> -->
-                          </div>
-                          <div class="col-sm-3">
-                            <input type="button" id="btnUploadFile0" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
-                              disabled />
-                          </div>
-                          <p>
+
+
+                            <input type="button" id="btnUploadFile0" value="Загрузить"
+                              class="btn btn-secondary btn-sm btn-upload-file" disabled />
+
                             <span id="photo-uploaded-0" class="photo-uploaded">Фотография загружена</span>
-                          </p>
-                        </div>
-                        <div class="form-group row">
-                          <label for="ddlCommentPic0" class="col-sm-3 col-form-label">Комментарий *</label>
-                          <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic0" name="ddlCommentPic0">
-                            <option value="">Выберите комментарий</option>
-                            
-                          </select>
+                          </div>
+
                         </div>
 
-                      </form>
-                      <div class="form-group row">
-                        <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo1-btn" />
+                        <div>
+                          <div class="form-group">
+                            <select class="form-control ddl-comment" id="ddlCommentPic0" >
+                              <option value="">Выберите комментарий</option>
+
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo1-btn" />
+                        </div>
+
                       </div>
 
-                    </div>
+                      <div class="pic-wrapper pic-wrapper_1 mb-4" data-picno="1">
 
-                    <div class="pic-wrapper pic-wrapper_1 mb-4" style="display: none">
-                      <form class="image-upload-form" data-picno="1">
-                        <div class="form-group row">
-                          <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #2</label>
-                          <div class="col-sm-3">
+                        <div>
+                          <div class="croppie-container">
+                            <div class="croppie-holder"></div>
+
+                            <div class="form-group">
+                              <div class="form-check">
+                                <input class="form-check-input image-aspect" type="radio" name="imageAspect1" id="rbPortraitImage"
+                                  value="portrait" checked>
+                                <label class="form-check-label" for="rbPortraitImage">
+                                  Вертикально
+                                </label>
+                              </div>
+                              <div class="form-check behavior-group">
+                                <input class="form-check-input image-aspect" type="radio" name="imageAspect1" id="rbLandscapeImage"
+                                  value="landscape">
+                                <label class="form-check-label" for="rbLandscapeImage">
+                                  Горизонтально
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div >
                             <input type="file" id="filePicture1" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
-                            <!-- <input type="hidden" value="1" name="index" /> -->
-                          </div>
-                          <div class="col-sm-3">
-                            <input type="button" id="btnUploadFile1" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
-                              disabled />
-                          </div>
-                          <p>
+
+
+                            <input type="button" id="btnUploadFile1" value="Загрузить"
+                              class="btn btn-secondary btn-sm btn-upload-file" disabled />
+
                             <span id="photo-uploaded-1" class="photo-uploaded">Фотография загружена</span>
-                          </p>
-                        </div>
-                        <div class="form-group row">
-                          <label for="ddlCommentPic1" class="col-sm-3 col-form-label">Комментарий *</label>
-                          <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic1" name="ddlCommentPic1">
-                            <option value="">Выберите комментарий</option>
-                            
-                          </select>
-                        </div>
-                      </form>
+                          </div>
 
-                      <div class="form-group row">
-                        <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
+                        </div>
+
+                        <div>
+                          <div class="form-group">
+                            <select class="form-control ddl-comment" id="ddlCommentPic1" >
+                              <option value="">Выберите комментарий</option>
+
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <input type="button" value="Добавить фотографию" class="btn btn-secondary add-photo2-btn" />
+                        </div>
+
                       </div>
-                    </div>
 
-                    <div class="pic-wrapper pic-wrapper_2 mb-4" style="display: none">
-                      <form class="image-upload-form" data-picno="2">
-                        <div class="form-group row">
-                          <label for="filePicture1" class="col-sm-3 col-form-label">Фотография #3</label>
-                          <div class="col-sm-3">
+                      <div class="pic-wrapper pic-wrapper_2 mb-4" data-picno="2">
+
+                        <div>
+                          <div class="croppie-container">
+                            <div class="croppie-holder"></div>
+
+                            <div class="form-group">
+                              <div class="form-check">
+                                <input class="form-check-input image-aspect" type="radio" name="imageAspect2" id="rbPortraitImage"
+                                  value="portrait" checked>
+                                <label class="form-check-label" for="rbPortraitImage">
+                                  Вертикально
+                                </label>
+                              </div>
+                              <div class="form-check behavior-group">
+                                <input class="form-check-input image-aspect" type="radio" name="imageAspect2" id="rbLandscapeImage"
+                                  value="landscape">
+                                <label class="form-check-label" for="rbLandscapeImage">
+                                  Горизонтально
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div >
                             <input type="file" id="filePicture2" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
-                            <!-- <input type="hidden" value="2" name="index" /> -->
-                          </div>
-                          <div class="col-sm-3">
-                            <input type="button" id="btnUploadFile2" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
-                              disabled />
-                          </div>
-                          <p>
+
+
+                            <input type="button" id="btnUploadFile2" value="Загрузить"
+                              class="btn btn-secondary btn-sm btn-upload-file" disabled />
+
                             <span id="photo-uploaded-2" class="photo-uploaded">Фотография загружена</span>
-                          </p>
+                          </div>
+
                         </div>
-                        <div class="form-group row">
-                          <label for="ddlCommentPic2" class="col-sm-3 col-form-label">Комментарий *</label>
-                          <select class="col-sm-6 form-control ddl-comment" id="ddlCommentPic2" name="ddlCommentPic2">
-                            <option value="">Выберите комментарий</option>
-                            
-                          </select>
+
+                        <div>
+                          <div class="form-group">
+                            <select class="form-control ddl-comment" id="ddlCommentPic2" >
+                              <option value="">Выберите комментарий</option>
+
+                            </select>
+                          </div>
                         </div>
-                      </form>
+
+                      </div>
                     </div>
 
                   </div>
@@ -368,9 +442,8 @@
                               data-text="Выбрать файл" />
                           </div>
                           <div class="col-sm-3">
-                            <input type="button" id="btnUploadLetterFile" value="Загрузить" 
-                            class="btn btn-secondary btn-sm btn-upload-file"
-                              disabled />
+                            <input type="button" id="btnUploadLetterFile" value="Загрузить"
+                              class="btn btn-secondary btn-sm btn-upload-file" disabled />
                           </div>
                           <p>
                             <span id="letter-uploaded" class="photo-uploaded">Письмо загружено</span>
@@ -403,7 +476,7 @@
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="behavior" id="good_behavior" value="1" checked>
                       <label class="form-check-label" for="good_behavior">
-                        Хорошее 
+                        Хорошее
                       </label>
                     </div>
                     <div class="form-check behavior-group">
@@ -433,8 +506,10 @@
 
                     <div class="form-group">
                       <label for="txtCustomerEmail">Ваш электронный адрес *</label>
-                      <input type="email" class="form-control" name="customerEmail" id="txtCustomerEmail" aria-describedby="emailHelp">
-                      <small id="emailHelp" class="form-text text-muted">Мы никогда никому не передадим вашу электронную почту.</small>
+                      <input type="email" class="form-control" name="customerEmail" id="txtCustomerEmail"
+                        aria-describedby="emailHelp">
+                      <small id="emailHelp" class="form-text text-muted">Мы никогда никому не передадим вашу электронную
+                        почту.</small>
                     </div>
 
                   </div>
@@ -555,7 +630,9 @@
   <script src="js/scrollax.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"
+    integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
+    crossorigin="anonymous"></script>
   <script src="js/google-map.js"></script>
   <script src="js/bs-stepper.min.js"></script>
   <script src="js/dm.settings.js"></script>
