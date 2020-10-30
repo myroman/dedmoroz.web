@@ -41,3 +41,10 @@ flex: 0 50%;
 .btn-upload-file {
     display: inline;
 }
+
+.bs-stepper-header {
+    height: 70px;
+}
+.image-aspect-wrapper {
+    display: none;
+}

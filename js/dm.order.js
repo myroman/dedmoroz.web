@@ -58,7 +58,6 @@ var stepper1;
         $('.order-dlg .goto-payment-btn').click(gotoPayment);
         $('.order-dlg .close-btn').click(closeDlg);
         $('.file-picture').change(onFileChanged);
-        $('.file-letter').change(onLetterFileChanged);
         $(".btn-upload-file").click(onFileUploadClick);
         $('.prev-btn').click(goBack);
         $(document).on('click', '.bs-stepper-pane.active .next-btn', goForward);
@@ -231,15 +230,18 @@ var stepper1;
 
         function getPicNo(elem) {
             let $parent = $(elem).parents('.pic-wrapper');
-            return +$parent.data('picno');
+            return $parent.data('picno');
         }
 
         function onFileChanged() {
+            debugger;
             let $parent = $(this).parents('.pic-wrapper');
             let picNo = getPicNo(this);
             let that = this;
 
-            $('#btnUploadFile' + picNo).removeAttr('disabled');
+            // $('#btnUploadFile' + picNo).removeAttr('disabled');
+            let $btnUpload = $parent.find('.btn-upload-file');
+            $btnUpload.removeAttr('disabled');
 
             $parent.find('.croppie-container').show();
             let holder = $parent.find('.croppie-holder')[0];
@@ -265,7 +267,12 @@ var stepper1;
             }
         }
 
-        let imageCache = [{}, {}, {}];
+        let imageCache = {
+            "0": {},
+            "1": {},
+            "2": {},
+            "letter": {}
+        }
 
         function refreshCroppieImage(elem, image_url, aspect) {
             let imageInfo = imageCache[getPicNo(elem)];
@@ -281,7 +288,7 @@ var stepper1;
             });
 
             let $parent = $(elem).parents('.pic-wrapper');
-            $parent.find('input[type=radio]').removeAttr('disabled')
+            $parent.find('.image-aspect-wrapper').show();
 
             function createCroppie(elem, ratio) {
                 let viewport = null;
@@ -322,10 +329,6 @@ var stepper1;
         });
 
 
-        function onLetterFileChanged() {
-            let btnUploadId = 'btnUploadLetterFile';
-            $('#' + btnUploadId).removeAttr('disabled');
-        }
 
         function goBack() {
             stepper1.previous();
@@ -565,8 +568,6 @@ var stepper1;
             debugger;
         }
 
-        $('.start-order-btn_boy').click();
-
-        $('.image-aspect').attr('disabled', 'disabled');
+        // $('.start-order-btn_boy').click();
     });
 })(jQuery);
