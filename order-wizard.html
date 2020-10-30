@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/ionicons.min.css">
 
   <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" integrity="sha512-2eMmukTZtvwlfQoG8ztapwAH5fXaQBzaMqdljLopRSA0i6YKM8kBAOrSSykxu9NN9HrtD45lIqfONLII2AFL/Q==" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/custom.css">
 
   <link rel="stylesheet" href="css/flaticon.css">
@@ -60,6 +61,7 @@
       <!-- <div class="waiting-info">
         Мы сейчас создаем демо видео, пожалуйста подождите. 
       </div> -->
+      
       <p>Для кого создаем видео поздравление?</p>
   
       <a href="#" id="startOrderBtn" class="btn btn-primary p-3 px-xl-5 py-xl-3 main-btn start-order-btn" data-gender="0">
@@ -251,14 +253,14 @@
                   <div class="dlg-order-wrapper">
 
                     <div class="pic-wrapper pic-wrapper_0 mb-4">
-                      <form class="image-upload-form" data-picno="0">
+                      <form class="image-upload-form" data-picno="0" enctype="multipart/form-data">
                         <div class="form-group row">
                           <label for="filePicture0" class="col-sm-3 col-form-label">Фотография #1</label>
                           <div class="col-sm-3">
                             <input type="file" id="filePicture0" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
-                            <input type="hidden" value="0" name="index" />
+                            <!-- <input type="hidden" value="0" name="index" /> -->
                           </div>
                           <div class="col-sm-3">
                             <input type="button" id="btnUploadFile0" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
@@ -291,7 +293,7 @@
                             <input type="file" id="filePicture1" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
-                            <input type="hidden" value="1" name="index" />
+                            <!-- <input type="hidden" value="1" name="index" /> -->
                           </div>
                           <div class="col-sm-3">
                             <input type="button" id="btnUploadFile1" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
@@ -323,7 +325,7 @@
                             <input type="file" id="filePicture2" class="form-control filestyle file-picture" name="file"
                               data-btnClass="btn btn-primary" data-input="false" data-size="sm"
                               data-text="Выбрать файл" />
-                            <input type="hidden" value="2" name="index" />
+                            <!-- <input type="hidden" value="2" name="index" /> -->
                           </div>
                           <div class="col-sm-3">
                             <input type="button" id="btnUploadFile2" value="Загрузить" class="btn btn-secondary btn-sm btn-upload-file"
@@ -553,6 +555,7 @@
   <script src="js/scrollax.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig==" crossorigin="anonymous"></script>
   <script src="js/google-map.js"></script>
   <script src="js/bs-stepper.min.js"></script>
   <script src="js/dm.settings.js"></script>

@@ -436,6 +436,7 @@ var stepper1;
             debugger;
         }
 
-        // $('#startOrderBtn').click();        
+        // $('#startOrderBtn').click();    
+       
     });
 })(jQuery);
