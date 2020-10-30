@@ -82,8 +82,10 @@ var stepper1;
                         $.each(resp, function () {
                             $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
                             masterData.comments.push(this);
+                            if (this.displayname.indexOf('моя любимая фотография') > -1) {
+                                $comments.val(this.filepath);
+                            }
                         });
-
                     })
                 .always(function () {
                     Dm.hideLoader();
@@ -103,9 +105,6 @@ var stepper1;
                             $ddl.append($("<option />").val(this.id).text(this.displayname));
                             masterData.names.push(this);
                         });
-
-                        $ddl.val('bogdan')
-
                     })
                 .always(function () {
                     Dm.hideLoader();
@@ -123,6 +122,9 @@ var stepper1;
                     $.each(resp, function () {
                         $ddl.append($("<option />").val(this.id).text(this.displayname));
                         masterData.praises.push(this);
+                        if (this.displayname.indexOf('Разные увлечения') > -1) {
+                            $ddl.val(this.id);
+                        }
                     });
                 })
                 .always(function () {
@@ -234,9 +236,7 @@ var stepper1;
         }
 
         function onFileChanged() {
-            debugger;
             let $parent = $(this).parents('.pic-wrapper');
-            let picNo = getPicNo(this);
             let that = this;
 
             // $('#btnUploadFile' + picNo).removeAttr('disabled');
@@ -282,7 +282,7 @@ var stepper1;
 
             let croppie;
             croppie = imageInfo.croppie = createCroppie(elem, aspect);
-            
+
             croppie.bind({
                 url: image_url
             });
