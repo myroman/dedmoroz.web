@@ -25,9 +25,15 @@
  		$('#ftco-loader').addClass('show');
 
  		let ordernumber = getURLParameter('ordernumber');
- 		let videotype = getURLParameter('vt'); //1=demo,undefined=prod
+ 		let videotype = +getURLParameter('vt'); //1=demo,undefined=prod
  		if (!videotype) videotype = 0;
- 		console.log('waiting order #' + ordernumber + " for video type " + videotype);
+		 console.log('waiting order #' + ordernumber + " for video type " + videotype);
+		 
+		 if (videotype == 1) {
+			 let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber='+ordernumber;
+			 $('.link-payment').attr('href', paymentPageUrl);
+			 $('.payment-page-link').show();
+		 }
 
  		let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;
  		checkAndRedirect(statusUrl, ordernumber, videotype);
