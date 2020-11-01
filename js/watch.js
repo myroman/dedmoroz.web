@@ -16,13 +16,19 @@
 
  	$(function () {
  		let ordernumber = getURLParameter('ordernumber');
- 		let videotype = getURLParameter('vt') ? 1 : 0;
+ 		let videotype = +getURLParameter('vt') ? 1 : 0;
  		let videoUrl = null;
  		if (Dm.settings.env == 'test') {
  			let filename = videotype == 1 ? 'demo.mp4' : 'hd.mp4';
  			videoUrl = 'https://darimchudo-files.s3.amazonaws.com/orders/' + ordernumber + '/' + filename;
  		} else {
-			videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype;
+ 			videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype;
+ 		}
+
+ 		if (videotype == 1) {
+ 			let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
+ 			$('.link-payment').attr('href', paymentPageUrl);
+ 			$('.payment-page-link').show();
  		}
 
  		var video = document.querySelector('video');

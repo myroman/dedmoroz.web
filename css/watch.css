@@ -19,3 +19,7 @@ html, body {
     margin:50px auto 0;
 
 }
+
+.payment-page-link {
+    display: none;
+}
