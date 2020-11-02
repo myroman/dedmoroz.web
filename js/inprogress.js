@@ -1,11 +1,6 @@
  (function ($) {
 
  	"use strict";
-
- 	var settings = {
- 		baseurl: 'http://localhost:5000'
- 	};
-
  	function getURLParameter(sParam) {
  		var sPageURL = window.location.search.substring(1);
  		var sURLVariables = sPageURL.split('&');
@@ -39,7 +34,7 @@
  		checkAndRedirect(statusUrl, ordernumber, videotype);
 
  		function checkAndRedirect(statusUrl, ordernumber, videotype) {
- 			let timeout = 5000;
+ 			let timeout = 15000;
  			$.get(statusUrl, function (resp) {
  				console.log(resp)
  				if (videotype == 1) {
