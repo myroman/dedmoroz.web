@@ -18,11 +18,11 @@
  		let ordernumber = getURLParameter('ordernumber');
  		let videotype = +getURLParameter('vt') ? 1 : 0;
  		let videoUrl = null;
- 		if (Dm.settings.env == 'test') {
- 			let filename = videotype == 1 ? 'demo.mp4' : 'hd.mp4';
- 			videoUrl = 'https://darimchudo-files.s3.amazonaws.com/orders/' + ordernumber + '/' + filename;
+ 		if (Dm.settings.env == 'local') {
+			videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype; 			
  		} else {
- 			videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype;
+			let filename = videotype == 1 ? 'demo.mp4' : 'hd_video.mp4';
+			videoUrl = Dm.settings.bucket_uploadfiles_url + '/orders/' + ordernumber + '/' + filename;
  		}
 
  		if (videotype == 1) {
