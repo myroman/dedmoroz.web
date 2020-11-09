@@ -1,9 +1,9 @@
 function createDmSettings() {
 
     return {
-        baseurl: 'https://p3r5o5x4x2.execute-api.us-east-1.amazonaws.com/dev',
-        websiteBaseurl: 'http://darimchudo-test.ru.s3-website.us-east-1.amazonaws.com',
-        env: 'test',
+        baseurl: 'http://127.0.0.1:5000',
+        websiteBaseurl: 'http://localhost/~roman/dedmoroz_web',
+        env: 'local',
         bucket_uploadfiles_url: 'https://darimchudo-files-dev.s3.amazonaws.com'
     };
 }
@@ -11,6 +11,9 @@ function createDmSettings() {
 
 Dm = {};
 
+//env can be local, test, prod
+// Dm.settings = createDmSettings('local');
+// Dm.settings = createDmSettings('test');
 Dm.settings = createDmSettings();
 
 Dm.showLoader = function() {
