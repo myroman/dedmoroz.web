@@ -82,7 +82,7 @@ var stepper1;
                         $.each(resp, function () {
                             $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
                             masterData.comments.push(this);
-                            if (this.displayname.indexOf('моя любимая фотография') > -1) {
+                            if (this.displayname.indexOf('чудесная фотография') > -1) {
                                 $comments.val(this.filepath);
                             }
                         });
@@ -210,7 +210,8 @@ var stepper1;
             Dm.showLoader();
 
             let resultOpts = {
-                type: 'base64'
+                type: 'base64',
+                size: 'original'
             };
             let croppie = imageCache[picno].croppie;
             croppie.result(resultOpts).then(function (imgEncoded) {
