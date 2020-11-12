@@ -250,6 +250,26 @@ var stepper1;
                 let picNo = getPicNo(that);
                 console.log('refreshing image for', picNo)
                 imageCache[picNo].imageUrl = imageUrl;
+                if (picNo == 'letter') {
+                    imageCache[picNo].croppieSettings = {
+                        longSide: 550,
+                        shortSide: 400,
+                        reducCoef: 0.25,
+                        boundaryWidth: 200,
+                        boundaryHeight: 200
+                    }
+                } else {
+                    imageCache[picNo].croppieSettings = {
+                        // longSide: 700,
+                        // shortSide: 660,
+                        // reducCoef: 0.15,
+                        longSide: 400,
+                        shortSide: 300,
+                        reducCoef: 0.3,
+                        boundaryWidth: 200,
+                        boundaryHeight: 200
+                    }
+                }
                 refreshCroppieImage(holder, imageUrl, null);
             });
         }
@@ -281,6 +301,8 @@ var stepper1;
                 imageInfo.croppie.destroy();
             }
 
+            let croppieSettings = imageInfo.croppieSettings;
+
             let croppie;
             croppie = imageInfo.croppie = createCroppie(elem, aspect);
 
@@ -294,14 +316,13 @@ var stepper1;
             function createCroppie(elem, ratio) {
                 let viewport = null;
                 let boundary = {
-                    width: 200,
-                    height: 200
+                    width: croppieSettings.boundaryWidth,
+                    height: croppieSettings.boundaryHeight
                 };
-                let long_side = 300,
-                    short_side = 200
-                let reducCoef = 0.5
-                long_side *= reducCoef
-                short_side *= reducCoef
+                let reducCoef = croppieSettings.reducCoef;
+
+                let long_side = croppieSettings.longSide * reducCoef,
+                    short_side = croppieSettings.shortSide * reducCoef;
                 if (ratio == 'landscape') {
                     viewport = {
                         width: long_side,
