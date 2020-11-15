@@ -1,0 +1,36 @@
+{% if not(page_title) %}
+{% set page_title = "Главная" %}
+{% endif %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+	<title>{{ page_title }}</title>
+	<meta name='description' content="" />
+	<meta name="keywords" content="" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+	<style>
+		.loaded .main-wrapper {
+			opacity: 0;
+		}
+
+		.icon-load {
+			background: url(img/loader.gif) no-repeat left top;
+			width: 40px;
+			height: 40px;
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			margin-left: -20px;
+			margin-left: -20px;
+			display: none;
+		}
+
+		.loaded .icon-load {
+			display: block;
+		}
+	</style>
+</head>

@@ -1,0 +1,152 @@
+/*
+================================================================================
+|                                     FOOTER                                   |
+================================================================================
+*/
+footer {
+	background: #134268;
+	text-align: left;
+	width: 100%;
+	min-width: $min-width;
+	order: 3;
+	-webkit-order: 3;
+	padding: 94px 0;
+}
+.footer-row{
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer-col {
+	&_3{
+		flex: 1;
+		padding: 0 9.5% 0 10.6%;
+	}
+}
+
+.footer-nav {
+	column-count: 2;
+
+	&__item {
+		margin-bottom: 23px;
+	}
+
+	&__link {
+		color: white;
+		font-size: 17px;
+		line-height: 24px;
+		font-weight: 400;
+		&:hover{
+			opacity: 0.7;
+		}
+	}
+}
+
+
+.footer-contact {
+	margin-bottom: 22px;
+	&__item {
+		margin-bottom: 17px;
+		&:last-child{
+			margin-bottom: 0px;
+		}
+	}
+
+	&__txt {
+		color: white;
+		font-size: 17px;
+		line-height: 21px;
+		font-weight: 400;
+	}
+
+	&__link {
+		color: white;
+		font-size: 17px;
+		line-height: 21px;
+		font-weight: 400;
+	}
+}
+
+
+
+.social-list {
+	display: flex;
+	align-items: center;
+	margin: 0 -9px;
+	&__item {
+		padding: 0 9px;
+	}
+
+	&__link {
+		display: block;
+		img{
+			width: 42px;
+		}
+		&_vk{
+			img{
+				width: 46px;
+			}
+		}
+		&_fb{
+			img{
+				width: 46px;
+			}
+		}
+		&_youtube{
+			img{
+				width: 48px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1400px) {
+	.footer-col_3{
+		padding: 0 25px;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1023px) {
+	.footer-nav{
+		column-count: 1;
+	}
+	.footer-col_3{
+		padding: 0 10px;
+	}
+	.footer-nav__item{
+		margin-bottom: 13px;
+	}
+	footer{
+		padding: 50px 0;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+}
+
+@media screen and (max-width: 767px) {
+
+	.footer-row{
+		display: block;
+		text-align: center;
+		.logo{
+			margin-bottom: 25px;
+			display: inline-block;
+		}
+	}
+	.footer-col_3{
+		padding: 0;
+	}
+	.footer-nav{
+		margin-bottom: 25px;
+	}
+	.footer-nav__item{
+		margin-bottom: 7px;
+	}
+	.social-list{
+		justify-content: center;
+	}
+}
