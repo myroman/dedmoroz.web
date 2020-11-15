@@ -1,15 +1,4 @@
-var stepper1;
-
 (function ($) {
-
-    //custom functionality
-    var dlgControl = function () {
-        console.log('here')
-        this.submitOrder = function (postdata, onSuccess, onError) {
-            $.post(Dm.settings.baseurl + '/videos/create', postdata, onSuccess);
-        }
-    };
-
     let steps = {
         kidname: 0,
         photos: 1,
@@ -51,17 +40,112 @@ var stepper1;
     let masterData = {};
 
     $(function () {
-        $('.start-order-btn').click(function () {
+        // $('.order-dlg .goto-payment-btn').click(gotoPayment);
+        // $('.order-dlg .close-btn').click(closeDlg);
+        // $('.file-picture').change(onFileChanged);
+        // $(".btn-upload-file").click(onFileUploadClick);
+        // $('.prev-btn').click(goBack);
+        // $('.submit-order').click(submitOrder);
+        // $('.image-aspect').change(onImageAspectChanged);
+
+        // stepper back,forward between dialog screens
+        $('.js-next').click(function () {
+            $(this).parents('.content-item').addClass('hide-item');
+            var id = $(this).attr('href');
+            $(id).removeClass('hide-item');
+            goForward();
+            return false;
+        });
+        $('.js-prev').click(function () {
+            $(this).parents('.content-item').addClass('hide-item');
+            var id = $(this).attr('href');
+            $(id).removeClass('hide-item');
+            goBack();
+            return false;
+        });
+
+        //choose boy, girl
+        $('.js-choose-radio input').live('change', function () {
+            $(this).parents('.content-item').addClass('hide-item');
+            $(this).parents('.content-item').next().removeClass('hide-item');
             let gender = $(this).data('gender');
             startOrder(gender);
         });
-        $('.order-dlg .goto-payment-btn').click(gotoPayment);
-        $('.order-dlg .close-btn').click(closeDlg);
-        $('.file-picture').change(onFileChanged);
-        $(".btn-upload-file").click(onFileUploadClick);
-        $('.prev-btn').click(goBack);
-        $(document).on('click', '.bs-stepper-pane.active .next-btn', goForward);
-        $('.submit-order').click(submitOrder);
+
+        function refreshElement(selector){
+            setTimeout(function () {
+                $(selector).trigger('refresh');
+            }, 1)
+        }        
+
+        if ($('.js-styled').length) {
+            $('.js-styled').styler({
+                selectSearch: true,
+            });
+        };
+
+        $("#childName").validate({
+            invalidHandler: function () {
+                setTimeout(function () {
+                    $('input, select').trigger('refresh');
+                }, 1)
+            },
+            submitHandler: function (form) {
+                $("#step-3").removeClass('hide-item');
+                $("#step-2").addClass('hide-item');
+                goForward();
+            },
+        });
+        $("#childPhoto").validate({
+            invalidHandler: function () {
+                setTimeout(function () {
+                    $('input, select').trigger('refresh');
+                }, 1)
+            },
+            submitHandler: function (form) {
+                $("#step-4").removeClass('hide-item');
+                $("#step-3").addClass('hide-item');
+                goForward();
+            },
+        });
+
+        $("#childOptions").validate({
+            rules: {
+                mark: "required",
+                achievements: "required",
+            },
+            messages: {
+                mark: "*Обязательное поле",
+                achievements: "*Обязательное поле",
+            },
+            submitHandler: function (form) {
+                $("#step-6").removeClass('hide-item');
+                $("#step-5").addClass('hide-item');
+                goForward();
+            },
+        });
+
+        $("#contactDetails").validate({
+            rules: {
+                name: "required",
+                email: "required",
+            },
+            messages: {
+                name: "*Обязательное поле",
+                msg: "*Обязательное поле",
+            },
+            submitHandler: function (form) {
+                $("#step-7").removeClass('hide-item');
+                $("#step-6").addClass('hide-item');
+                goForward();
+            }
+        });
+
+        $('.submit-order').click(function(){            
+            submitOrder(function(){
+                $("#step-7").addClass('hide-item');
+            });
+        });
 
 
         function showError(message) {
@@ -75,20 +159,28 @@ var stepper1;
 
         function loadComments(gender) {
             masterData.comments = [];
-            Dm.showLoader();
+            // Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + gender,
                     function (resp) {
-                        var $comments = $(".ddl-comment");
+                        var $ddl = $("select.ddl-comment");
+                        $ddl.html('');
+                        $ddl.append($("<option />").val('').text("-- Выберите комментарий --"));
+                        let defaultValue;
                         $.each(resp, function () {
-                            $comments.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
+                            $ddl.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
                             masterData.comments.push(this);
                             if (this.displayname.indexOf('чудесная фотография') > -1) {
-                                $comments.val(this.filepath);
+                                defaultValue = this.filepath;
                             }
                         });
+                        if (defaultValue) {
+                            $ddl.first().val(defaultValue);
+                        }
+
+                        refreshElement('select.ddl-comment');
                     })
                 .always(function () {
-                    Dm.hideLoader();
+                    // Dm.hideLoader();
                 });
         }
 
@@ -97,7 +189,7 @@ var stepper1;
             Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/names?gender=' + gender,
                     function (resp) {
-                        var $ddl = $(".ddl-names");
+                        var $ddl = $("select.ddl-names");
                         $ddl.html('');
                         $ddl.append($("<option />").val('').text('Выберите имя'));
 
@@ -105,6 +197,8 @@ var stepper1;
                             $ddl.append($("<option />").val(this.id).text(this.displayname));
                             masterData.names.push(this);
                         });
+
+                        refreshElement('select.ddl-names');
                     })
                 .always(function () {
                     Dm.hideLoader();
@@ -115,17 +209,23 @@ var stepper1;
             masterData.praises = [];
             Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
-                    var $ddl = $(".ddl-praise");
+                    var $ddl = $("select.ddl-praise");
                     $ddl.html('');
-                    $ddl.append($("<option />").val('').text('Выберите похвалу'));
+                    $ddl.append($("<option />").val('').text('-- Выберите похвалу --'));
 
+                    let defaultValue;
                     $.each(resp, function () {
                         $ddl.append($("<option />").val(this.id).text(this.displayname));
                         masterData.praises.push(this);
                         if (this.displayname.indexOf('Разные увлечения') > -1) {
-                            $ddl.val(this.id);
+                            defaultValue = this.id;
                         }
                     });
+                    if (defaultValue) {
+                        $ddl.val(defaultValue);
+                    }
+
+                    refreshElement('select.ddl-praise');
                 })
                 .always(function () {
                     Dm.hideLoader();
@@ -137,12 +237,10 @@ var stepper1;
         }
 
         function startOrder(gender) {
-            stepper1 = new Stepper($('.bs-stepper')[0]);
             orderState = initOrderState(gender);
 
             loadNames(gender);
 
-            //load static masterdata
             function loadMasterdata() {
 
                 masterData.behaviors = [{
@@ -157,37 +255,6 @@ var stepper1;
             loadMasterdata();
 
             $('.order-dlg').show();
-        }
-
-        function onFileUploadClick_old() {
-            let thisId = $(this).attr('id');
-            let $form = $(this).parents('.image-upload-form');
-            var formdata = new FormData($form[0]);
-            let picno = $form.data('picno');
-            let onPhotoUploaded = function (data) {
-                $('#photo-uploaded-' + picno).show();
-                orderState.imageMap['pic' + picno] = {
-                    name: data.filename
-                };
-            }
-            let onLetterUploaded = function (data) {
-                $('#letter-uploaded').show();
-                orderState.letter_filename = data.filename;
-            }
-            let successHandler = thisId == 'btnUploadLetterFile' ? onLetterUploaded : onPhotoUploaded;
-            Dm.showLoader();
-            $.ajax({
-                type: 'POST',
-                url: Dm.settings.baseurl + '/images',
-                data: formdata,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: successHandler,
-                complete: function () {
-                    Dm.hideLoader();
-                }
-            });
         }
 
         function onFileUploadClick() {
@@ -235,6 +302,25 @@ var stepper1;
             let $parent = $(elem).parents('.pic-wrapper');
             return $parent.data('picno');
         }
+
+        /*upload image on background*/
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                console.log();
+
+                reader.onload = function (e) {
+                    $('#' + input.id).parents('label').addClass('active');
+                    $('#' + input.id).parents('label').find('.photo-list__photo').css('background-image', "url(" + e.target.result + ")");
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        $(".input-photo").change(function () {
+            readURL(this);
+        });
 
         function onFileChanged() {
             let $parent = $(this).parents('.pic-wrapper');
@@ -342,31 +428,33 @@ var stepper1;
             }
         }
 
-        $('.image-aspect').change(function () {
+
+
+        function onImageAspectChanged() {
             let picNo = getPicNo(this);
             let loadedImageUrl = imageCache[picNo].imageUrl;
             let $parent = $(this).parents('.pic-wrapper');
             let elem = $parent.find('.croppie-holder')[0]
             refreshCroppieImage(elem, loadedImageUrl, this.value);
-        });
+        }
 
 
 
         function goBack() {
-            stepper1.previous();
             orderState.step--;
         }
 
         function goForward() {
-            let errors = validateInput(orderState.step);
-            if (errors.length) {
-                showError(errors.join('. '));
-                return;
-            }
+            // let errors = validateInput(orderState.step);
+            // if (errors.length) {
+            //     showError(errors.join('. '));
+            //     return;
+            // }
             saveDataToOrder(orderState.step);
+            
+            console.log('Order state:',orderState);
 
             hideError();
-            stepper1.next();
             orderState.step++;
 
             if (orderState.step == steps.review) {
@@ -439,7 +527,7 @@ var stepper1;
                     break;
                 case steps.additionalOptions:
                     orderState.praiseid = $('#ddlPraise').val();
-                    orderState.behaviorid = $('input[name="behavior"]:checked').val();
+                    orderState.behaviorid = $('#ddlBehavior').val();
                     break;
                 case steps.customerDetails:
                     orderState.customername = $('#txtCustomerName').val();
@@ -506,27 +594,7 @@ var stepper1;
             $('.review-form .photos-number-text').text(photosUploaded);
         }
 
-        function gotoPayment() {
-            if (!orderState.kidname) {
-                orderState.kidname = $('#ddlName').val();
-            }
-
-            new dlgControl().submitOrder(orderState, function (resp) {
-                console.log('got resp', resp);
-                orderState.step = steps.finished;
-                // refreshControlByOrderStep();;
-
-                $('.wizard-finished').show();
-                if (resp.status == videoProcStatuses.submitted) {
-                    $('.order-status span').text('Видео в процессе, пожалуйста подождите');
-                } else if (resp.status == videoProcStatuses.ready) {
-                    $('.order-status span').text('Видео готово, пожалуйста проверьте свою почту');
-                }
-
-            });
-        }
-
-        function submitOrder() {
+        function submitOrder(onSuccess) {
             let orderInfo = {
                 kidname: orderState.kidname,
                 gender: orderState.gender,
@@ -563,6 +631,10 @@ var stepper1;
                     } else {
                         showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
                     }
+
+                    if (onSuccess) {
+                        onSuccess(data);
+                    }
                 },
                 error: function (resp) {
                     console.log('some error during submitting order', resp);
@@ -578,17 +650,17 @@ var stepper1;
         }
 
 
-        $('.add-photo1-btn').click(function () {
-            $('.pic-wrapper_1').show();
-        });
-        $('.add-photo2-btn').click(function () {
-            $('.pic-wrapper_2').show();
-        });
+        // $('.add-photo1-btn').click(function () {
+        //     $('.pic-wrapper_1').show();
+        // });
+        // $('.add-photo2-btn').click(function () {
+        //     $('.pic-wrapper_2').show();
+        // });
 
         //allows to see response data before redirect
-        window.onunload = function () {
-            debugger;
-        }
+        // window.onunload = function () {
+        //     debugger;
+        // }
 
         // $('.start-order-btn_boy').click();
     });

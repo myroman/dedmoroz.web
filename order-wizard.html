@@ -45,21 +45,21 @@
                             <ul class="choose-radio js-choose-radio">
                                 <li class="choose-radio__item">
                                     <label class="choose-radio__label">
-                                        <input type="radio" name="name_1">
+                                        <input type="radio" name="name_1" data-gender="1">
                                         <span class="choose-radio__icon"><i class="icon-girl"></i></span>
                                         <span class="choose-radio__button">для девочки</span>
                                     </label>
                                 </li>
                                 <li class="choose-radio__item">
                                     <label class="choose-radio__label">
-                                        <input type="radio" name="name_1">
+                                        <input type="radio" name="name_1" data-gender="0">
                                         <span class="choose-radio__icon"><i class="icon-boy"></i></span>
                                         <span class="choose-radio__button">для мальчика</span>
                                     </label>
                                 </li>
                                 <li class="choose-radio__item">
                                     <label class="choose-radio__label">
-                                        <input type="radio" name="name_1">
+                                        <input type="radio" name="name_1" data-gender="2">
                                         <span class="choose-radio__icon"><i class="icon-childrens"></i></span>
                                         <span class="choose-radio__button">для двоих детей</span>
                                     </label>
@@ -73,13 +73,7 @@
                         <form class="content-item__bg" id="childName">
                             <div class="content-item-choose__title">Выберите имя ребенка</div>
                             <p class="content-item-choose__sub-title">Наш список отсортирован по алфавиту и включает полные и уменьшительно-ласкательные формы имен. Если имя вашего ребенка все же отсутствует в нашем списке, воспользуйтесь заменой имени на обращение Деда Мороза: Внученька или Внучок</p>
-                            <select class="js-styled styled" data-placeholder="Имя ребенка" required>
-                                <option></option>
-                                <option>Вася</option>
-                                <option>Петя</option>
-                                <option>Коля</option>
-                                <option>Марина</option>
-                                <option>Вика</option>
+                            <select class="js-styled styled ddl-names" id="ddlName" data-placeholder="Имя ребенка" required>
                             </select>
                             <div class="content-item__bottom">
                                 <a href="#step-1" class="button-prev js-prev">Назад</a>
@@ -97,16 +91,11 @@
                             <div class="photo-list">
                                 <div class="photo-list__item">
                                     <label class="photo-list__label">
-                                        <input type="file" class="input-photo" id="photo-1" required>
+                                        <input type="file" class="input-photo" id="photo-1" >
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
-                                    <select class="js-styled styled" data-placeholder="Комментарий к фотографии" required>
-                                        <option></option>
-                                        <option>Комментарий 1</option>
-                                        <option>Комментарий 2</option>
-                                        <option>Комментарий 3</option>
-                                        <option>Комментарий 4</option>
+                                    <select class="js-styled styled ddl-comment" id="ddlCommentPic0" data-placeholder="Комментарий к фотографии" required>
                                     </select>
                                 </div>
                                 <div class="photo-list__item">
@@ -115,12 +104,7 @@
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
-                                    <select class="js-styled styled" data-placeholder="Комментарий к фотографии">
-                                        <option></option>
-                                        <option>Комментарий 1</option>
-                                        <option>Комментарий 2</option>
-                                        <option>Комментарий 3</option>
-                                        <option>Комментарий 4</option>
+                                    <select class="js-styled styled ddl-comment" id="ddlCommentPic1" data-placeholder="Комментарий к фотографии">
                                     </select>
                                 </div>
                                 <div class="photo-list__item">
@@ -129,12 +113,7 @@
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
-                                    <select class="js-styled styled" data-placeholder="Комментарий к фотографии">
-                                        <option></option>
-                                        <option>Комментарий 1</option>
-                                        <option>Комментарий 2</option>
-                                        <option>Комментарий 3</option>
-                                        <option>Комментарий 4</option>
+                                    <select class="js-styled styled ddl-comment" id="ddlCommentPic2" data-placeholder="Комментарий к фотографии">
                                     </select>
                                 </div>
                             </div>
@@ -170,28 +149,19 @@
                         </div>
                     </div>
                     <div class="content-item content-item-choose hide-item" id="step-5">
-                        <form class="content-item__bg" id="childHobi">
+                        <form class="content-item__bg" id="childOptions">
                             <div class="content-item-choose__title">Как ребенок вел себя в этом году?</div>
                             <p class="content-item-choose__sub-title">Оценка поведения:</p>
-                            <select class="js-styled styled styled-sm" data-placeholder="Хорошее поведение" name="mark">
+                            <select class="js-styled styled styled-sm" id="ddlBehavior" data-placeholder="Хорошее поведение" name="mark">
                                 <option></option>
-                                <option>Хорошее поведение</option>
-                                <option>Плохое поведение</option>
-                                <option>Хорошее</option>
-                                <option>Плохое</option>
-                                <option>Плохое</option>
+                                <option value="1" selected>Хорошее поведение</option>
+                                <option value="2">Плохое или неоднозначное поведение</option>
                             </select>
-                            <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna</p>
+                            <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna</p> -->
                             <p class="content-item-choose__sub-title">Достижения:</p>
-                            <select class="js-styled styled styled-sm" data-placeholder="Разные увлечения" name="achievements">
-                                <option></option>
-                                <option>Увлечения 1</option>
-                                <option>Увлечения 2</option>
-                                <option>Увлечения 3</option>
-                                <option>Увлечения 4</option>
-                                <option>Увлечения 5</option>
+                            <select class="js-styled styled styled-sm ddl-praise" data-placeholder="Разные увлечения" name="achievements" id="ddlPraise">
                             </select>
-                            <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna </p>
+                            <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna </p> -->
                             <div class="content-item__bottom">
                                 <a href="#step-4" class="button-prev js-prev">Назад</a>
                                 <div class="content-item__bottom-text">
@@ -207,20 +177,100 @@
                             <div class="box-field">
                                 <label for="name" class="box-field__label">Ваше имя:</label>
                                 <div class="box-field__input">
-                                    <input type="text" id="name" name="name" class="form-control">
+                                    <input type="text" id="txtCustomerName" name="customerName" class="form-control">
                                 </div>
                             </div>
                             <div class="box-field">
                                 <label for="email" class="box-field__label">Ваш email:</label>
                                 <div class="box-field__input">
-                                    <input type="text" id="email" name="email" class="form-control">
+                                    <input type="text" id="txtCustomerEmail" name="customerEmail" class="form-control">
                                     <span>На этот адрес мы отправим ссылку на видео</span>
                                 </div>
                             </div>
-                            <input type="submit" class="button-next" value="Создать поздравление">
+                            
+                            <div class="content-item__bottom">
+                                <a href="#step-5" class="button-prev js-prev">Назад</a>
+                                <div class="content-item__bottom-text">
+                                    <p>Личные данные используются исключительно в целях изготовления заказа и ни при каких обстоятельствах не будут переданы третьим лицам.</p>
+                                </div>
+                                <input type="submit" class="button-next" value="Дальше">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="content-item content-item-choose hide-item review-form" id="step-7">
+                        <div class="content-item__bg" id="reviewOrder">
+                            <div class="content-item-choose__title">Проверьте данные по заказу</div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Пол:</label>
+                                <div class="box-field__input">
+                                    <span class="gender-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Для кого:</label>
+                                <div class="box-field__input">
+                                    <span class="name-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Фотографий загружено:</label>
+                                <div class="box-field__input">
+                                    <span class="photos-number-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Комментарий 1:</label>
+                                <div class="box-field__input">
+                                    <span class="comment0-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Комментарий 2:</label>
+                                <div class="box-field__input">
+                                    <span class="comment1-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Комментарий 3:</label>
+                                <div class="box-field__input">
+                                    <span class="comment2-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Письмо загружено?:</label>
+                                <div class="box-field__input">
+                                    <span class="letter-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Поведение:</label>
+                                <div class="box-field__input">
+                                    <span class="behavior-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Похвала:</label>
+                                <div class="box-field__input">
+                                    <span class="praise-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Ваше имя:</label>
+                                <div class="box-field__input">
+                                    <span class="customer-name-text"></span>
+                                </div>
+                            </div>
+                            <div class="box-field">
+                                <label for="name" class="box-field__label">Ваш электронный адрес:</label>
+                                <div class="box-field__input">
+                                    <span class="customer-email-text"></span>
+                                </div>
+                            </div>
+                            <!-- <input type="submit" class="button-next" value="Создать поздравление"> -->
+                            <input type="button" class="button-next submit-order" value="Создать поздравление"/>
                             <p class="select-sub-title">Нажимая кнопку "Создать поздравление", вы подтверждаете, что ознакомились с пользовательским соглашением и принимаете его.</p>
                             <div class="content-item__bottom">
-                                <a href="#step-4" class="button-prev js-prev">Назад</a>
+                                <a href="#step-6" class="button-prev js-prev">Назад</a>
                                 <div class="content-item__bottom-text">
                                     <p>Личные данные используются исключительно в целях изготовления заказа и ни при каких обстоятельствах не будут переданы третьим лицам.</p>
                                 </div>
