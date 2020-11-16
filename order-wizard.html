@@ -8,6 +8,9 @@
         <meta name='description' content="" />
         <meta name="keywords" content="" />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css"
+    integrity="sha512-2eMmukTZtvwlfQoG8ztapwAH5fXaQBzaMqdljLopRSA0i6YKM8kBAOrSSykxu9NN9HrtD45lIqfONLII2AFL/Q=="
+    crossorigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
         <style>
             .loaded .main-wrapper {
@@ -43,21 +46,21 @@
                         <div class="content-item__bg">
                             <div class="content-item-choose__title">Выберите для кого вы создаете видеопоздравление?</div>
                             <ul class="choose-radio js-choose-radio">
-                                <li class="choose-radio__item">
+                                <li class="choose-radio__item choose-radio__gender">
                                     <label class="choose-radio__label">
                                         <input type="radio" name="name_1" data-gender="1">
                                         <span class="choose-radio__icon"><i class="icon-girl"></i></span>
                                         <span class="choose-radio__button">для девочки</span>
                                     </label>
                                 </li>
-                                <li class="choose-radio__item">
+                                <li class="choose-radio__item choose-radio__gender">
                                     <label class="choose-radio__label">
                                         <input type="radio" name="name_1" data-gender="0">
                                         <span class="choose-radio__icon"><i class="icon-boy"></i></span>
                                         <span class="choose-radio__button">для мальчика</span>
                                     </label>
                                 </li>
-                                <li class="choose-radio__item">
+                                <li class="choose-radio__item choose-radio__gender">
                                     <label class="choose-radio__label">
                                         <input type="radio" name="name_1" data-gender="2">
                                         <span class="choose-radio__icon"><i class="icon-childrens"></i></span>
@@ -85,34 +88,88 @@
                         </form>
                     </div>
                     <div class="content-item content-item-choose hide-item" id="step-3">
-                        <form class="content-item__bg" id="childPhoto">
+                        <div class="content-item__bg" id="childPhoto">
                             <div class="content-item-choose__title">Добавьте фотографии ребенка</div>
                             <p class="content-item-choose__sub-title">Загрузите от 1 до 3ех фотографий ребенка и выберите к ним комментарии</p>
+
+                            <p class="content-item-choose__sub-title content-item-choose__sub-title_error photo-error"></p>
+
                             <div class="photo-list">
-                                <div class="photo-list__item">
+                                <div class="photo-list__item pic-wrapper pic-wrapper_0" data-picno="0">
                                     <label class="photo-list__label">
-                                        <input type="file" class="input-photo" id="photo-1" >
+                                        <input type="file" class="input-photo input-photo_hidden" id="photo-0" >
+                                        <input type="hidden" class="photo-hidden" name="hidPhoto0" id="hidPhoto0"  />
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+                                    <div class="aspect-container">
+                                        <ul class="choose-radio js-choose-radio">
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_0" value="portrait" class="image-aspect" checked>
+                                                    <span class="choose-radio__button choose-radio__button_small">Вертикально</span>
+                                                </label>
+                                            </li>
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_0" value="landscape" class="image-aspect">
+                                                    <span class="choose-radio__button choose-radio__button_small">Горизонтально</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <select class="js-styled styled ddl-comment" id="ddlCommentPic0" data-placeholder="Комментарий к фотографии" required>
                                     </select>
                                 </div>
-                                <div class="photo-list__item">
+                                <div class="photo-list__item pic-wrapper pic-wrapper_1" data-picno="1">
                                     <label class="photo-list__label">
-                                        <input type="file" class="input-photo" id="photo-2">
+                                        <input type="file" class="input-photo" id="photo-1">
+                                        <input type="hidden" class="photo-hidden" name="hidPhoto1" id="hidPhoto1" />
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+                                    <div class="aspect-container">
+                                        <ul class="choose-radio js-choose-radio">
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_1" value="portrait" class="image-aspect" checked>
+                                                    <span class="choose-radio__button choose-radio__button_small">Вертикально</span>
+                                                </label>
+                                            </li>
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_1" value="landscape" class="image-aspect">
+                                                    <span class="choose-radio__button choose-radio__button_small">Горизонтально</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <select class="js-styled styled ddl-comment" id="ddlCommentPic1" data-placeholder="Комментарий к фотографии">
                                     </select>
                                 </div>
-                                <div class="photo-list__item">
+                                <div class="photo-list__item pic-wrapper pic-wrapper_2" data-picno="2">
                                     <label class="photo-list__label">
-                                        <input type="file" class="input-photo" id="photo-3">
+                                        <input type="file" class="input-photo" id="photo-2">
+                                        <input type="hidden" class="photo-hidden" name="hidPhoto2" id="hidPhoto2" />
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+                                    <div class="aspect-container">
+                                        <ul class="choose-radio js-choose-radio">
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_2" value="portrait" class="image-aspect" checked>
+                                                    <span class="choose-radio__button choose-radio__button_small">Вертикально</span>
+                                                </label>
+                                            </li>
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_2" value="landscape" class="image-aspect">
+                                                    <span class="choose-radio__button choose-radio__button_small">Горизонтально</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <select class="js-styled styled ddl-comment" id="ddlCommentPic2" data-placeholder="Комментарий к фотографии">
                                     </select>
                                 </div>
@@ -122,21 +179,39 @@
                                 <div class="content-item__bottom-text">
                                     <p>Личные данные используются исключительно в целях изготовления заказа и ни при каких обстоятельствах не будут переданы третьим лицам.</p>
                                 </div>
-                                <input type="submit" class="button-next" value="Дальше">
+                                <!-- <input type="submit" class="button-next" value="Дальше"> -->
+                                <a href="#step-4" class="button-next js-next">Дальше</a>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="content-item content-item-choose hide-item" id="step-4">
                         <div class="content-item__bg">
                             <div class="content-item-choose__title">Добавьте письмо (рисунок) Деду Морозу</div>
                             <p class="content-item-choose__sub-title">Если ребенок не написал письмо, пропустите этот шаг</p>
                             <div class="photo-list photo-list-single">
-                                <div class="photo-list__item">
+                                <div class="photo-list__item pic-wrapper pic-wrapper_0 mb-4" data-picno="letter">
                                     <label class="photo-list__label">
-                                        <input type="file" class="input-photo" id="photo-4">
+                                        <input type="file" class="input-photo" id="photo-letter">
+                                        <input type="hidden" class="photo-hidden" name="hidLetter" id="hidLetter" />
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+                                    <div class="aspect-container">
+                                        <ul class="choose-radio js-choose-radio">
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_2" value="portrait" class="image-aspect" checked>
+                                                    <span class="choose-radio__button choose-radio__button_small">Вертикально</span>
+                                                </label>
+                                            </li>
+                                            <li class="choose-radio-aspect__item">
+                                                <label class="choose-radio-aspect__label">
+                                                    <input type="radio" name="aspect_2" value="landscape" class="image-aspect">
+                                                    <span class="choose-radio__button choose-radio__button_small">Горизонтально</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="content-item__bottom">
@@ -366,6 +441,9 @@
         <script src="js/jquery-migrate-1.4.1.min.js"></script>
         <script src="js/components/jquery.formstyler.js"></script>
         <script src="js/components/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"
+    integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
+    crossorigin="anonymous"></script>
         <script src="js/custom.js"></script>
         <script src="js/dm.settings.js"></script>
         <script src="js/dm.order.js" crossorigin="anonymous"></script>

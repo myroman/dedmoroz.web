@@ -31,27 +31,74 @@
     }
 
     let orderState = null;
-
-    let videoProcStatuses = {
-        submitted: "submitted",
-        ready: "ready"
-    };
+    let imageCache = {
+        "0": {},
+        "1": {},
+        "2": {},
+        "letter": {}
+    }
 
     let masterData = {};
 
     $(function () {
         // $('.order-dlg .goto-payment-btn').click(gotoPayment);
         // $('.order-dlg .close-btn').click(closeDlg);
-        // $('.file-picture').change(onFileChanged);
-        // $(".btn-upload-file").click(onFileUploadClick);
+
         // $('.prev-btn').click(goBack);
         // $('.submit-order').click(submitOrder);
-        // $('.image-aspect').change(onImageAspectChanged);
+        $('.image-aspect').change(onImageAspectChanged);
 
         // stepper back,forward between dialog screens
         $('.js-next').click(function () {
-            $(this).parents('.content-item').addClass('hide-item');
+            let currentStepId = $(this).parents('.content-item').attr('id');
+            if (currentStepId == 'step-3') {
+                //validate photo
+
+                let chosenFiles = $('.pic-wrapper input[type=hidden]');
+                let i, uploadedFilesNumber = 0;
+                let errors = [];
+                for (i = 0; i < chosenFiles.length; i++) {
+                    if ($(chosenFiles[i]).val()) {
+                        uploadedFilesNumber++;
+                    }
+                }
+
+                if (!uploadedFilesNumber) {
+                    errors.push('Необходимо загрузить хотя бы одну фотографию');
+                }
+                (function validateCommentsAreEnteredForChosenPics() {
+                    let i = 0;
+                    for (i = 0; i < MaxPictures; i++) {
+                        let hiddenInput = chosenFiles[i];
+                        let picNo = getPicNo(hiddenInput);
+                        let $ddlComment = $('#ddlCommentPic' + picNo);
+                        if ($(hiddenInput).val() && !$ddlComment.val()) {
+                            errors.push('Выберите комментарий для фотографии #' + (i + 1));
+                        }
+                    }
+                })();
+
+                let err = errors.join(". ");
+
+                if (err) {
+                    console.error(err);
+                    // setTimeout(function () {
+                    //     $('input, select').trigger('refresh');
+                    // }, 1)
+                    // $('.photo-error').text(err).show();
+                    return;
+                }
+
+                for (i = 0; i < chosenFiles.length; i++) {
+                    if ($(chosenFiles[i]).val()) {
+                        uploadFile(chosenFiles[i]);
+                    }
+                }
+            }
             var id = $(this).attr('href');
+
+            // debugger;
+            $(this).parents('.content-item').addClass('hide-item');
             $(id).removeClass('hide-item');
             goForward();
             return false;
@@ -65,18 +112,18 @@
         });
 
         //choose boy, girl
-        $('.js-choose-radio input').live('change', function () {
+        $('.js-choose-radio .choose-radio__gender input').live('change', function () {
             $(this).parents('.content-item').addClass('hide-item');
             $(this).parents('.content-item').next().removeClass('hide-item');
             let gender = $(this).data('gender');
             startOrder(gender);
         });
 
-        function refreshElement(selector){
+        function refreshElement(selector) {
             setTimeout(function () {
                 $(selector).trigger('refresh');
             }, 1)
-        }        
+        }
 
         if ($('.js-styled').length) {
             $('.js-styled').styler({
@@ -93,18 +140,6 @@
             submitHandler: function (form) {
                 $("#step-3").removeClass('hide-item');
                 $("#step-2").addClass('hide-item');
-                goForward();
-            },
-        });
-        $("#childPhoto").validate({
-            invalidHandler: function () {
-                setTimeout(function () {
-                    $('input, select').trigger('refresh');
-                }, 1)
-            },
-            submitHandler: function (form) {
-                $("#step-4").removeClass('hide-item');
-                $("#step-3").addClass('hide-item');
                 goForward();
             },
         });
@@ -141,8 +176,8 @@
             }
         });
 
-        $('.submit-order').click(function(){            
-            submitOrder(function(){
+        $('.submit-order').click(function () {
+            submitOrder(function () {
                 $("#step-7").addClass('hide-item');
             });
         });
@@ -198,6 +233,8 @@
                             masterData.names.push(this);
                         });
 
+                        $ddl.val('617');
+
                         refreshElement('select.ddl-names');
                     })
                 .always(function () {
@@ -232,10 +269,6 @@
                 });;
         }
 
-        function closeDlg() {
-            $('.order-dlg').hide();
-        }
-
         function startOrder(gender) {
             orderState = initOrderState(gender);
 
@@ -257,20 +290,108 @@
             $('.order-dlg').show();
         }
 
-        function onFileUploadClick() {
-            let thisId = $(this).attr('id');
-            let picno = getPicNo(this);
+        function getPicNo(elem) {
+            let $parent = $(elem).parents('.pic-wrapper');
+            return $parent.data('picno');
+        }
+
+        /*upload image on background*/
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                console.log();
+
+                reader.onload = function (e) {
+                    $('#' + input.id).parents('label').addClass('active');
+                    $('#' + input.id).parents('label').find('.photo-list__photo').css('background-image', "url(" + e.target.result + ")");
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // $(".input-photo").change(function () {
+        //     readURL(this);
+        // });
+        $(".input-photo").change(function () {
+            onFileChanged(this);
+        });
+
+        // $('.file-picture').change(onFileChanged);
+        // $(".btn-upload-file").click(uploadFile);
+
+        function onFileChanged(input) {
+            function readFile(input, holder, success) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        success(e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    console.error("Ваш браузер не поддерживает загрузку фотографий, пожалуйста используйте последнюю версию для браузеров Google Chrome, Mozilla Firefox или Safari");
+                }
+            }
+
+            let $parent = $(input).parents('.pic-wrapper');
+
+            // $('#btnUploadFile' + picNo).removeAttr('disabled');
+            // let $btnUpload = $parent.find('.btn-upload-file');
+            // $btnUpload.removeAttr('disabled');
+
+            // $parent.find('.croppie-container').show();
+            let holder = $parent.find('.photo-list__photo')[0];
+            readFile(input, holder, function (imageUrl) {
+                let picNo = getPicNo(input);
+                console.log('refreshing image for', picNo)
+                imageCache[picNo].imageUrl = imageUrl;
+                if (picNo == 'letter') {
+                    imageCache[picNo].croppieSettings = {
+                        longSide: 550,
+                        shortSide: 400,
+                        reducCoef: 0.25,
+                        boundaryWidth: 200,
+                        boundaryHeight: 200
+                    }
+                } else {
+                    imageCache[picNo].croppieSettings = {
+                        // longSide: 700,
+                        // shortSide: 660,
+                        // reducCoef: 0.15,
+                        longSide: 400,
+                        shortSide: 300,
+                        reducCoef: 0.5,
+                        boundaryWidth: 200,
+                        boundaryHeight: 200
+                    }
+                }
+                refreshCroppieImage(holder, imageUrl, null);
+                // $(input).parents('.pic-wrapper').find('.aspect-container').show();
+                // $(input).parents('.photo-list__label').addClass('photo-list__label_extra-bottom-space');
+                let $hidFile = $(input).parent().find('input[type=hidden]');
+                $hidFile.val(1);
+
+                $(input).remove();
+            });
+        }
+
+        function uploadFile(fileElem) {
+            let picno = getPicNo(fileElem);
             let successHandler;
-            if (thisId == 'btnUploadLetterFile') {
+            let isLetter = $(fileElem).attr('id') == 'hidLetter';
+            if (isLetter) {
                 successHandler = function (data) {
-                    $('#letter-uploaded').show();
+                    // $('#letter-uploaded').show();
                     orderState.letter_filename = data.filename;
                 };
             } else {
                 successHandler = function (data) {
-                    $('#photo-uploaded-' + picno).show();
+                    // $('#photo-uploaded-' + picno).show();
                     orderState.imageMap['pic' + picno] = {
-                        name: data.filename
+                        name: data.filename,
+                        commentid: $('#ddlCommentPic' + picno).val()
                     };
                 }
             }
@@ -293,92 +414,13 @@
                     success: successHandler,
                     complete: function () {
                         Dm.hideLoader();
+                    },
+                    error: function (resp) {
+                        let selector = isLetter ? '.letter-error' : '.photo-error';
+                        $(selector).text('Ошибка при загрузке фотографии. Мы поддерживаем изображения форматов JPG и PNG. Если же расширение верное, то обратитесь в службу техю поддержки.').show();
                     }
                 });
             });
-        }
-
-        function getPicNo(elem) {
-            let $parent = $(elem).parents('.pic-wrapper');
-            return $parent.data('picno');
-        }
-
-        /*upload image on background*/
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                console.log();
-
-                reader.onload = function (e) {
-                    $('#' + input.id).parents('label').addClass('active');
-                    $('#' + input.id).parents('label').find('.photo-list__photo').css('background-image', "url(" + e.target.result + ")");
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        
-        $(".input-photo").change(function () {
-            readURL(this);
-        });
-
-        function onFileChanged() {
-            let $parent = $(this).parents('.pic-wrapper');
-            let that = this;
-
-            // $('#btnUploadFile' + picNo).removeAttr('disabled');
-            let $btnUpload = $parent.find('.btn-upload-file');
-            $btnUpload.removeAttr('disabled');
-
-            $parent.find('.croppie-container').show();
-            let holder = $parent.find('.croppie-holder')[0];
-            readFile(this, holder, function (imageUrl) {
-                let picNo = getPicNo(that);
-                console.log('refreshing image for', picNo)
-                imageCache[picNo].imageUrl = imageUrl;
-                if (picNo == 'letter') {
-                    imageCache[picNo].croppieSettings = {
-                        longSide: 550,
-                        shortSide: 400,
-                        reducCoef: 0.25,
-                        boundaryWidth: 200,
-                        boundaryHeight: 200
-                    }
-                } else {
-                    imageCache[picNo].croppieSettings = {
-                        // longSide: 700,
-                        // shortSide: 660,
-                        // reducCoef: 0.15,
-                        longSide: 400,
-                        shortSide: 300,
-                        reducCoef: 0.3,
-                        boundaryWidth: 200,
-                        boundaryHeight: 200
-                    }
-                }
-                refreshCroppieImage(holder, imageUrl, null);
-            });
-        }
-
-        function readFile(input, holder, success) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    success(e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                swal("Sorry - you're browser doesn't support the FileReader API");
-            }
-        }
-
-        let imageCache = {
-            "0": {},
-            "1": {},
-            "2": {},
-            "letter": {}
         }
 
         function refreshCroppieImage(elem, image_url, aspect) {
@@ -388,6 +430,7 @@
             }
 
             let croppieSettings = imageInfo.croppieSettings;
+            if (!croppieSettings) return;
 
             let croppie;
             croppie = imageInfo.croppie = createCroppie(elem, aspect);
@@ -422,7 +465,7 @@
                 }
                 return new Croppie(elem, {
                     viewport: viewport,
-                    boundary: boundary,
+                    // boundary: boundary,
                     enableOrientation: true
                 });
             }
@@ -434,7 +477,7 @@
             let picNo = getPicNo(this);
             let loadedImageUrl = imageCache[picNo].imageUrl;
             let $parent = $(this).parents('.pic-wrapper');
-            let elem = $parent.find('.croppie-holder')[0]
+            let elem = $parent.find('.photo-list__photo')[0]
             refreshCroppieImage(elem, loadedImageUrl, this.value);
         }
 
@@ -451,8 +494,8 @@
             //     return;
             // }
             saveDataToOrder(orderState.step);
-            
-            console.log('Order state:',orderState);
+
+            console.log('Order state:', orderState);
 
             hideError();
             orderState.step++;
@@ -513,15 +556,15 @@
                     orderState.kidname = $('#ddlName').val();
                     loadComments(orderState.gender);
                     break;
-                case steps.photos:
-                    let i = 0;
-                    for (i = 0; i < MaxPictures; i++) {
-                        let picId = 'pic' + i;
-                        if (orderState.imageMap[picId]) {
-                            orderState.imageMap[picId].commentid = $('#ddlCommentPic' + i).val();
-                        }
-                    }
-                    break;
+                    // case steps.photos:
+                    //     let i = 0;
+                    //     for (i = 0; i < MaxPictures; i++) {
+                    //         let picId = 'pic' + i;
+                    //         if (orderState.imageMap[picId]) {
+                    //             orderState.imageMap[picId].commentid = $('#ddlCommentPic' + i).val();
+                    //         }
+                    //     }
+                    //     break;
                 case steps.letter:
                     loadPraises(orderState.gender);
                     break;
@@ -648,20 +691,5 @@
                 }
             });
         }
-
-
-        // $('.add-photo1-btn').click(function () {
-        //     $('.pic-wrapper_1').show();
-        // });
-        // $('.add-photo2-btn').click(function () {
-        //     $('.pic-wrapper_2').show();
-        // });
-
-        //allows to see response data before redirect
-        // window.onunload = function () {
-        //     debugger;
-        // }
-
-        // $('.start-order-btn_boy').click();
     });
 })(jQuery);
