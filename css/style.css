@@ -3105,3 +3105,13 @@ label.error {
 .payment-page-link {
   display: none;
 }
+
+.contacts-container div {
+  padding: 0;
+  color: black;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: -0.1px;
+  margin-bottom: 4px;
+}
