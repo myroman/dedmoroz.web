@@ -669,7 +669,7 @@
                     let ordernumber = data.ordernumber;
                     if (ordernumber) {
                         setTimeout(function () {
-                            window.location.replace("inprogress.html?ordernumber=" + ordernumber + "&vt=1");
+                            window.location.replace("in-progress.html?ordernumber=" + ordernumber + "&vt=1");
                         }, 1000);
                     } else {
                         showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
