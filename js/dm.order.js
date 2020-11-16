@@ -54,7 +54,7 @@
             if (currentStepId == 'step-3') {
                 //validate photo
 
-                let chosenFiles = $('.pic-wrapper input[type=hidden]');
+                let chosenFiles = $('.kids-photo-list input[type=hidden]');
                 let i, uploadedFilesNumber = 0;
                 let errors = [];
                 for (i = 0; i < chosenFiles.length; i++) {
@@ -95,9 +95,14 @@
                     }
                 }
             }
+            //letter
+            else if (currentStepId == 'step-4') {
+                let chosenFile = $('.pic-wrapper_letter input[type=hidden]')[0];
+                if ($(chosenFile).val()) {
+                    uploadFile(chosenFile);
+                }
+            }
             var id = $(this).attr('href');
-
-            // debugger;
             $(this).parents('.content-item').addClass('hide-item');
             $(id).removeClass('hide-item');
             goForward();

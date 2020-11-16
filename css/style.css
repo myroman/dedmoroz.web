@@ -713,6 +713,9 @@ header .wrapper {
   text-transform: uppercase;
   font-weight: 500;
 }
+.logo img {
+  width: 210px;
+}
 
 .main-nav {
   flex: 1;
