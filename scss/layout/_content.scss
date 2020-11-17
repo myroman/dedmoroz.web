@@ -22,7 +22,7 @@
 .wrapper {
 	min-width: $min-width;
 	max-width: $max-width;
-	padding: 0 40px 0 40px;
+	padding: 0 60px 0 60px;
 	margin: 0 auto;
 	position: relative;
 }
@@ -774,7 +774,7 @@ ul{
 
 .content-item-choose {
 	display: flex;	
-	min-height: 689px;	
+	min-height: 529px;	
 	.content-item__bg{
 		padding-left: 42px ;
 		padding-right: 42px;
@@ -1401,7 +1401,7 @@ label.error{
 	.main-screen h1{
 		font-size: 56px;
 		line-height: 68px;
-		max-width: 800px;
+		max-width: 830px;
 	}
 	.main-screen p{
 		font-size: 32px;

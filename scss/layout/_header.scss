@@ -12,15 +12,16 @@ header {
 	-webkit-order: 1;
 	position: absolute;
 	left: 0;
-	top: 21px;
+	top: 0px;
 	width: 100%;
-	padding: 25px 0;
+	padding: 8px 0px;
 	z-index: 100;
 	.wrapper{
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		max-width: 1576px;
+		padding: 0 40px 0 40px;
 	}
 }
 .logo {
@@ -31,7 +32,8 @@ header {
 	text-transform: uppercase;
 	font-weight: 500;
 	img {
-		width: 210px;
+		width: 220px;
+		vertical-align: middle;
 	}
 }
 .main-nav{
