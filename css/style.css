@@ -3120,3 +3120,11 @@ label.error {
   letter-spacing: -0.1px;
   margin-bottom: 4px;
 }
+
+.waiting-info {
+  text-align: center;
+}
+
+.info-block {
+  margin-top: 20px;
+}
