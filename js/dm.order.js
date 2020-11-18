@@ -167,12 +167,18 @@
 
         $("#contactDetails").validate({
             rules: {
-                name: "required",
-                email: "required",
+                customerName: "required",
+                customerEmail: {
+                    required: true,
+                    email: true
+                  }
             },
             messages: {
-                name: "*Обязательное поле",
-                msg: "*Обязательное поле",
+                customerName: "*Обязательное поле",
+                customerEmail: {
+                    required: "*Обязательное поле",
+                    email: "Введите корректный email"
+                },
             },
             submitHandler: function (form) {
                 $("#step-7").removeClass('hide-item');
@@ -238,7 +244,7 @@
                             masterData.names.push(this);
                         });
 
-                        $ddl.val('617');
+                        // $ddl.val('617');
 
                         refreshElement('select.ddl-names');
                     })
