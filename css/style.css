@@ -3133,3 +3133,15 @@ label.error {
 .info-block {
   margin-top: 20px;
 }
+
+.choose-radio-aspect__item {
+  margin-bottom: 14px;
+}
+
+.choose-radio-aspect__label .choose-radio__button_small {
+  width: 160px;
+}
+
+.kids-photo-list .photo-list__label {
+  margin-bottom: 50px;
+}
