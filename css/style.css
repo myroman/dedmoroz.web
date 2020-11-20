@@ -3149,3 +3149,9 @@ label.error {
 .choose-radio {
   margin-top: 10px;
 }
+
+.button-next:disabled, .button-next[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}

@@ -39,8 +39,8 @@
             letter_filename: null,
             praiseid: 19,
             behaviorid: 1,
-            customername: 'Роман',
-            customeremail: 'roman.pavlushchenko@gmail.com',
+            customername: '',
+            customeremail: '',
 
             imageMap: {}
         };
@@ -103,6 +103,7 @@
                 if (err) {
                     console.error(err);
                     $('.photo-error').text(err).show();
+                    scrollUp();
                     e.preventDefault()
                     return;
                 }
@@ -123,6 +124,7 @@
                             console.log('failed to upload', resp);
                             let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке фотографии';
                             $('.photo-error').text(msg).show();
+                            scrollUp();
                         });
                     }
                 }
@@ -133,15 +135,20 @@
             //letter
             if (currentStepId == 'step-4') {
                 let chosenFile = $('.pic-wrapper_letter input[type=hidden]')[0];
-                if ($(chosenFile).val()) {
-                    uploadFile(chosenFile, function (resp) {
-                        orderState.letter_filename = resp.filename;
-                        nextStep();
-                    }, function (resp) {
-                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
-                        $('.letter-error').text(msg).show();
-                    });
+                if (!$(chosenFile).val()) {
+                    nextStep();
+                    e.preventDefault();
+                    return false;
                 }
+
+                uploadFile(chosenFile, function (resp) {
+                    orderState.letter_filename = resp.filename;
+                    nextStep();
+                }, function (resp) {
+                    let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
+                    $('.letter-error').text(msg).show();
+                    scrollUp();
+                });
                 e.preventDefault();
                 return false;
             }
@@ -167,6 +174,9 @@
             }
             //TODO: delete image from server
             imageCache[picNo] = {};
+            if (picNo == 'letter') {
+                orderState.letter_filename = null;
+            }
             let $container = $(this).parents('.pic-wrapper');
 
             if ($container.find('input[type=hidden]').val()) {
@@ -255,19 +265,46 @@
         });
 
         $('.submit-order').click(function () {
-            submitOrder(function () {
-                $("#step-7").addClass('hide-item');
+            submitOrder(function (data) {
+                console.log('success, redirecting to wait page', data);
+                let ordernumber = data.ordernumber;
+                if (ordernumber) {
+                    setTimeout(function () {
+                        window.location.replace("in-progress.html?ordernumber=" + ordernumber + "&vt=1");
+                    }, 1000);
+                } else {
+                    showReviewError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
+                    $('.submit-order').prop('disabled', false);
+                    scrollUp();
+                }
+                // $("#step-7").addClass('hide-item');
+            }, function (resp) {
+                console.log('some error during submitting order', resp);
+                if (resp.responseJSON && resp.responseJSON.error) {
+                    showReviewError(resp.responseJSON.error);
+                } else {
+                    showReviewError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
+                }
+                scrollUp();
+
+                $('.submit-order').prop('disabled', false);
+
+                Dm.hideLoader();
             });
         });
 
-
-        function showError(message) {
-            $('.wizard-warning').show();
-            $('.wizard-warning p').text(message)
+        function showReviewError(message) {
+            $('.review-form .error-block').text(message).show();
         }
 
-        function hideError() {
-            $('.wizard-warning').hide();
+        function clearReviewError() {
+            $('.review-form .error-block').hide();
+        }
+
+        function scrollUp() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 300);
         }
 
         function loadComments(gender) {
@@ -315,7 +352,7 @@
             masterData.praises = [];
             Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
-                    var $ddl = $("select.ddl-praise");
+                    var $ddl = $("#ddlPraise");
                     $ddl.html('');
                     $ddl.append($("<option />").val('').text('-- Выберите похвалу --'));
 
@@ -329,9 +366,10 @@
                     });
                     if (defaultValue) {
                         $ddl.val(defaultValue);
+                        orderState.praiseid = defaultValue;
                     }
 
-                    refreshElement('select.ddl-praise');
+                    refreshElement('#ddlPraise');
                 })
                 .always(function () {
                     Dm.hideLoader();
@@ -350,7 +388,7 @@
                     text: 'Хорошее'
                 }, {
                     id: 2,
-                    text: 'Плохое или неоднозначное'
+                    text: 'Шкодливое'
                 }];
             }
 
@@ -362,21 +400,6 @@
         function getPicNo(elem) {
             let $parent = $(elem).parents('.pic-wrapper');
             return $parent.data('picno');
-        }
-
-        /*upload image on background*/
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                console.log();
-
-                reader.onload = function (e) {
-                    $('#' + input.id).parents('label').addClass('active');
-                    $('#' + input.id).parents('label').find('.photo-list__photo').css('background-image', "url(" + e.target.result + ")");
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
         }
 
         $(".input-photo").change(function () {
@@ -493,8 +516,6 @@
             }
         }
 
-
-
         function onImageAspectChanged() {
             let picNo = getPicNo(this);
             let loadedImageUrl = imageCache[picNo].imageUrl;
@@ -503,23 +524,15 @@
             refreshCroppieImage(elem, loadedImageUrl, this.value);
         }
 
-
-
         function goBack() {
             orderState.step--;
         }
 
         function goForward() {
-            // let errors = validateInput(orderState.step);
-            // if (errors.length) {
-            //     showError(errors.join('. '));
-            //     return;
-            // }
             saveDataToOrder(orderState.step);
 
             console.log('Order state:', orderState);
 
-            hideError();
             orderState.step++;
 
             if (orderState.step == steps.review) {
@@ -572,31 +585,29 @@
             }
         }
 
+        $('#ddlName').change(function () {
+            orderState.kidname = $(this).val();
+        });
+        $('#ddlPraise').change(function () {
+            orderState.praiseid = $(this).val();
+        });
+        $('#ddlBehavior').change(function () {
+            orderState.behaviorid = $(this).val();
+        });
+        $('#txtCustomerName').change(function () {
+            orderState.customername = $(this).val();
+        });
+        $('#txtCustomerEmail').change(function () {
+            orderState.customeremail = $(this).val();
+        });
+
         function saveDataToOrder(step) {
             switch (step) {
                 case steps.kidname:
-                    orderState.kidname = $('#ddlName').val();
                     loadComments(orderState.gender);
                     break;
-                    // case steps.photos:
-                    //     let i = 0;
-                    //     for (i = 0; i < MaxPictures; i++) {
-                    //         let picId = 'pic' + i;
-                    //         if (orderState.imageMap[picId]) {
-                    //             orderState.imageMap[picId].commentid = $('#ddlCommentPic' + i).val();
-                    //         }
-                    //     }
-                    //     break;
                 case steps.letter:
                     loadPraises(orderState.gender);
-                    break;
-                case steps.additionalOptions:
-                    orderState.praiseid = $('#ddlPraise').val();
-                    orderState.behaviorid = $('#ddlBehavior').val();
-                    break;
-                case steps.customerDetails:
-                    orderState.customername = $('#txtCustomerName').val();
-                    orderState.customeremail = $('#txtCustomerEmail').val();
                     break;
             }
         }
@@ -611,6 +622,54 @@
                     case 2:
                         return "Двое детей";
                 }
+            }
+
+            function validateOrder(orderState) {
+                let errors = [];
+                if (!orderState.kidname) {
+                    errors.push('имя ребенка');
+                }
+                if (orderState.gender >= 2) {
+                    errors.push('пол ребенка');
+                }
+                if (!orderState.imageMap) {
+                    errors.push('фотографии');
+                } else {
+                    let i;
+
+                    let photoKeys = Object.keys(orderState.imageMap);
+                    for (i = 0; i < photoKeys.length; i++) {
+                        let imageInfo = orderState.imageMap[photoKeys[i]];
+                        if (imageInfo.name && !imageInfo.commentid) {
+                            errors.push('комментарий к фотографии №' + (i + 1));
+                        }
+                    }
+                }
+
+
+                if (!orderState.praiseid) {
+                    errors.push('похвала');
+                }
+                if (!orderState.behaviorid) {
+                    errors.push('поведение');
+                }
+                if (!orderState.customername) {
+                    errors.push('ваше имя');
+                }
+                if (!orderState.customeremail) {
+                    errors.push('ваш email');
+                }
+
+                if (errors.length) {
+                    return 'Кажется, некоторые данные не были введены, пожалуйста введите: ' + errors.join(', ');
+                }
+            }
+            clearReviewError();
+            $('.submit-order').prop('disabled', false);
+            let validationMsg = validateOrder(orderState);
+            if (validationMsg) {
+                showReviewError(validationMsg);
+                $('.submit-order').prop('disabled', true);
             }
             $('.review-form .gender-text').text(getForWhom(orderState.gender));
 
@@ -659,7 +718,10 @@
             $('.review-form .photos-number-text').text(photosUploaded);
         }
 
-        function submitOrder(onSuccess) {
+        function submitOrder(onSuccess, onError) {
+            //to avoid double submission
+            $('.submit-order').prop('disabled', true);
+
             let orderInfo = {
                 kidname: orderState.kidname,
                 gender: orderState.gender,
@@ -686,31 +748,8 @@
                 url: Dm.settings.baseurl + '/orders',
                 data: JSON.stringify(orderInfo),
                 contentType: 'application/json',
-                success: function (data) {
-                    console.log('success, redirecting to wait page', data);
-                    let ordernumber = data.ordernumber;
-                    if (ordernumber) {
-                        setTimeout(function () {
-                            window.location.replace("in-progress.html?ordernumber=" + ordernumber + "&vt=1");
-                        }, 1000);
-                    } else {
-                        showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
-                    }
-
-                    if (onSuccess) {
-                        onSuccess(data);
-                    }
-                },
-                error: function (resp) {
-                    console.log('some error during submitting order', resp);
-                    if (resp.responseJSON && resp.responseJSON.message) {
-                        showError(resp.responseJSON.message);
-                    } else {
-                        showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
-                    }
-
-                    Dm.hideLoader();
-                }
+                success: onSuccess,
+                error: onError
             });
         }
     });
