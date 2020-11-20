@@ -49,7 +49,7 @@
         $('.image-aspect').change(onImageAspectChanged);
 
         // stepper back,forward between dialog screens
-        $('.js-next').click(function () {
+        $('.js-next').click(function (e) {
             let currentStepId = $(this).parents('.content-item').attr('id');
             if (currentStepId == 'step-3') {
                 //validate photo
@@ -85,7 +85,8 @@
                     // setTimeout(function () {
                     //     $('input, select').trigger('refresh');
                     // }, 1)
-                    // $('.photo-error').text(err).show();
+                    $('.photo-error').text(err).show();
+                    e.preventDefault()
                     return;
                 }
 
@@ -106,6 +107,8 @@
             $(this).parents('.content-item').addClass('hide-item');
             $(id).removeClass('hide-item');
             goForward();
+
+            e.preventDefault();
             return false;
         });
         $('.js-prev').click(function () {
@@ -113,6 +116,7 @@
             var id = $(this).attr('href');
             $(id).removeClass('hide-item');
             goBack();
+            e.preventDefault();
             return false;
         });
 
