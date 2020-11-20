@@ -157,6 +157,32 @@
             return false;
         });
 
+        $('.js-delete-photo').click(function (e) {
+            let picNo = getPicNo(this);
+            let imageInfo = imageCache[picNo];
+            //cleanup
+            if (imageInfo.croppie) {
+                imageInfo.croppie.destroy();
+                imageInfo.croppie = null;
+            }
+            //TODO: delete image from server
+            imageCache[picNo] = {};
+            let $container = $(this).parents('.pic-wrapper');
+
+            if ($container.find('input[type=hidden]').val()) {
+                let $input = $('<input type="file" class="input-photo input-photo_hidden" />').attr('id', 'photo-' + picNo);
+                $container.find('.photo-list__label').prepend($input);
+                $input.change(function () {
+                    onFileChanged(this);
+                });
+
+                $container.find('input[type=hidden]').val('');
+            }
+
+            e.preventDefault();
+            return false;
+        });
+
         //choose boy, girl
         $('.js-choose-radio .choose-radio__gender input').live('change', function () {
             $(this).parents('.content-item').addClass('hide-item');
@@ -361,11 +387,9 @@
             function readFile(input, holder, success) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
-
                     reader.onload = function (e) {
                         success(e.target.result);
                     }
-
                     reader.readAsDataURL(input.files[0]);
                 } else {
                     console.error("Ваш браузер не поддерживает загрузку фотографий, пожалуйста используйте последнюю версию для браузеров Google Chrome, Mozilla Firefox или Safari");
@@ -387,6 +411,7 @@
                 refreshCroppieImage(holder, imageUrl, null);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
                 $hidFile.val(true);
+                console.log('removing input', input)
                 $(input).remove();
             });
         }
@@ -423,6 +448,7 @@
             let imageInfo = imageCache[getPicNo(elem)];
             if (imageInfo.croppie) {
                 imageInfo.croppie.destroy();
+                imageInfo.croppie = null;
             }
 
             let croppieSettings = imageInfo.croppieSettings;
