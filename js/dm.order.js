@@ -132,7 +132,7 @@
 
         if ($('.js-styled').length) {
             $('.js-styled').styler({
-                selectSearch: true,
+                selectSearch: true
             });
         };
 
@@ -171,7 +171,7 @@
                 customerEmail: {
                     required: true,
                     email: true
-                  }
+                }
             },
             messages: {
                 customerName: "*Обязательное поле",
@@ -231,26 +231,17 @@
         }
 
         function loadNames(gender) {
-            masterData.names = [];
-            Dm.showLoader();
-            $.get(Dm.settings.baseurl + '/md/names?gender=' + gender,
-                    function (resp) {
-                        var $ddl = $("select.ddl-names");
-                        $ddl.html('');
-                        $ddl.append($("<option />").val('').text('Выберите имя'));
+            masterData.names = Dm.masterdata.names[gender+''];
 
-                        $.each(resp, function () {
-                            $ddl.append($("<option />").val(this.id).text(this.displayname));
-                            masterData.names.push(this);
-                        });
+            var $ddl = $("select.ddl-names");
+            $ddl.html('');
+            $ddl.append($("<option />").val('').text('Выберите имя'));
 
-                        // $ddl.val('617');
-
-                        refreshElement('select.ddl-names');
-                    })
-                .always(function () {
-                    Dm.hideLoader();
-                });;
+            $.each(masterData.names, function () {
+                $ddl.append($("<option />").val(this.id).text(this.displayname));
+                masterData.names.push(this);
+            });
+            refreshElement('select.ddl-names');
         }
 
         function loadPraises(gender) {
