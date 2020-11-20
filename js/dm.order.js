@@ -64,6 +64,14 @@
 
         $('.js-next').click(function (e) {
             let currentStepId = $(this).parents('.content-item').attr('id');
+            var that = this;
+
+            function nextStep() {
+                var id = $(that).attr('href');
+                $(that).parents('.content-item').addClass('hide-item');
+                $(id).removeClass('hide-item');
+                goForward();
+            }
             if (currentStepId == 'step-3') {
                 //validate photo
 
@@ -74,16 +82,16 @@
                     if ($(chosenFiles[i]).val()) {
                         uploadedFilesNumber++;
                     }
-                }                
+                }
 
                 if (!uploadedFilesNumber) {
-                    errors.push('Необходимо загрузить хотя бы одну фотографию');
+                    errors.push('Необходимо выбрать хотя бы одну фотографию');
                 }
                 (function validateCommentsAreEnteredForChosenPics() {
                     let i = 0;
                     for (i = 0; i < MaxPictures; i++) {
                         let hiddenInput = chosenFiles[i];
-                        let picNo = getPicNo(hiddenInput);
+                        var picNo = getPicNo(hiddenInput);
                         let $ddlComment = $('#ddlCommentPic' + picNo);
                         if ($(hiddenInput).val() && !$ddlComment.val()) {
                             errors.push('Выберите комментарий для фотографии #' + (i + 1));
@@ -92,22 +100,53 @@
                 })();
 
                 let err = errors.join(". ");
-
                 if (err) {
                     console.error(err);
                     $('.photo-error').text(err).show();
                     e.preventDefault()
                     return;
                 }
-            }
-            
-            var id = $(this).attr('href');
-            $(this).parents('.content-item').addClass('hide-item');
-            $(id).removeClass('hide-item');
-            goForward();
 
-            e.preventDefault();
-            return false;
+                //now upload photos
+                for (i = 0; i < chosenFiles.length; i++) {
+                    if ($(chosenFiles[i]).val()) {
+                        var picNo = getPicNo(chosenFiles[i]);
+                        uploadFile(chosenFiles[i], function (resp) {
+                            console.log('uploaded OK', resp);
+                            orderState.imageMap['pic' + picNo] = {
+                                name: resp.filename,
+                                commentid: $('#ddlCommentPic' + picNo).val()
+                            };
+
+                            nextStep();
+                        }, function (resp) {
+                            console.log('failed to upload', resp);
+                            let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке фотографии';
+                            $('.photo-error').text(msg).show();
+                        });
+                    }
+                }
+                e.preventDefault();
+                return false;
+            }
+
+            //letter
+            if (currentStepId == 'step-4') {
+                let chosenFile = $('.pic-wrapper_letter input[type=hidden]')[0];
+                if ($(chosenFile).val()) {
+                    uploadFile(chosenFile, function (resp) {
+                        orderState.letter_filename = resp.filename;
+                        nextStep();
+                    }, function (resp) {
+                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
+                        $('.letter-error').text(msg).show();
+                    });
+                }
+                e.preventDefault();
+                return false;
+            }
+
+            nextStep();
         });
         $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
@@ -270,7 +309,7 @@
                 })
                 .always(function () {
                     Dm.hideLoader();
-                });;
+                });
         }
 
         function startOrder(gender) {
@@ -347,31 +386,8 @@
                 }
                 refreshCroppieImage(holder, imageUrl, null);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
-                
+                $hidFile.val(true);
                 $(input).remove();
-
-                if (picNo == 'letter') {
-                    uploadFile($hidFile, function (resp) {
-                        orderState.letter_filename = resp.filename;
-                        
-                        $hidFile.val(true);
-                    }, function (resp) {
-                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
-                        $('.letter-error').text(msg).show();
-                    });
-                } else {
-                    uploadFile($hidFile, function (resp) {
-                        orderState.imageMap['pic' + picNo] = {
-                            name: resp.filename,
-                            commentid: $('#ddlCommentPic' + picNo).val()
-                        };
-                        $hidFile.val(true);
-                    }, function (resp) {
-                        $hidFile.val(true);
-                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке фотографии';
-                        $('.photo-error').text(msg).show();
-                    });
-                }
             });
         }
 
