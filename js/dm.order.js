@@ -70,7 +70,7 @@
                 var id = $(that).attr('href');
                 $(that).parents('.content-item').addClass('hide-item');
                 $(id).removeClass('hide-item');
-                goForward();
+                goForward(id);
             }
             if (currentStepId == 'step-3') {
                 //validate photo
@@ -119,6 +119,7 @@
                 let successCallbacksNumber = 0;
                 for (i = 0; i < filesForUpload.length; i++) {
                     var picNo = getPicNo(filesForUpload[i]);
+                    Dm.showLoader();
                     uploadFile(picNo, function (respWrap) {
                         successCallbacksNumber++;
 
@@ -129,11 +130,13 @@
                         };
 
                         if (successCallbacksNumber == filesForUpload.length) {
+                            Dm.hideLoader();
                             nextStep();
                         }
                     }, function (respWrap) {
                         let resp = respWrap.resp;
                         console.log('failed to upload', resp);
+                        Dm.hideLoader();
                         let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке фотографии';
                         $('.photo-error').text(msg).show();
                         scrollUp();
@@ -151,14 +154,17 @@
                     e.preventDefault();
                     return false;
                 }
-
+                Dm.showLoader();
                 uploadFile('letter', function (respWrap) {
                     orderState.letter_filename = respWrap.resp.filename;
+                    Dm.hideLoader();
                     nextStep();
                 }, function (respWrap) {
+                    Dm.hideLoader();
                     let resp = respWrap.resp;
                     let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
                     $('.letter-error').text(msg).show();
+
                     scrollUp();
                 });
                 e.preventDefault();
@@ -171,7 +177,6 @@
             $(this).parents('.content-item').addClass('hide-item');
             var id = $(this).attr('href');
             $(id).removeClass('hide-item');
-            goBack();
             e.preventDefault();
             return false;
         });
@@ -234,7 +239,7 @@
             submitHandler: function (form) {
                 $("#step-3").removeClass('hide-item');
                 $("#step-2").addClass('hide-item');
-                goForward();
+                goForward('step-3');
             },
         });
 
@@ -250,7 +255,7 @@
             submitHandler: function (form) {
                 $("#step-6").removeClass('hide-item');
                 $("#step-5").addClass('hide-item');
-                goForward();
+                goForward('step-6');
             },
         });
 
@@ -272,7 +277,7 @@
             submitHandler: function (form) {
                 $("#step-7").removeClass('hide-item');
                 $("#step-6").addClass('hide-item');
-                goForward();
+                goForward('step-7');
             }
         });
 
@@ -321,7 +326,7 @@
 
         function loadComments(gender) {
             masterData.comments = [];
-            // Dm.showLoader();
+            Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + gender,
                     function (resp) {
                         var $ddl = $("select.ddl-comment");
@@ -342,7 +347,7 @@
                         refreshElement('select.ddl-comment');
                     })
                 .always(function () {
-                    // Dm.hideLoader();
+                    Dm.hideLoader();
                 });
         }
 
@@ -392,6 +397,8 @@
             orderState = initOrderState(gender);
 
             loadNames(gender);
+            loadComments(gender);
+            loadPraises(orderState.gender);
 
             function loadMasterdata() {
 
@@ -452,9 +459,6 @@
         }
 
         function uploadFile(picNo, onSuccess, onError) {
-
-            Dm.showLoader();
-
             let resultOpts = {
                 type: 'base64',
                 size: 'original'
@@ -484,9 +488,6 @@
                                 picNo: picNo
                             })
                         }
-                    },
-                    complete: function () {
-                        Dm.hideLoader();
                     }
                 });
             });
@@ -549,18 +550,9 @@
             refreshCroppieImage(elem, loadedImageUrl, this.value);
         }
 
-        function goBack() {
-            orderState.step--;
-        }
-
-        function goForward() {
-            saveDataToOrder(orderState.step);
-
-            console.log('Order state:', orderState);
-
-            orderState.step++;
-
-            if (orderState.step == steps.review) {
+        function goForward(nextStep) {
+            console.log('going forward. step:',nextStep,orderState)
+            if (nextStep == 'step-7') {
                 initReviewForm();
             }
         }
@@ -580,17 +572,6 @@
         $('#txtCustomerEmail').change(function () {
             orderState.customeremail = $(this).val();
         });
-
-        function saveDataToOrder(step) {
-            switch (step) {
-                case steps.kidname:
-                    loadComments(orderState.gender);
-                    break;
-                case steps.letter:
-                    loadPraises(orderState.gender);
-                    break;
-            }
-        }
 
         function initReviewForm() {
             console.log('init review form & validation...')
