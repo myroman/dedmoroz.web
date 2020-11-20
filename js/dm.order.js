@@ -10,6 +10,25 @@
         finished: 10
     }
 
+    let letter_croppie_settings = {
+        longSide: 550,
+        shortSide: 400,
+        reducCoef: 0.25,
+        boundaryWidth: 200,
+        boundaryHeight: 200
+    }
+
+    let photo_croppie_settings = {
+        // longSide: 700,
+        // shortSide: 660,
+        // reducCoef: 0.15,
+        longSide: 400,
+        shortSide: 300,
+        reducCoef: 0.5,
+        boundaryWidth: 200,
+        boundaryHeight: 200
+    }
+
     let MaxPictures = 3;
 
     function initOrderState(gender) {
@@ -41,14 +60,8 @@
     let masterData = {};
 
     $(function () {
-        // $('.order-dlg .goto-payment-btn').click(gotoPayment);
-        // $('.order-dlg .close-btn').click(closeDlg);
-
-        // $('.prev-btn').click(goBack);
-        // $('.submit-order').click(submitOrder);
         $('.image-aspect').change(onImageAspectChanged);
 
-        // stepper back,forward between dialog screens
         $('.js-next').click(function (e) {
             let currentStepId = $(this).parents('.content-item').attr('id');
             if (currentStepId == 'step-3') {
@@ -61,7 +74,7 @@
                     if ($(chosenFiles[i]).val()) {
                         uploadedFilesNumber++;
                     }
-                }
+                }                
 
                 if (!uploadedFilesNumber) {
                     errors.push('Необходимо загрузить хотя бы одну фотографию');
@@ -82,27 +95,12 @@
 
                 if (err) {
                     console.error(err);
-                    // setTimeout(function () {
-                    //     $('input, select').trigger('refresh');
-                    // }, 1)
                     $('.photo-error').text(err).show();
                     e.preventDefault()
                     return;
                 }
-
-                for (i = 0; i < chosenFiles.length; i++) {
-                    if ($(chosenFiles[i]).val()) {
-                        uploadFile(chosenFiles[i]);
-                    }
-                }
             }
-            //letter
-            else if (currentStepId == 'step-4') {
-                let chosenFile = $('.pic-wrapper_letter input[type=hidden]')[0];
-                if ($(chosenFile).val()) {
-                    uploadFile(chosenFile);
-                }
-            }
+            
             var id = $(this).attr('href');
             $(this).parents('.content-item').addClass('hide-item');
             $(id).removeClass('hide-item');
@@ -111,7 +109,7 @@
             e.preventDefault();
             return false;
         });
-        $('.js-prev').click(function () {
+        $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
             var id = $(this).attr('href');
             $(id).removeClass('hide-item');
@@ -235,7 +233,7 @@
         }
 
         function loadNames(gender) {
-            masterData.names = Dm.masterdata.names[gender+''];
+            masterData.names = Dm.masterdata.names[gender + ''];
 
             var $ddl = $("select.ddl-names");
             $ddl.html('');
@@ -316,15 +314,9 @@
             }
         }
 
-        // $(".input-photo").change(function () {
-        //     readURL(this);
-        // });
         $(".input-photo").change(function () {
             onFileChanged(this);
         });
-
-        // $('.file-picture').change(onFileChanged);
-        // $(".btn-upload-file").click(uploadFile);
 
         function onFileChanged(input) {
             function readFile(input, holder, success) {
@@ -343,64 +335,49 @@
 
             let $parent = $(input).parents('.pic-wrapper');
 
-            // $('#btnUploadFile' + picNo).removeAttr('disabled');
-            // let $btnUpload = $parent.find('.btn-upload-file');
-            // $btnUpload.removeAttr('disabled');
-
-            // $parent.find('.croppie-container').show();
             let holder = $parent.find('.photo-list__photo')[0];
             readFile(input, holder, function (imageUrl) {
                 let picNo = getPicNo(input);
                 console.log('refreshing image for', picNo)
                 imageCache[picNo].imageUrl = imageUrl;
                 if (picNo == 'letter') {
-                    imageCache[picNo].croppieSettings = {
-                        longSide: 550,
-                        shortSide: 400,
-                        reducCoef: 0.25,
-                        boundaryWidth: 200,
-                        boundaryHeight: 200
-                    }
+                    imageCache[picNo].croppieSettings = letter_croppie_settings
                 } else {
-                    imageCache[picNo].croppieSettings = {
-                        // longSide: 700,
-                        // shortSide: 660,
-                        // reducCoef: 0.15,
-                        longSide: 400,
-                        shortSide: 300,
-                        reducCoef: 0.5,
-                        boundaryWidth: 200,
-                        boundaryHeight: 200
-                    }
+                    imageCache[picNo].croppieSettings = photo_croppie_settings
                 }
                 refreshCroppieImage(holder, imageUrl, null);
-                // $(input).parents('.pic-wrapper').find('.aspect-container').show();
-                // $(input).parents('.photo-list__label').addClass('photo-list__label_extra-bottom-space');
                 let $hidFile = $(input).parent().find('input[type=hidden]');
-                $hidFile.val(1);
-
+                
                 $(input).remove();
+
+                if (picNo == 'letter') {
+                    uploadFile($hidFile, function (resp) {
+                        orderState.letter_filename = resp.filename;
+                        
+                        $hidFile.val(true);
+                    }, function (resp) {
+                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
+                        $('.letter-error').text(msg).show();
+                    });
+                } else {
+                    uploadFile($hidFile, function (resp) {
+                        orderState.imageMap['pic' + picNo] = {
+                            name: resp.filename,
+                            commentid: $('#ddlCommentPic' + picNo).val()
+                        };
+                        $hidFile.val(true);
+                    }, function (resp) {
+                        $hidFile.val(true);
+                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке фотографии';
+                        $('.photo-error').text(msg).show();
+                    });
+                }
             });
         }
 
-        function uploadFile(fileElem) {
+        function uploadFile(fileElem, onSuccess, onError) {
             let picno = getPicNo(fileElem);
-            let successHandler;
-            let isLetter = $(fileElem).attr('id') == 'hidLetter';
-            if (isLetter) {
-                successHandler = function (data) {
-                    // $('#letter-uploaded').show();
-                    orderState.letter_filename = data.filename;
-                };
-            } else {
-                successHandler = function (data) {
-                    // $('#photo-uploaded-' + picno).show();
-                    orderState.imageMap['pic' + picno] = {
-                        name: data.filename,
-                        commentid: $('#ddlCommentPic' + picno).val()
-                    };
-                }
-            }
+
             Dm.showLoader();
 
             let resultOpts = {
@@ -417,13 +394,10 @@
                     url: Dm.settings.baseurl + '/images/base64',
                     data: JSON.stringify(data),
                     contentType: 'application/json',
-                    success: successHandler,
+                    success: onSuccess,
+                    error: onError,
                     complete: function () {
                         Dm.hideLoader();
-                    },
-                    error: function (resp) {
-                        let selector = isLetter ? '.letter-error' : '.photo-error';
-                        $(selector).text('Ошибка при загрузке фотографии. Мы поддерживаем изображения форматов JPG и PNG. Если же расширение верное, то обратитесь в службу техю поддержки.').show();
                     }
                 });
             });
