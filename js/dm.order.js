@@ -127,8 +127,10 @@
                         console.log('uploaded OK', respWrap.picNo, respWrap.resp);
                         orderState.imageMap['pic' + respWrap.picNo] = {
                             name: respWrap.resp.filename,
-                            commentid: $('#ddlCommentPic' + respWrap.picNo).val()
+                            commentid: $('#ddlCommentPic' + respWrap.picNo).val(),
+                            aspect: imageCache[respWrap.picNo].aspect
                         };
+                        console.log("orderstate after image upload",orderState.imageMap['pic' + respWrap.picNo])
 
                         if (successCallbacksNumber == filesForUpload.length) {
                             Dm.hideLoader();
@@ -451,7 +453,12 @@
                 } else {
                     imageCache[picNo].croppieSettings = photo_croppie_settings
                 }
-                refreshCroppieImage(holder, imageUrl, null);
+                let $rdAspectChecked = $parent.find('.image-aspect:checked');
+                let selectedAspect = 'portrait';
+                if ($rdAspectChecked.length) {
+                    selectedAspect = $rdAspectChecked.val();
+                }
+                refreshCroppieImage(holder, imageUrl, selectedAspect);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
                 $hidFile.val(true);
                 console.log('removing input', input)
@@ -525,7 +532,7 @@
             let $parent = $(elem).parents('.pic-wrapper');
             $parent.find('.image-aspect-wrapper').show();
 
-            function createCroppie(elem, ratio) {
+            function createCroppie(elem, aspect) {
                 let viewport = null;
                 let boundary = {
                     width: croppieSettings.boundaryWidth,
@@ -535,7 +542,7 @@
 
                 let long_side = croppieSettings.longSide * reducCoef,
                     short_side = croppieSettings.shortSide * reducCoef;
-                if (ratio == 'landscape') {
+                if (aspect == 'landscape') {
                     viewport = {
                         width: long_side,
                         height: short_side
@@ -556,10 +563,9 @@
 
         function onImageAspectChanged() {
             let picNo = getPicNo(this);
-            let loadedImageUrl = imageCache[picNo].imageUrl;
             let $parent = $(this).parents('.pic-wrapper');
             let elem = $parent.find('.photo-list__photo')[0]
-            refreshCroppieImage(elem, loadedImageUrl, this.value);
+            refreshCroppieImage(elem, imageCache[picNo].imageUrl, this.value);
         }
 
         function goForward(nextStep) {
@@ -616,11 +622,18 @@
                     for (i = 0; i < photoKeys.length; i++) {
                         let imageInfo = orderState.imageMap[photoKeys[i]];
                         if (imageInfo.name && !imageInfo.commentid) {
-                            errors.push('комментарий к фотографии №' + (i + 1));
+                            if (!imageInfo.commentid){
+                                errors.push('комментарий к фотографии №' + (i + 1));
+                            }
+                            if (!imageInfo.aspect) {
+                                errors.push('формат фотографии №' + (i + 1) + ' (вертикальный или горизонтальный)');
+                            }
                         }
                     }
                 }
-
+                if (orderState.letter_filename && !imageInfo.aspect) {
+                    errors.push('формат письма (вертикальный или горизонтальный)');
+                }
 
                 if (!orderState.praiseid) {
                     errors.push('похвала');
