@@ -11,20 +11,21 @@
     }
 
     let letter_croppie_settings = {
-        longSide: 550,
-        shortSide: 400,
-        reducCoef: 0.25,
+        longSide: 930,
+        shortSide: 600,
+        reducCoef: 0.15,
         boundaryWidth: 200,
         boundaryHeight: 200
     }
+    let croppieResultLongSide = 1200;
 
     let photo_croppie_settings = {
         // longSide: 700,
         // shortSide: 660,
         // reducCoef: 0.15,
-        longSide: 400,
-        shortSide: 300,
-        reducCoef: 0.5,
+        longSide: 700,
+        shortSide: 600,
+        reducCoef: 0.25,
         boundaryWidth: 200,
         boundaryHeight: 200
     }
@@ -458,11 +459,21 @@
             });
         }
 
-        function uploadFile(picNo, onSuccess, onError) {
+        function uploadFile(picNo, onSuccess, onError) {            
             let resultOpts = {
-                type: 'base64',
-                size: 'original'
+                type: 'base64'
             };
+
+            if (imageCache[picNo].aspect == 'landscape') {
+                resultOpts.size = {
+                    width: croppieResultLongSide
+                }
+            } else {
+                resultOpts.size = {
+                    height: croppieResultLongSide
+                }
+            }
+            
             let croppie = imageCache[picNo].croppie;
             croppie.result(resultOpts).then(function (imgEncoded) {
                 let data = {
@@ -505,6 +516,7 @@
 
             let croppie;
             croppie = imageInfo.croppie = createCroppie(elem, aspect);
+            imageInfo.aspect = aspect;
 
             croppie.bind({
                 url: image_url
