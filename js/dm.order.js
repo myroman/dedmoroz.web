@@ -207,8 +207,11 @@
                 $input.change(function () {
                     onFileChanged(this);
                 });
+                $input.click();
 
                 $container.find('input[type=hidden]').val('');
+            } else if ($container.find('input[type=file]').length) {
+                $container.find('input[type=file]').click();
             }
 
             e.preventDefault();

@@ -87,21 +87,23 @@
 .delete-photo-link {
     text-decoration: underline;
 }
-
-.vertical-format {
+.dm-icon {
     display: block;
     text-indent: -9999px;
     width: 34px;
     height: 34px;
+}
+
+.dm-icon_redo {
+    background: url(../img/redo.svg);
+    background-size: 34px 34px;
+}
+.dm-icon_vertical-format {
     background: url(../img/vertical-format.svg);
     background-size: 34px 34px;
 }
 
-.horizontal-format {
-    display: block;
-    text-indent: -9999px;
-    width: 34px;
-    height: 34px;
+.dm-icon_horizontal-format {
     background: url(../img/horizontal-format.svg);
     background-size: 34px 34px;
 }
