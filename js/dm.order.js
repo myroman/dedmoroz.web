@@ -37,7 +37,6 @@
             step: 0,
             kidname: '',
             gender: gender,
-            letter_filename: null,
             praiseid: 19,
             behaviorid: 1,
             customername: '',
@@ -159,7 +158,10 @@
                 }
                 Dm.showLoader();
                 uploadFile('letter', function (respWrap) {
-                    orderState.letter_filename = respWrap.resp.filename;
+                    orderState.letter = {
+                        name: respWrap.resp.filename,
+                        aspect: imageCache[respWrap.picNo].aspect
+                    };
                     Dm.hideLoader();
                     nextStep();
                 }, function (respWrap) {
@@ -195,7 +197,7 @@
             //TODO: delete image from server
             imageCache[picNo] = {};
             if (picNo == 'letter') {
-                orderState.letter_filename = null;
+                orderState.letter = null;
             }
             let $container = $(this).parents('.pic-wrapper');
 
@@ -631,7 +633,7 @@
                         }
                     }
                 }
-                if (orderState.letter_filename && !imageInfo.aspect) {
+                if (orderState.letter && !orderState.letter.aspect) {
                     errors.push('формат письма (вертикальный или горизонтальный)');
                 }
 
@@ -664,7 +666,7 @@
             let kidname = masterData.names.find(x => x.id == orderState.kidname).displayname;
             $('.review-form .name-text').text(kidname);
 
-            $('.review-form .letter-text').text(orderState.letter_filename ? 'Да' : 'Нет');
+            $('.review-form .letter-text').text(orderState.letter && orderState.letter.name ? 'Да' : 'Нет');
 
             let praise = masterData.praises.find(x => x.id == orderState.praiseid);
             if (praise) {
@@ -717,21 +719,23 @@
             let orderInfo = {
                 kidname: orderState.kidname,
                 gender: orderState.gender,
-                images: {
-                    content: []
-                },
-                letter_filename: orderState.letter_filename,
+                images: { },
                 praiseid: +orderState.praiseid,
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
                 customeremail: orderState.customeremail
             };
+
+            orderInfo.images.content = [];
             let i = 0;
             for (i = 0; i < MaxPictures; i++) {
                 let key = 'pic' + i;
                 if (orderState.imageMap[key] && orderState.imageMap[key].name) {
                     orderInfo.images.content.push(orderState.imageMap[key]);
                 }
+            }
+            if (orderState.letter && orderState.letter.name) {
+                orderInfo.images.letters = [orderState.letter]
             }
 
             Dm.showLoader();
