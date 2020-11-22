@@ -3142,7 +3142,8 @@ label.error {
   width: 160px;
 }
 
-.kids-photo-list .photo-list__label, .photo-list-single .photo-list__label {
+.kids-photo-list .photo-list__label,
+.photo-list-single .photo-list__label {
   margin-bottom: 50px;
 }
 
@@ -3150,8 +3151,58 @@ label.error {
   margin-top: 10px;
 }
 
-.button-next:disabled, .button-next[disabled] {
+.button-next:disabled,
+.button-next[disabled] {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+}
+
+.image-toolbox {
+  display: flex;
+  font-size: 34px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.image-toolbox-item {
+  margin: 0 10px;
+}
+
+.rotate-button {
+  padding: 2px 0;
+  width: 30px;
+}
+
+.delete-photo-wrapper {
+  padding: 12px;
+}
+
+.delete-photo-link {
+  text-decoration: underline;
+}
+
+.vertical-format {
+  display: block;
+  text-indent: -9999px;
+  width: 34px;
+  height: 34px;
+  background: url(../img/vertical-format.svg);
+  background-size: 34px 34px;
+}
+
+.horizontal-format {
+  display: block;
+  text-indent: -9999px;
+  width: 34px;
+  height: 34px;
+  background: url(../img/horizontal-format.svg);
+  background-size: 34px 34px;
+}
+
+.image-toolbox input[type=radio] {
+  position: absolute;
+  left: -60000px;
+  visibility: hidden;
 }

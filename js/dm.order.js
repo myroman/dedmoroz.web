@@ -129,7 +129,7 @@
                             commentid: $('#ddlCommentPic' + respWrap.picNo).val(),
                             aspect: imageCache[respWrap.picNo].aspect
                         };
-                        console.log("orderstate after image upload",orderState.imageMap['pic' + respWrap.picNo])
+                        console.log("orderstate after image upload", orderState.imageMap['pic' + respWrap.picNo])
 
                         if (successCallbacksNumber == filesForUpload.length) {
                             Dm.hideLoader();
@@ -213,6 +213,17 @@
 
             e.preventDefault();
             return false;
+        });
+
+        $('.js-image-rotate').click(function (e) {
+            let picno = getPicNo(this);
+            let croppie = imageCache[picno].croppie;
+            if (!croppie) {
+                e.preventDefault();
+                return;
+            }
+
+            croppie.rotate(parseInt($(this).data('deg')));
         });
 
         //choose boy, girl
@@ -468,7 +479,7 @@
             });
         }
 
-        function uploadFile(picNo, onSuccess, onError) {            
+        function uploadFile(picNo, onSuccess, onError) {
             let resultOpts = {
                 type: 'base64'
             };
@@ -482,7 +493,7 @@
                     height: croppieResultLongSide
                 }
             }
-            
+
             let croppie = imageCache[picNo].croppie;
             croppie.result(resultOpts).then(function (imgEncoded) {
                 let data = {
@@ -571,7 +582,7 @@
         }
 
         function goForward(nextStep) {
-            console.log('going forward. step:',nextStep,orderState)
+            console.log('going forward. step:', nextStep, orderState)
             if (nextStep == 'step-7') {
                 initReviewForm();
             }
@@ -624,7 +635,7 @@
                     for (i = 0; i < photoKeys.length; i++) {
                         let imageInfo = orderState.imageMap[photoKeys[i]];
                         if (imageInfo.name && !imageInfo.commentid) {
-                            if (!imageInfo.commentid){
+                            if (!imageInfo.commentid) {
                                 errors.push('комментарий к фотографии №' + (i + 1));
                             }
                             if (!imageInfo.aspect) {
@@ -708,7 +719,7 @@
                 }
                 $('.review-form .photos-number-text').text(photosUploaded);
             }
-            
+
             displayInfoAboutPhotos();
         }
 
@@ -719,7 +730,7 @@
             let orderInfo = {
                 kidname: orderState.kidname,
                 gender: orderState.gender,
-                images: { },
+                images: {},
                 praiseid: +orderState.praiseid,
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
