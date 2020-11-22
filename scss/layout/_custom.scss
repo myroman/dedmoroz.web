@@ -153,6 +153,19 @@
     margin: 0 auto;
 }
 
+.centered-text-container {
+    width: 90%;
+    margin: auto auto;
+}
+
+.demo-info-wrapper {
+    
+
+    .go-to-payment {
+        margin-top: 12px;
+    }
+}
+
 @media screen and (max-width: 480px) {
     .table-2-columns {
         margin: 0 0 40px;
@@ -160,11 +173,11 @@
         text-align: center;
 
         .table-row {
-            flex-direction: column;            
+            flex-direction: column;
         }
 
         .field-name {
-            width: 100%;            
+            width: 100%;
         }
 
         .field-value {
