@@ -44,7 +44,7 @@
                             window.location.replace(createWatchUrl(ordernumber, videotype));
                         }, 300);
                     } else {
-                        $('.waiting-info').text('Мы сейчас создаем демо видео, пожалуйста подождите.');
+                        $('.waiting-info').text('Мы сейчас создаём демо видео, пожалуйста подождите.');
                         setTimeout(function () {
                             checkAndRedirect(statusUrl, ordernumber, videotype);
                         }, timeout);
@@ -56,7 +56,7 @@
                             window.location.replace(createWatchUrl(ordernumber, videotype));
                         }, 300);
                     } else {
-                        $('.waiting-info').text('Мы сейчас создаем видео, пожалуйста подождите.');
+                        $('.waiting-info').text('Мы сейчас создаём видео, пожалуйста подождите.');
 
                         setTimeout(function () {
                             checkAndRedirect(statusUrl, ordernumber, videotype);

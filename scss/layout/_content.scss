@@ -1027,10 +1027,10 @@ label.error{
     font-size: 15px;
     line-height: 17px;
 	font-weight: 400;
-	padding: 0;
+	padding: 10px;
     position: relative;
-    margin: 28px auto 112px;
-    max-width: 469px;
+    margin: 20px auto 40px;
+    width: 90%;
     letter-spacing: -0.25px;
     display: block;
 }
@@ -1166,7 +1166,7 @@ label.error{
 	text-align: center;
 	&__item {
 		padding: 0 37px;
-		width: 50%;
+		width: 100%;
 		margin-bottom: 77px;
 	}
 
@@ -1197,9 +1197,9 @@ label.error{
 
 	&__photo{
 		position: absolute;
-		left: 0;
+		left: 25%;
 		top: 0;
-		width: 100%;
+		width: 50%;
 		height: 100%;
 		z-index: 1;
 		background-size: contain;
@@ -1622,7 +1622,11 @@ label.error{
 		width: calc(100% + 30px);
 		&__item{
 			padding: 0 15px ;
-			margin-bottom: 50px;
+			margin-bottom: 100px;
+		}
+		&__item:last-child{
+			padding: 0 15px ;
+			margin-bottom: 10px;
 		}
 	}
 
@@ -1876,11 +1880,11 @@ label.error{
 	.content-item h1{
 		font-size: 31px;
 		line-height: 37px;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 	}
 
 	.content-item-choose__title{
-		font-size: 21px;
+		font-size: 22px;
 		line-height: 25px;
 	}
 
@@ -1962,7 +1966,7 @@ label.error{
 	}
 
 	.select-sub-title{
-		margin: 0 auto 75px;
+		margin: 20px 10px;
 	}
 
 	.content-item__bottom-text p{

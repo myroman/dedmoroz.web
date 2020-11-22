@@ -47,15 +47,146 @@
     width: 160px;
 }
 
-.kids-photo-list .photo-list__label, .photo-list-single .photo-list__label {
+.kids-photo-list .photo-list__label,
+.photo-list-single .photo-list__label {
     margin-bottom: 50px;
 }
+
 .choose-radio {
     margin-top: 10px;
 }
 
-.button-next:disabled, .button-next[disabled] {
+.button-next:disabled,
+.button-next[disabled] {
     border: 1px solid #999999;
     background-color: #cccccc;
     color: #666666;
+}
+
+.image-toolbox {
+    display: flex;
+    font-size: 34px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0 10px 0;
+}
+
+.image-toolbox-item {
+    margin: 0 16px;
+}
+
+.rotate-button {
+    padding: 2px 0;
+    width: 30px;
+}
+
+.delete-photo-wrapper {
+    padding: 12px 0 20px 0;
+}
+
+.delete-photo-link {
+    text-decoration: underline;
+}
+
+.dm-icon {
+    display: block;
+    text-indent: -9999px;
+    width: 34px;
+    height: 34px;
+}
+
+.dm-icon_redo {
+    background: url(../img/redo.svg);
+    background-size: 34px 34px;
+}
+
+.dm-icon_vertical-format {
+    background: url(../img/vertical-format.svg);
+    background-size: 34px 34px;
+}
+
+.dm-icon_horizontal-format {
+    background: url(../img/horizontal-format.svg);
+    background-size: 34px 34px;
+}
+
+.image-toolbox input[type=radio] {
+    position: absolute;
+    left: -60000px;
+    visibility: hidden;
+}
+
+.praise-header {
+    margin-top: 30px;
+}
+
+.table-2-columns {
+    display: flex;
+    font-size: 18px;
+    color: black;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    line-height: 1.3em;
+    flex-direction: column;
+    margin: 0 auto 40px;
+    width: 90%;
+
+    .table-row {
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+    }
+
+    .field-name {
+        width: 30%;
+        padding: 0 10px;
+        font-weight: 600;
+    }
+
+    .field-value {
+        width: 70%;
+        padding: 0 10px;
+    }
+}
+
+.submit-order {
+    margin: 0 auto;
+}
+
+.centered-text-container {
+    width: 90%;
+    margin: auto auto;
+}
+
+.demo-info-wrapper {
+    .go-to-payment {
+        margin-top: 12px;
+    }
+}
+.video__holder > video {
+    width: 100%    !important;
+    height: auto   !important;
+}
+p.info-paragraph {
+    margin: 10px 10% 0;
+}
+
+@media screen and (max-width: 480px) {
+    .table-2-columns {
+        margin: 0 0 40px;
+        width: 100%;
+        text-align: center;
+
+        .table-row {
+            flex-direction: column;
+        }
+
+        .field-name {
+            width: 100%;
+        }
+
+        .field-value {
+            width: 100%;
+        }
+    }
 }

@@ -1,14 +1,4 @@
 (function ($) {
-    let steps = {
-        kidname: 0,
-        photos: 1,
-        letter: 2,
-        additionalOptions: 3,
-        customerDetails: 4,
-        review: 5,
-
-        finished: 10
-    }
 
     let letter_croppie_settings = {
         longSide: 930,
@@ -20,9 +10,6 @@
     let croppieResultLongSide = 1200;
 
     let photo_croppie_settings = {
-        // longSide: 700,
-        // shortSide: 660,
-        // reducCoef: 0.15,
         longSide: 700,
         shortSide: 600,
         reducCoef: 0.25,
@@ -129,7 +116,7 @@
                             commentid: $('#ddlCommentPic' + respWrap.picNo).val(),
                             aspect: imageCache[respWrap.picNo].aspect
                         };
-                        console.log("orderstate after image upload",orderState.imageMap['pic' + respWrap.picNo])
+                        console.log("orderstate after image upload", orderState.imageMap['pic' + respWrap.picNo])
 
                         if (successCallbacksNumber == filesForUpload.length) {
                             Dm.hideLoader();
@@ -207,12 +194,26 @@
                 $input.change(function () {
                     onFileChanged(this);
                 });
+                $input.click();
 
                 $container.find('input[type=hidden]').val('');
+            } else if ($container.find('input[type=file]').length) {
+                $container.find('input[type=file]').click();
             }
 
             e.preventDefault();
             return false;
+        });
+
+        $('.js-image-rotate').click(function (e) {
+            let picno = getPicNo(this);
+            let croppie = imageCache[picno].croppie;
+            if (!croppie) {
+                e.preventDefault();
+                return;
+            }
+
+            croppie.rotate(parseInt($(this).data('deg')));
         });
 
         //choose boy, girl
@@ -299,7 +300,6 @@
                     $('.submit-order').prop('disabled', false);
                     scrollUp();
                 }
-                // $("#step-7").addClass('hide-item');
             }, function (resp) {
                 console.log('some error during submitting order', resp);
                 if (resp.responseJSON && resp.responseJSON.error) {
@@ -468,7 +468,7 @@
             });
         }
 
-        function uploadFile(picNo, onSuccess, onError) {            
+        function uploadFile(picNo, onSuccess, onError) {
             let resultOpts = {
                 type: 'base64'
             };
@@ -482,7 +482,7 @@
                     height: croppieResultLongSide
                 }
             }
-            
+
             let croppie = imageCache[picNo].croppie;
             croppie.result(resultOpts).then(function (imgEncoded) {
                 let data = {
@@ -557,7 +557,6 @@
                 }
                 return new Croppie(elem, {
                     viewport: viewport,
-                    // boundary: boundary,
                     enableOrientation: true
                 });
             }
@@ -571,7 +570,7 @@
         }
 
         function goForward(nextStep) {
-            console.log('going forward. step:',nextStep,orderState)
+            console.log('going forward. step:', nextStep, orderState)
             if (nextStep == 'step-7') {
                 initReviewForm();
             }
@@ -624,7 +623,7 @@
                     for (i = 0; i < photoKeys.length; i++) {
                         let imageInfo = orderState.imageMap[photoKeys[i]];
                         if (imageInfo.name && !imageInfo.commentid) {
-                            if (!imageInfo.commentid){
+                            if (!imageInfo.commentid) {
                                 errors.push('комментарий к фотографии №' + (i + 1));
                             }
                             if (!imageInfo.aspect) {
@@ -708,7 +707,7 @@
                 }
                 $('.review-form .photos-number-text').text(photosUploaded);
             }
-            
+
             displayInfoAboutPhotos();
         }
 
@@ -719,7 +718,7 @@
             let orderInfo = {
                 kidname: orderState.kidname,
                 gender: orderState.gender,
-                images: { },
+                images: {},
                 praiseid: +orderState.praiseid,
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
