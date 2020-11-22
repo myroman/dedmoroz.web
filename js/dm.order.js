@@ -1,14 +1,4 @@
 (function ($) {
-    let steps = {
-        kidname: 0,
-        photos: 1,
-        letter: 2,
-        additionalOptions: 3,
-        customerDetails: 4,
-        review: 5,
-
-        finished: 10
-    }
 
     let letter_croppie_settings = {
         longSide: 930,
@@ -20,9 +10,6 @@
     let croppieResultLongSide = 1200;
 
     let photo_croppie_settings = {
-        // longSide: 700,
-        // shortSide: 660,
-        // reducCoef: 0.15,
         longSide: 700,
         shortSide: 600,
         reducCoef: 0.25,
@@ -313,7 +300,6 @@
                     $('.submit-order').prop('disabled', false);
                     scrollUp();
                 }
-                // $("#step-7").addClass('hide-item');
             }, function (resp) {
                 console.log('some error during submitting order', resp);
                 if (resp.responseJSON && resp.responseJSON.error) {
@@ -571,7 +557,6 @@
                 }
                 return new Croppie(elem, {
                     viewport: viewport,
-                    // boundary: boundary,
                     enableOrientation: true
                 });
             }
