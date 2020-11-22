@@ -1166,7 +1166,7 @@ label.error{
 	text-align: center;
 	&__item {
 		padding: 0 37px;
-		width: 50%;
+		width: 100%;
 		margin-bottom: 77px;
 	}
 
@@ -1197,9 +1197,9 @@ label.error{
 
 	&__photo{
 		position: absolute;
-		left: 0;
+		left: 25%;
 		top: 0;
-		width: 100%;
+		width: 50%;
 		height: 100%;
 		z-index: 1;
 		background-size: contain;
@@ -1622,7 +1622,11 @@ label.error{
 		width: calc(100% + 30px);
 		&__item{
 			padding: 0 15px ;
-			margin-bottom: 50px;
+			margin-bottom: 100px;
+		}
+		&__item:last-child{
+			padding: 0 15px ;
+			margin-bottom: 10px;
 		}
 	}
 

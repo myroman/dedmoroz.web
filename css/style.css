@@ -2206,7 +2206,7 @@ label.error {
 }
 .photo-list__item {
   padding: 0 37px;
-  width: 50%;
+  width: 100%;
   margin-bottom: 77px;
 }
 .photo-list__label {
@@ -2233,9 +2233,9 @@ label.error {
 }
 .photo-list__photo {
   position: absolute;
-  left: 0;
+  left: 25%;
   top: 0;
-  width: 100%;
+  width: 50%;
   height: 100%;
   z-index: 1;
   background-size: contain;
@@ -2698,7 +2698,11 @@ label.error {
   }
   .photo-list__item {
     padding: 0 15px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
+  }
+  .photo-list__item:last-child {
+    padding: 0 15px;
+    margin-bottom: 10px;
   }
 
   .select-sub-title {
