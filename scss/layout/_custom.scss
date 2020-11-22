@@ -159,11 +159,13 @@
 }
 
 .demo-info-wrapper {
-    
-
     .go-to-payment {
         margin-top: 12px;
     }
+}
+.video__holder > video {
+    width: 100%    !important;
+    height: auto   !important;
 }
 
 @media screen and (max-width: 480px) {
@@ -187,5 +189,5 @@
 
     .submit-order {
         margin-left: 0;
-    }
+    }   
 }

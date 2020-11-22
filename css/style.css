@@ -2977,7 +2977,7 @@ label.error {
   .content-item h1 {
     font-size: 31px;
     line-height: 37px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .content-item-choose__title {
@@ -3256,6 +3256,11 @@ label.error {
 
 .demo-info-wrapper .go-to-payment {
   margin-top: 12px;
+}
+
+.video__holder > video {
+  width: 100% !important;
+  height: auto !important;
 }
 
 @media screen and (max-width: 480px) {
