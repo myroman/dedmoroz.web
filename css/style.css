@@ -705,6 +705,11 @@ header .wrapper {
   max-width: 1576px;
   padding: 0 40px 0 40px;
 }
+header .button {
+  font-size: 18px;
+  height: 40px;
+  padding: 5px 20px;
+}
 
 .logo {
   font-family: "Crassula", sans-serif;
@@ -1907,7 +1912,7 @@ ul {
 }
 .choose-radio__item {
   padding: 0 32px;
-  width: 33.3%;
+  width: 50%;
 }
 .choose-radio__label {
   display: block;
@@ -3119,4 +3124,34 @@ label.error {
   line-height: 25px;
   letter-spacing: -0.1px;
   margin-bottom: 4px;
+}
+
+.waiting-info {
+  text-align: center;
+}
+
+.info-block {
+  margin-top: 20px;
+}
+
+.choose-radio-aspect__item {
+  margin-bottom: 14px;
+}
+
+.choose-radio-aspect__label .choose-radio__button_small {
+  width: 160px;
+}
+
+.kids-photo-list .photo-list__label, .photo-list-single .photo-list__label {
+  margin-bottom: 50px;
+}
+
+.choose-radio {
+  margin-top: 10px;
+}
+
+.button-next:disabled, .button-next[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }

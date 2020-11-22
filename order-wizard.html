@@ -90,7 +90,7 @@
                     <div class="content-item content-item-choose hide-item" id="step-3">
                         <div class="content-item__bg" id="childPhoto">
                             <div class="content-item-choose__title">Добавьте фотографии ребенка</div>
-                            <p class="content-item-choose__sub-title">Загрузите от 1 до 3ех фотографий ребенка и выберите к ним комментарии</p>
+                            <p class="content-item-choose__sub-title">Загрузите от 1 до 3 фотографий ребенка в формате JPG или PNG и выберите к ним комментарии</p>
 
                             <p class="content-item-choose__sub-title content-item-choose__sub-title_error photo-error"></p>
 
@@ -102,6 +102,10 @@
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+                                    <div class="delete-photo-wrapper">
+                                        <a href='#' class="choose-radio__button choose-radio__button_small js-delete-photo">Удалить фотографию</a>
+                                    </div>
+                                    
                                     <div class="aspect-container">
                                         <ul class="choose-radio js-choose-radio">
                                             <li class="choose-radio-aspect__item">
@@ -128,6 +132,11 @@
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+
+                                    <div class="delete-photo-wrapper">
+                                        <a href='#' class="choose-radio__button choose-radio__button_small js-delete-photo">Удалить фотографию</a>
+                                    </div>
+                                    
                                     <div class="aspect-container">
                                         <ul class="choose-radio js-choose-radio">
                                             <li class="choose-radio-aspect__item">
@@ -154,6 +163,11 @@
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+
+                                    <div class="delete-photo-wrapper">
+                                        <a href='#' class="choose-radio__button choose-radio__button_small js-delete-photo">Удалить фотографию</a>
+                                    </div>
+
                                     <div class="aspect-container">
                                         <ul class="choose-radio js-choose-radio">
                                             <li class="choose-radio-aspect__item">
@@ -188,6 +202,7 @@
                         <div class="content-item__bg">
                             <div class="content-item-choose__title">Добавьте письмо (рисунок) Деду Морозу</div>
                             <p class="content-item-choose__sub-title">Если ребенок не написал письмо, пропустите этот шаг</p>
+                            <p class="content-item-choose__sub-title content-item-choose__sub-title_error letter-error"></p>
                             <div class="photo-list photo-list-single">
                                 <div class="photo-list__item pic-wrapper pic-wrapper_letter mb-4" data-picno="letter">
                                     <label class="photo-list__label">
@@ -196,17 +211,22 @@
                                         <span class="photo-list__photo"></span>
                                         <i class="icon-upload"></i>
                                     </label>
+
+                                    <div class="delete-photo-wrapper">
+                                        <a href='#' class="choose-radio__button choose-radio__button_small js-delete-photo">Удалить</a>
+                                    </div>
+
                                     <div class="aspect-container">
                                         <ul class="choose-radio js-choose-radio">
                                             <li class="choose-radio-aspect__item">
                                                 <label class="choose-radio-aspect__label">
-                                                    <input type="radio" name="aspect_2" value="portrait" class="image-aspect" checked>
+                                                    <input type="radio" name="aspect_letter" value="portrait" class="image-aspect" checked>
                                                     <span class="choose-radio__button choose-radio__button_small">Вертикально</span>
                                                 </label>
                                             </li>
                                             <li class="choose-radio-aspect__item">
                                                 <label class="choose-radio-aspect__label">
-                                                    <input type="radio" name="aspect_2" value="landscape" class="image-aspect">
+                                                    <input type="radio" name="aspect_letter" value="landscape" class="image-aspect">
                                                     <span class="choose-radio__button choose-radio__button_small">Горизонтально</span>
                                                 </label>
                                             </li>
@@ -230,11 +250,11 @@
                             <select class="js-styled styled styled-sm" id="ddlBehavior" data-placeholder="Хорошее поведение" name="mark">
                                 <option></option>
                                 <option value="1" selected>Хорошее поведение</option>
-                                <option value="2">Плохое или неоднозначное поведение</option>
+                                <option value="2">Шкодливое поведение</option>
                             </select>
                             <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna</p> -->
                             <p class="content-item-choose__sub-title">Достижения:</p>
-                            <select class="js-styled styled styled-sm ddl-praise" data-placeholder="Разные увлечения" name="achievements" id="ddlPraise">
+                            <select class="js-styled styled styled-sm" data-placeholder="Разные увлечения" name="achievements" id="ddlPraise">
                             </select>
                             <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna </p> -->
                             <div class="content-item__bottom">
@@ -275,6 +295,7 @@
                     <div class="content-item content-item-choose hide-item review-form" id="step-7">
                         <div class="content-item__bg" id="reviewOrder">
                             <div class="content-item-choose__title">Проверьте данные по заказу</div>
+                            <p class="content-item-choose__sub-title content-item-choose__sub-title_error error-block"></p>
                             <div class="box-field">
                                 <label for="name" class="box-field__label">Пол:</label>
                                 <div class="box-field__input">
@@ -412,12 +433,12 @@
                             </div>
                             <ul class="social-list">
                                 <li class="social-list__item">
-                                    <a href="#" class="social-list__link social-list__link_inst" target="_blank">
+                                    <a href="https://www.instagram.com/darimchudo/" class="social-list__link social-list__link_inst" target="_blank">
                                         <img src="img/inst.png" alt="">
                                     </a>
                                 </li>
                                 <li class="social-list__item">
-                                    <a href="#" class="social-list__link social-list__link_vk" target="_blank">
+                                    <a href="https://vk.com/public200346034" class="social-list__link social-list__link_vk" target="_blank">
                                         <img src="img/vk.png" alt="">
                                     </a>
                                 </li>
@@ -427,7 +448,7 @@
                                     </a>
                                 </li>
                                 <li class="social-list__item">
-                                    <a href="#" class="social-list__link social-list__link_youtube" target="_blank">
+                                    <a href="https://www.youtube.com/channel/UCWcRYpamljjN21EoSOFokqw" class="social-list__link social-list__link_youtube" target="_blank">
                                         <img src="img/youtube.png" alt="">
                                     </a>
                                 </li>
@@ -440,7 +461,7 @@
         </div>
         <div class="icon-load"></div>
         <!-- BODY EOF   -->
-        <link rel="stylesheet" type="text/css" href="css/style.css?qr=2" />
+        <link rel="stylesheet" type="text/css" href="css/style.css?qr=10" />
         <script src="js/jquery-3.0.0.min.js"></script>
         <script src="js/jquery-migrate-1.4.1.min.js"></script>
         <script src="js/components/jquery.formstyler.js"></script>
@@ -448,8 +469,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"
     integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
     crossorigin="anonymous"></script>
-        <script src="js/custom.js?qr=2"></script>
-        <script src="js/dm.settings.js?qr=2"></script>
-        <script src="js/dm.order.js?qr=2" crossorigin="anonymous"></script>
+        <script src="js/custom.js?qr=10"></script>
+        <script src="js/dm.settings.js?qr=10"></script>
+        <script src="js/masterdata.js?qr=10"></script>
+        <script src="js/dm.order.js?qr=10" crossorigin="anonymous"></script>
     </body>
 </html>

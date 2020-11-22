@@ -27,7 +27,7 @@
         if (videotype == 1) {
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber='+ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
-            $('.payment-page-link').show();
+            $('.demo-info-wrapper').show();
         }
 
         let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;

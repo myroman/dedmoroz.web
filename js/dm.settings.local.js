@@ -17,8 +17,8 @@ Dm = {};
 Dm.settings = createDmSettings();
 
 Dm.showLoader = function() {
-    $('#ftco-loader').addClass('show');
+    $('body').addClass('loaded');
 };
 Dm.hideLoader = function() {
-    $('#ftco-loader').removeClass('show');
+    $('body').removeClass('loaded');
 };

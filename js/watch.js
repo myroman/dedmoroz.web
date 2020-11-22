@@ -13,7 +13,6 @@
         }
     }
 
-
     $(function () {
         let ordernumber = getURLParameter('ordernumber');
         let videotype = +getURLParameter('vt') ? 1 : 0;
@@ -28,7 +27,7 @@
         if (videotype == 1) {
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
-            $('.payment-page-link').show();
+            $('.demo-info-wrapper').show();
         }
 
         var video = document.querySelector('video');

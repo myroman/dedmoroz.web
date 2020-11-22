@@ -10,6 +10,26 @@
         finished: 10
     }
 
+    let letter_croppie_settings = {
+        longSide: 930,
+        shortSide: 600,
+        reducCoef: 0.15,
+        boundaryWidth: 200,
+        boundaryHeight: 200
+    }
+    let croppieResultLongSide = 1200;
+
+    let photo_croppie_settings = {
+        // longSide: 700,
+        // shortSide: 660,
+        // reducCoef: 0.15,
+        longSide: 700,
+        shortSide: 600,
+        reducCoef: 0.25,
+        boundaryWidth: 200,
+        boundaryHeight: 200
+    }
+
     let MaxPictures = 3;
 
     function initOrderState(gender) {
@@ -17,11 +37,10 @@
             step: 0,
             kidname: '',
             gender: gender,
-            letter_filename: null,
             praiseid: 19,
             behaviorid: 1,
-            customername: 'Роман',
-            customeremail: 'roman.pavlushchenko@gmail.com',
+            customername: '',
+            customeremail: '',
 
             imageMap: {}
         };
@@ -41,16 +60,18 @@
     let masterData = {};
 
     $(function () {
-        // $('.order-dlg .goto-payment-btn').click(gotoPayment);
-        // $('.order-dlg .close-btn').click(closeDlg);
-
-        // $('.prev-btn').click(goBack);
-        // $('.submit-order').click(submitOrder);
         $('.image-aspect').change(onImageAspectChanged);
 
-        // stepper back,forward between dialog screens
-        $('.js-next').click(function () {
+        $('.js-next').click(function (e) {
             let currentStepId = $(this).parents('.content-item').attr('id');
+            var that = this;
+
+            function nextStep() {
+                var id = $(that).attr('href');
+                $(that).parents('.content-item').addClass('hide-item');
+                $(id).removeClass('hide-item');
+                goForward(id);
+            }
             if (currentStepId == 'step-3') {
                 //validate photo
 
@@ -64,13 +85,13 @@
                 }
 
                 if (!uploadedFilesNumber) {
-                    errors.push('Необходимо загрузить хотя бы одну фотографию');
+                    errors.push('Необходимо выбрать хотя бы одну фотографию');
                 }
                 (function validateCommentsAreEnteredForChosenPics() {
                     let i = 0;
                     for (i = 0; i < MaxPictures; i++) {
                         let hiddenInput = chosenFiles[i];
-                        let picNo = getPicNo(hiddenInput);
+                        var picNo = getPicNo(hiddenInput);
                         let $ddlComment = $('#ddlCommentPic' + picNo);
                         if ($(hiddenInput).val() && !$ddlComment.val()) {
                             errors.push('Выберите комментарий для фотографии #' + (i + 1));
@@ -79,40 +100,118 @@
                 })();
 
                 let err = errors.join(". ");
-
                 if (err) {
                     console.error(err);
-                    // setTimeout(function () {
-                    //     $('input, select').trigger('refresh');
-                    // }, 1)
-                    // $('.photo-error').text(err).show();
+                    $('.photo-error').text(err).show();
+                    scrollUp();
+                    e.preventDefault()
                     return;
                 }
 
+                //now upload photos
+                let filesForUpload = []
                 for (i = 0; i < chosenFiles.length; i++) {
                     if ($(chosenFiles[i]).val()) {
-                        uploadFile(chosenFiles[i]);
+                        filesForUpload.push(chosenFiles[i])
                     }
                 }
-            }
-            //letter
-            else if (currentStepId == 'step-4') {
-                let chosenFile = $('.pic-wrapper_letter input[type=hidden]')[0];
-                if ($(chosenFile).val()) {
-                    uploadFile(chosenFile);
+
+                let successCallbacksNumber = 0;
+                for (i = 0; i < filesForUpload.length; i++) {
+                    var picNo = getPicNo(filesForUpload[i]);
+                    Dm.showLoader();
+                    uploadFile(picNo, function (respWrap) {
+                        successCallbacksNumber++;
+
+                        console.log('uploaded OK', respWrap.picNo, respWrap.resp);
+                        orderState.imageMap['pic' + respWrap.picNo] = {
+                            name: respWrap.resp.filename,
+                            commentid: $('#ddlCommentPic' + respWrap.picNo).val(),
+                            aspect: imageCache[respWrap.picNo].aspect
+                        };
+                        console.log("orderstate after image upload",orderState.imageMap['pic' + respWrap.picNo])
+
+                        if (successCallbacksNumber == filesForUpload.length) {
+                            Dm.hideLoader();
+                            nextStep();
+                        }
+                    }, function (respWrap) {
+                        let resp = respWrap.resp;
+                        console.log('failed to upload', resp);
+                        Dm.hideLoader();
+                        let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке фотографии';
+                        $('.photo-error').text(msg).show();
+                        scrollUp();
+                    });
                 }
+                e.preventDefault();
+                return false;
             }
-            var id = $(this).attr('href');
+
+            //letter
+            if (currentStepId == 'step-4') {
+                let chosenFile = $('.pic-wrapper_letter input[type=hidden]')[0];
+                if (!$(chosenFile).val()) {
+                    nextStep();
+                    e.preventDefault();
+                    return false;
+                }
+                Dm.showLoader();
+                uploadFile('letter', function (respWrap) {
+                    orderState.letter = {
+                        name: respWrap.resp.filename,
+                        aspect: imageCache[respWrap.picNo].aspect
+                    };
+                    Dm.hideLoader();
+                    nextStep();
+                }, function (respWrap) {
+                    Dm.hideLoader();
+                    let resp = respWrap.resp;
+                    let msg = resp && resp.responseJSON ? resp.responseJSON.error : 'Ошибка при загрузке письма';
+                    $('.letter-error').text(msg).show();
+
+                    scrollUp();
+                });
+                e.preventDefault();
+                return false;
+            }
+
+            nextStep();
+        });
+        $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
+            var id = $(this).attr('href');
             $(id).removeClass('hide-item');
-            goForward();
+            e.preventDefault();
             return false;
         });
-        $('.js-prev').click(function () {
-            $(this).parents('.content-item').addClass('hide-item');
-            var id = $(this).attr('href');
-            $(id).removeClass('hide-item');
-            goBack();
+
+        $('.js-delete-photo').click(function (e) {
+            let picNo = getPicNo(this);
+            let imageInfo = imageCache[picNo];
+            //cleanup
+            if (imageInfo.croppie) {
+                imageInfo.croppie.destroy();
+                imageInfo.croppie = null;
+            }
+            //TODO: delete image from server
+            imageCache[picNo] = {};
+            if (picNo == 'letter') {
+                orderState.letter = null;
+            }
+            let $container = $(this).parents('.pic-wrapper');
+
+            if ($container.find('input[type=hidden]').val()) {
+                let $input = $('<input type="file" class="input-photo input-photo_hidden" />').attr('id', 'photo-' + picNo);
+                $container.find('.photo-list__label').prepend($input);
+                $input.change(function () {
+                    onFileChanged(this);
+                });
+
+                $container.find('input[type=hidden]').val('');
+            }
+
+            e.preventDefault();
             return false;
         });
 
@@ -132,7 +231,7 @@
 
         if ($('.js-styled').length) {
             $('.js-styled').styler({
-                selectSearch: true,
+                selectSearch: true
             });
         };
 
@@ -145,7 +244,7 @@
             submitHandler: function (form) {
                 $("#step-3").removeClass('hide-item');
                 $("#step-2").addClass('hide-item');
-                goForward();
+                goForward('step-3');
             },
         });
 
@@ -161,45 +260,78 @@
             submitHandler: function (form) {
                 $("#step-6").removeClass('hide-item');
                 $("#step-5").addClass('hide-item');
-                goForward();
+                goForward('step-6');
             },
         });
 
         $("#contactDetails").validate({
             rules: {
-                name: "required",
-                email: "required",
+                customerName: "required",
+                customerEmail: {
+                    required: true,
+                    email: true
+                }
             },
             messages: {
-                name: "*Обязательное поле",
-                msg: "*Обязательное поле",
+                customerName: "*Обязательное поле",
+                customerEmail: {
+                    required: "*Обязательное поле",
+                    email: "Введите корректный email"
+                },
             },
             submitHandler: function (form) {
                 $("#step-7").removeClass('hide-item');
                 $("#step-6").addClass('hide-item');
-                goForward();
+                goForward('step-7');
             }
         });
 
         $('.submit-order').click(function () {
-            submitOrder(function () {
-                $("#step-7").addClass('hide-item');
+            submitOrder(function (data) {
+                console.log('success, redirecting to wait page', data);
+                let ordernumber = data.ordernumber;
+                if (ordernumber) {
+                    setTimeout(function () {
+                        window.location.replace("in-progress.html?ordernumber=" + ordernumber + "&vt=1");
+                    }, 1000);
+                } else {
+                    showReviewError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
+                    $('.submit-order').prop('disabled', false);
+                    scrollUp();
+                }
+                // $("#step-7").addClass('hide-item');
+            }, function (resp) {
+                console.log('some error during submitting order', resp);
+                if (resp.responseJSON && resp.responseJSON.error) {
+                    showReviewError(resp.responseJSON.error);
+                } else {
+                    showReviewError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
+                }
+                scrollUp();
+
+                $('.submit-order').prop('disabled', false);
+
+                Dm.hideLoader();
             });
         });
 
-
-        function showError(message) {
-            $('.wizard-warning').show();
-            $('.wizard-warning p').text(message)
+        function showReviewError(message) {
+            $('.review-form .error-block').text(message).show();
         }
 
-        function hideError() {
-            $('.wizard-warning').hide();
+        function clearReviewError() {
+            $('.review-form .error-block').hide();
+        }
+
+        function scrollUp() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 300);
         }
 
         function loadComments(gender) {
             masterData.comments = [];
-            // Dm.showLoader();
+            Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + gender,
                     function (resp) {
                         var $ddl = $("select.ddl-comment");
@@ -220,38 +352,29 @@
                         refreshElement('select.ddl-comment');
                     })
                 .always(function () {
-                    // Dm.hideLoader();
+                    Dm.hideLoader();
                 });
         }
 
         function loadNames(gender) {
-            masterData.names = [];
-            Dm.showLoader();
-            $.get(Dm.settings.baseurl + '/md/names?gender=' + gender,
-                    function (resp) {
-                        var $ddl = $("select.ddl-names");
-                        $ddl.html('');
-                        $ddl.append($("<option />").val('').text('Выберите имя'));
+            masterData.names = Dm.masterdata.names[gender + ''];
 
-                        $.each(resp, function () {
-                            $ddl.append($("<option />").val(this.id).text(this.displayname));
-                            masterData.names.push(this);
-                        });
+            var $ddl = $("select.ddl-names");
+            $ddl.html('');
+            $ddl.append($("<option />").val('').text('Выберите имя'));
 
-                        $ddl.val('617');
-
-                        refreshElement('select.ddl-names');
-                    })
-                .always(function () {
-                    Dm.hideLoader();
-                });;
+            $.each(masterData.names, function () {
+                $ddl.append($("<option />").val(this.id).text(this.displayname));
+                masterData.names.push(this);
+            });
+            refreshElement('select.ddl-names');
         }
 
         function loadPraises(gender) {
             masterData.praises = [];
             Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
-                    var $ddl = $("select.ddl-praise");
+                    var $ddl = $("#ddlPraise");
                     $ddl.html('');
                     $ddl.append($("<option />").val('').text('-- Выберите похвалу --'));
 
@@ -265,19 +388,22 @@
                     });
                     if (defaultValue) {
                         $ddl.val(defaultValue);
+                        orderState.praiseid = defaultValue;
                     }
 
-                    refreshElement('select.ddl-praise');
+                    refreshElement('#ddlPraise');
                 })
                 .always(function () {
                     Dm.hideLoader();
-                });;
+                });
         }
 
         function startOrder(gender) {
             orderState = initOrderState(gender);
 
             loadNames(gender);
+            loadComments(gender);
+            loadPraises(orderState.gender);
 
             function loadMasterdata() {
 
@@ -286,7 +412,7 @@
                     text: 'Хорошее'
                 }, {
                     id: 2,
-                    text: 'Плохое или неоднозначное'
+                    text: 'Шкодливое'
                 }];
             }
 
@@ -300,40 +426,17 @@
             return $parent.data('picno');
         }
 
-        /*upload image on background*/
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                console.log();
-
-                reader.onload = function (e) {
-                    $('#' + input.id).parents('label').addClass('active');
-                    $('#' + input.id).parents('label').find('.photo-list__photo').css('background-image', "url(" + e.target.result + ")");
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        // $(".input-photo").change(function () {
-        //     readURL(this);
-        // });
         $(".input-photo").change(function () {
             onFileChanged(this);
         });
-
-        // $('.file-picture').change(onFileChanged);
-        // $(".btn-upload-file").click(uploadFile);
 
         function onFileChanged(input) {
             function readFile(input, holder, success) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
-
                     reader.onload = function (e) {
                         success(e.target.result);
                     }
-
                     reader.readAsDataURL(input.files[0]);
                 } else {
                     console.error("Ваш браузер не поддерживает загрузку фотографий, пожалуйста используйте последнюю версию для браузеров Google Chrome, Mozilla Firefox или Safari");
@@ -342,71 +445,45 @@
 
             let $parent = $(input).parents('.pic-wrapper');
 
-            // $('#btnUploadFile' + picNo).removeAttr('disabled');
-            // let $btnUpload = $parent.find('.btn-upload-file');
-            // $btnUpload.removeAttr('disabled');
-
-            // $parent.find('.croppie-container').show();
             let holder = $parent.find('.photo-list__photo')[0];
             readFile(input, holder, function (imageUrl) {
                 let picNo = getPicNo(input);
                 console.log('refreshing image for', picNo)
                 imageCache[picNo].imageUrl = imageUrl;
                 if (picNo == 'letter') {
-                    imageCache[picNo].croppieSettings = {
-                        longSide: 550,
-                        shortSide: 400,
-                        reducCoef: 0.25,
-                        boundaryWidth: 200,
-                        boundaryHeight: 200
-                    }
+                    imageCache[picNo].croppieSettings = letter_croppie_settings
                 } else {
-                    imageCache[picNo].croppieSettings = {
-                        // longSide: 700,
-                        // shortSide: 660,
-                        // reducCoef: 0.15,
-                        longSide: 400,
-                        shortSide: 300,
-                        reducCoef: 0.5,
-                        boundaryWidth: 200,
-                        boundaryHeight: 200
-                    }
+                    imageCache[picNo].croppieSettings = photo_croppie_settings
                 }
-                refreshCroppieImage(holder, imageUrl, null);
-                // $(input).parents('.pic-wrapper').find('.aspect-container').show();
-                // $(input).parents('.photo-list__label').addClass('photo-list__label_extra-bottom-space');
+                let $rdAspectChecked = $parent.find('.image-aspect:checked');
+                let selectedAspect = 'portrait';
+                if ($rdAspectChecked.length) {
+                    selectedAspect = $rdAspectChecked.val();
+                }
+                refreshCroppieImage(holder, imageUrl, selectedAspect);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
-                $hidFile.val(1);
-
+                $hidFile.val(true);
+                console.log('removing input', input)
                 $(input).remove();
             });
         }
 
-        function uploadFile(fileElem) {
-            let picno = getPicNo(fileElem);
-            let successHandler;
-            let isLetter = $(fileElem).attr('id') == 'hidLetter';
-            if (isLetter) {
-                successHandler = function (data) {
-                    // $('#letter-uploaded').show();
-                    orderState.letter_filename = data.filename;
-                };
+        function uploadFile(picNo, onSuccess, onError) {            
+            let resultOpts = {
+                type: 'base64'
+            };
+
+            if (imageCache[picNo].aspect == 'landscape') {
+                resultOpts.size = {
+                    width: croppieResultLongSide
+                }
             } else {
-                successHandler = function (data) {
-                    // $('#photo-uploaded-' + picno).show();
-                    orderState.imageMap['pic' + picno] = {
-                        name: data.filename,
-                        commentid: $('#ddlCommentPic' + picno).val()
-                    };
+                resultOpts.size = {
+                    height: croppieResultLongSide
                 }
             }
-            Dm.showLoader();
-
-            let resultOpts = {
-                type: 'base64',
-                size: 'original'
-            };
-            let croppie = imageCache[picno].croppie;
+            
+            let croppie = imageCache[picNo].croppie;
             croppie.result(resultOpts).then(function (imgEncoded) {
                 let data = {
                     'content': imgEncoded
@@ -416,13 +493,21 @@
                     url: Dm.settings.baseurl + '/images/base64',
                     data: JSON.stringify(data),
                     contentType: 'application/json',
-                    success: successHandler,
-                    complete: function () {
-                        Dm.hideLoader();
+                    success: function (resp) {
+                        if (onSuccess) {
+                            onSuccess({
+                                resp: resp,
+                                picNo: picNo
+                            });
+                        }
                     },
                     error: function (resp) {
-                        let selector = isLetter ? '.letter-error' : '.photo-error';
-                        $(selector).text('Ошибка при загрузке фотографии. Мы поддерживаем изображения форматов JPG и PNG. Если же расширение верное, то обратитесь в службу техю поддержки.').show();
+                        if (onError) {
+                            onError({
+                                resp: resp,
+                                picNo: picNo
+                            })
+                        }
                     }
                 });
             });
@@ -432,6 +517,7 @@
             let imageInfo = imageCache[getPicNo(elem)];
             if (imageInfo.croppie) {
                 imageInfo.croppie.destroy();
+                imageInfo.croppie = null;
             }
 
             let croppieSettings = imageInfo.croppieSettings;
@@ -439,6 +525,7 @@
 
             let croppie;
             croppie = imageInfo.croppie = createCroppie(elem, aspect);
+            imageInfo.aspect = aspect;
 
             croppie.bind({
                 url: image_url
@@ -447,7 +534,7 @@
             let $parent = $(elem).parents('.pic-wrapper');
             $parent.find('.image-aspect-wrapper').show();
 
-            function createCroppie(elem, ratio) {
+            function createCroppie(elem, aspect) {
                 let viewport = null;
                 let boundary = {
                     width: croppieSettings.boundaryWidth,
@@ -457,7 +544,7 @@
 
                 let long_side = croppieSettings.longSide * reducCoef,
                     short_side = croppieSettings.shortSide * reducCoef;
-                if (ratio == 'landscape') {
+                if (aspect == 'landscape') {
                     viewport = {
                         width: long_side,
                         height: short_side
@@ -476,115 +563,39 @@
             }
         }
 
-
-
         function onImageAspectChanged() {
             let picNo = getPicNo(this);
-            let loadedImageUrl = imageCache[picNo].imageUrl;
             let $parent = $(this).parents('.pic-wrapper');
             let elem = $parent.find('.photo-list__photo')[0]
-            refreshCroppieImage(elem, loadedImageUrl, this.value);
+            refreshCroppieImage(elem, imageCache[picNo].imageUrl, this.value);
         }
 
-
-
-        function goBack() {
-            orderState.step--;
-        }
-
-        function goForward() {
-            // let errors = validateInput(orderState.step);
-            // if (errors.length) {
-            //     showError(errors.join('. '));
-            //     return;
-            // }
-            saveDataToOrder(orderState.step);
-
-            console.log('Order state:', orderState);
-
-            hideError();
-            orderState.step++;
-
-            if (orderState.step == steps.review) {
+        function goForward(nextStep) {
+            console.log('going forward. step:',nextStep,orderState)
+            if (nextStep == 'step-7') {
                 initReviewForm();
             }
         }
 
-        function validateInput(step) {
-            let errors = [];
-            switch (step) {
-                case steps.kidname:
-                    let kidname = $('#ddlName').val();
-                    if (!kidname) {
-                        errors.push('Введите имя');
-                    }
-                    return errors;
-                case steps.photos:
-                    if (!orderState.imageMap['pic0']) {
-                        errors.push('Необходимо загрузить хотя бы одну фотографию');
-                    }
-                    (function validateCommentsAreEnteredForUploadedPics() {
-                        let i = 0;
-                        for (i = 0; i < MaxPictures; i++) {
-                            let imageInfo = orderState.imageMap['pic' + i];
-                            if (imageInfo && imageInfo.name) {
-                                if (!$('#ddlCommentPic' + i).val()) {
-                                    errors.push('Выберите комментарий для фотографии ' + (i + 1));
-                                }
-                            }
-                        }
-                    })();
-
-                    return errors;
-                case steps.additionalOptions:
-                    let praise = $('#ddlPraise').val();
-                    if (!praise) {
-                        errors.push('Введите похвалу');
-                    }
-                    return errors;
-                case steps.customerDetails:
-                    if (!$('#txtCustomerName').val()) {
-                        errors.push('Введите Ваше имя');
-                    }
-                    if (!$('#txtCustomerEmail').val()) {
-                        errors.push('Введите Ваш электронный адрес');
-                    }
-                    return errors;
-                default:
-                    return [];
-            }
-        }
-
-        function saveDataToOrder(step) {
-            switch (step) {
-                case steps.kidname:
-                    orderState.kidname = $('#ddlName').val();
-                    loadComments(orderState.gender);
-                    break;
-                    // case steps.photos:
-                    //     let i = 0;
-                    //     for (i = 0; i < MaxPictures; i++) {
-                    //         let picId = 'pic' + i;
-                    //         if (orderState.imageMap[picId]) {
-                    //             orderState.imageMap[picId].commentid = $('#ddlCommentPic' + i).val();
-                    //         }
-                    //     }
-                    //     break;
-                case steps.letter:
-                    loadPraises(orderState.gender);
-                    break;
-                case steps.additionalOptions:
-                    orderState.praiseid = $('#ddlPraise').val();
-                    orderState.behaviorid = $('#ddlBehavior').val();
-                    break;
-                case steps.customerDetails:
-                    orderState.customername = $('#txtCustomerName').val();
-                    orderState.customeremail = $('#txtCustomerEmail').val();
-                    break;
-            }
-        }
+        $('#ddlName').change(function () {
+            orderState.kidname = $(this).val();
+        });
+        $('#ddlPraise').change(function () {
+            orderState.praiseid = $(this).val();
+        });
+        $('#ddlBehavior').change(function () {
+            orderState.behaviorid = $(this).val();
+        });
+        $('#txtCustomerName').change(function () {
+            orderState.customername = $(this).val();
+        });
+        $('#txtCustomerEmail').change(function () {
+            orderState.customeremail = $(this).val();
+        });
 
         function initReviewForm() {
+            console.log('init review form & validation...')
+
             function getForWhom(gender) {
                 switch (gender) {
                     case 0:
@@ -595,12 +606,67 @@
                         return "Двое детей";
                 }
             }
+
+            function validateOrder(orderState) {
+                let errors = [];
+                if (!orderState.kidname) {
+                    errors.push('имя ребенка');
+                }
+                if (orderState.gender >= 2) {
+                    errors.push('пол ребенка');
+                }
+                if (!orderState.imageMap) {
+                    errors.push('фотографии');
+                } else {
+                    let i;
+
+                    let photoKeys = Object.keys(orderState.imageMap);
+                    for (i = 0; i < photoKeys.length; i++) {
+                        let imageInfo = orderState.imageMap[photoKeys[i]];
+                        if (imageInfo.name && !imageInfo.commentid) {
+                            if (!imageInfo.commentid){
+                                errors.push('комментарий к фотографии №' + (i + 1));
+                            }
+                            if (!imageInfo.aspect) {
+                                errors.push('формат фотографии №' + (i + 1) + ' (вертикальный или горизонтальный)');
+                            }
+                        }
+                    }
+                }
+                if (orderState.letter && !orderState.letter.aspect) {
+                    errors.push('формат письма (вертикальный или горизонтальный)');
+                }
+
+                if (!orderState.praiseid) {
+                    errors.push('похвала');
+                }
+                if (!orderState.behaviorid) {
+                    errors.push('поведение');
+                }
+                if (!orderState.customername) {
+                    errors.push('ваше имя');
+                }
+                if (!orderState.customeremail) {
+                    errors.push('ваш email');
+                }
+
+                if (errors.length) {
+                    return 'Кажется, некоторые данные не были введены, пожалуйста введите: ' + errors.join(', ');
+                }
+            }
+            clearReviewError();
+            $('.submit-order').prop('disabled', false);
+            let validationMsg = validateOrder(orderState);
+            if (validationMsg) {
+                showReviewError(validationMsg);
+                $('.submit-order').prop('disabled', true);
+            }
             $('.review-form .gender-text').text(getForWhom(orderState.gender));
 
             let kidname = masterData.names.find(x => x.id == orderState.kidname).displayname;
             $('.review-form .name-text').text(kidname);
 
-            $('.review-form .letter-text').text(orderState.letter_filename ? 'Да' : 'Нет');
+            $('.review-form .letter-text').text(orderState.letter && orderState.letter.name ? 'Да' : 'Нет');
 
             let praise = masterData.praises.find(x => x.id == orderState.praiseid);
             if (praise) {
@@ -615,52 +681,61 @@
             $('.review-form .customer-name-text').text(orderState.customername);
             $('.review-form .customer-email-text').text(orderState.customeremail);
 
-            let i = 0;
-            let photosUploaded = 0;
-            for (i = 0; i < MaxPictures; i++) {
-                let picid = 'pic' + i;
-                let imageInfo = orderState.imageMap[picid];
-                if (imageInfo && imageInfo.commentid) {
-                    let commentSelector = '.review-form .comment' + i + '-text';
-
-                    function findCommentByFilepath(filepath) {
-                        if (!filepath) return '';
-                        let j;
-                        for (j = 0; j < masterData.comments.length; j++) {
-                            if (masterData.comments[j].filepath == filepath) {
-                                return masterData.comments[j].displayname;
-                            }
-                        }
-                        return ''
+            function findCommentByFilepath(filepath) {
+                if (!filepath) return '';
+                let j;
+                for (j = 0; j < masterData.comments.length; j++) {
+                    if (masterData.comments[j].filepath == filepath) {
+                        return masterData.comments[j].displayname;
                     }
-                    $(commentSelector).text(findCommentByFilepath(imageInfo.commentid));
-                    $(commentSelector).parents('.comment-wrapper').show();
-                    photosUploaded++;
                 }
+                return ''
             }
 
-            $('.review-form .photos-number-text').text(photosUploaded);
+            function displayInfoAboutPhotos() {
+                let photoKeys = Object.keys(orderState.imageMap);
+                let photosUploaded = 0;
+                let i = 0;
+                for (i = 0; i < photoKeys.length; i++) {
+                    let imageInfo = orderState.imageMap[photoKeys[i]];
+                    if (imageInfo.name && imageInfo.commentid) {
+                        photosUploaded++;
+
+                        let commentSelector = '.review-form .comment' + i + '-text';
+                        $(commentSelector).text(findCommentByFilepath(imageInfo.commentid));
+                        $(commentSelector).parents('.comment-wrapper').show();
+                    }
+                }
+                $('.review-form .photos-number-text').text(photosUploaded);
+            }
+            
+            displayInfoAboutPhotos();
         }
 
-        function submitOrder(onSuccess) {
+        function submitOrder(onSuccess, onError) {
+            //to avoid double submission
+            $('.submit-order').prop('disabled', true);
+
             let orderInfo = {
                 kidname: orderState.kidname,
                 gender: orderState.gender,
-                images: {
-                    content: []
-                },
-                letter_filename: orderState.letter_filename,
+                images: { },
                 praiseid: +orderState.praiseid,
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
                 customeremail: orderState.customeremail
             };
+
+            orderInfo.images.content = [];
             let i = 0;
             for (i = 0; i < MaxPictures; i++) {
                 let key = 'pic' + i;
                 if (orderState.imageMap[key] && orderState.imageMap[key].name) {
                     orderInfo.images.content.push(orderState.imageMap[key]);
                 }
+            }
+            if (orderState.letter && orderState.letter.name) {
+                orderInfo.images.letters = [orderState.letter]
             }
 
             Dm.showLoader();
@@ -669,31 +744,8 @@
                 url: Dm.settings.baseurl + '/orders',
                 data: JSON.stringify(orderInfo),
                 contentType: 'application/json',
-                success: function (data) {
-                    console.log('success, redirecting to wait page', data);
-                    let ordernumber = data.ordernumber;
-                    if (ordernumber) {
-                        setTimeout(function () {
-                            window.location.replace("in-progress.html?ordernumber=" + ordernumber + "&vt=1");
-                        }, 1000);
-                    } else {
-                        showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
-                    }
-
-                    if (onSuccess) {
-                        onSuccess(data);
-                    }
-                },
-                error: function (resp) {
-                    console.log('some error during submitting order', resp);
-                    if (resp.responseJSON && resp.responseJSON.message) {
-                        showError(resp.responseJSON.message);
-                    } else {
-                        showError("Произошла какая-то ошибка. Пожалуйста, обратитесь в службу поддержки.");
-                    }
-
-                    Dm.hideLoader();
-                }
+                success: onSuccess,
+                error: onError
             });
         }
     });
