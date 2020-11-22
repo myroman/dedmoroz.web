@@ -27,7 +27,10 @@
         if (videotype == 1) {
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
-            $('.demo-info-wrapper').show();
+            $('.watch-video-heading').text('Демо-видео поздравления');
+            $('.demo-info-wrapper').show();            
+        } else {
+            $('.watch-video-heading').text('Видеопоздравление');
         }
 
         var video = document.querySelector('video');
