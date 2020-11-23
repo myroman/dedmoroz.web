@@ -2723,181 +2723,6 @@ label.error {
     margin-top: 25px;
   }
 }
-@media screen and (max-width: 767px) {
-  .main-screen {
-    padding-top: 130px;
-    padding-bottom: 80px;
-  }
-
-  .main-screen__btns {
-    margin-top: 40px;
-  }
-
-  .btns {
-    flex-direction: column;
-  }
-  .btns__item {
-    margin-bottom: 10px;
-  }
-
-  .servise-list {
-    margin-bottom: 85px;
-  }
-
-  .servise-list__item {
-    width: 100%;
-    margin-bottom: 45px;
-  }
-  .servise-list__item:last-child {
-    margin: 0px 0px 0px 0px;
-  }
-
-  .feedback {
-    display: block;
-  }
-
-  .cost__title {
-    font-size: 26px;
-    line-height: 32px;
-  }
-
-  .inner-content {
-    padding-top: 50px;
-    padding-bottom: 75px;
-  }
-
-  .content-item__bg {
-    padding: 15px 15px 45px;
-  }
-
-  .content-item h1 {
-    font-size: 35px;
-    line-height: 41px;
-  }
-
-  .order-step > li:before {
-    font-size: 37px;
-    left: 0;
-  }
-
-  .order-step p {
-    font-size: 16px;
-    line-height: 21px;
-  }
-
-  .content-item-choose .content-item__bg {
-    padding: 25px 15px;
-  }
-
-  .content-item-choose__title {
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 0px;
-  }
-
-  .choose-radio {
-    display: block;
-  }
-  .choose-radio__item {
-    width: 100%;
-    margin-bottom: 25px;
-  }
-
-  .choose-radio__button {
-    display: inline-flex;
-  }
-
-  .choose-radio__label {
-    text-align: center;
-  }
-
-  .choose-radio__icon {
-    font-size: 70px;
-    min-height: 0;
-    margin-bottom: 15px;
-  }
-
-  .button-blue-border {
-    padding: 5px 24px;
-  }
-
-  .payment-list {
-    margin: 0 -8px;
-    max-width: calc(100% + 16px);
-  }
-  .payment-list__item {
-    padding: 0 8px;
-  }
-
-  .main-screen__santa {
-    right: -40px;
-    width: 80%;
-  }
-
-  .content-item-choose__sub-title {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .styled .jq-selectbox__select {
-    height: 56px;
-    font-size: 18px;
-    line-height: 26px;
-    padding: 14px 28px 0;
-  }
-
-  .styled .jq-selectbox__trigger-arrow {
-    top: 22px;
-    right: 10px;
-  }
-
-  .styled .jq-selectbox__dropdown {
-    top: 56px;
-  }
-
-  .jq-selectbox li {
-    font-size: 18px;
-    line-height: 26px;
-    padding: 5px 20px;
-  }
-
-  .photo-list__item {
-    width: 100%;
-  }
-
-  .photo-list__label {
-    height: 200px;
-    margin-bottom: 22px;
-  }
-
-  .icon-upload {
-    width: 80px;
-    height: 80px;
-  }
-
-  .box-field {
-    display: block;
-    margin-bottom: 25px;
-  }
-
-  .box-field__label {
-    display: block;
-    width: 100%;
-    margin-bottom: 5px;
-  }
-
-  .form-control {
-    height: 50px;
-  }
-
-  .box-field + .button-next {
-    margin-bottom: 20px;
-  }
-
-  .content-item-choose__title + .box-field {
-    margin-top: 45px;
-  }
-}
 .my-full-page-container {
   min-height: 100%;
   height: 100%;
@@ -3126,6 +2951,39 @@ p.info-paragraph {
   border-width: 0 8px 13px 8px;
   top: 40%;
   left: -60%;
+}
+
+.faq-page h2 {
+  margin-top: 40px;
+}
+.faq-page .faq-accordion h3 {
+  font-size: 20px;
+  font-family: "Iskra";
+  height: auto;
+  padding: 12px 4px 12px 18px;
+  line-height: 1em;
+  margin-top: 4px;
+}
+.faq-page .faq-accordion p {
+  margin: 8px 0;
+  font-size: 18px;
+  line-height: 1.4em;
+  font-family: "Nunito", sans-serif;
+}
+.faq-page .faq-accordion .ui-accordion-header.ui-state-active {
+  background: #134268;
+}
+.faq-page .faq-accordion .ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e,
+.faq-page .faq-accordion .ui-state-active .ui-icon, .faq-page .faq-accordion .ui-button:active .ui-icon {
+  display: none;
+}
+.faq-page .faq-accordion ul {
+  padding: 25px 0;
+}
+.faq-page .faq-accordion ul > li {
+  font-size: 15px;
+  line-height: 1em;
+  padding-top: 8px;
 }
 
 @media screen and (max-width: 480px) {
@@ -3532,5 +3390,10 @@ p.info-paragraph {
 
   .content-item-choose__title + .box-field {
     margin-top: 45px;
+  }
+
+  .faq-page h2 {
+    font-size: 27px;
+    line-height: 1em;
   }
 }
