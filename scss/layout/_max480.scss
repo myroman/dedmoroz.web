@@ -167,6 +167,13 @@
 		text-align: center;
 	}
 
+	.photo-list {
+		&__photo{
+			width: 90%;
+			left: 5%;
+		}
+	}
+
 	.photo-list__label{
 		height: 170px;
 		margin-bottom: 0;

@@ -3321,6 +3321,11 @@ p.info-paragraph {
     text-align: center;
   }
 
+  .photo-list__photo {
+    width: 90%;
+    left: 5%;
+  }
+
   .photo-list__label {
     height: 170px;
     margin-bottom: 0;
