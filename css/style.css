@@ -1315,7 +1315,6 @@ ul {
 
 .video {
   width: 830px;
-  height: 492px;
   max-width: 100%;
   margin: 0 auto 103px;
   position: relative;
@@ -1705,7 +1704,7 @@ ul {
 }
 
 .inner-page {
-  background: #5a84a8;
+  background: #abc0d2;
 }
 .inner-page header {
   top: 0;
@@ -2757,10 +2756,6 @@ label.error {
     display: block;
   }
 
-  .video {
-    height: 300px;
-  }
-
   .cost__title {
     font-size: 26px;
     line-height: 32px;
@@ -3354,6 +3349,15 @@ p.info-paragraph {
   .ddl-names-holder {
     width: 100%;
   }
+
+  .video__play i {
+    font-size: 34px;
+    margin: 0 auto 12px;
+  }
+
+  .video__play span {
+    font-size: 18px;
+  }
 }
 @media screen and (max-width: 767px) {
   .main-screen {
@@ -3386,10 +3390,6 @@ p.info-paragraph {
 
   .feedback {
     display: block;
-  }
-
-  .video {
-    height: 300px;
   }
 
   .cost__title {
