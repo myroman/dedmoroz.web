@@ -233,25 +233,3 @@ p.info-paragraph {
     top: 40%;
     left: -60%;
 }
-
-
-
-@media screen and (max-width: 480px) {
-    .table-2-columns {
-        margin: 0 0 40px;
-        width: 100%;
-        text-align: center;
-
-        .table-row {
-            flex-direction: column;
-        }
-
-        .field-name {
-            width: 100%;
-        }
-
-        .field-value {
-            width: 100%;
-        }
-    }
-}
