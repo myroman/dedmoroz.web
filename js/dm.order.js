@@ -357,6 +357,25 @@
         }
 
         function loadNames(gender) {
+            function matchByFilterName(params, data) {
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+
+                if (typeof data.text === 'undefined' || typeof data.element === 'undefined') {
+                    return null;
+                }
+
+                let filterField = $(data.element).data('filter');
+                if (!filterField) {
+                    return null;
+                }
+
+                if (filterField.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                    return data;
+                }
+                return null;
+            }
             masterData.names = Dm.masterdata.names[gender + ''];
 
             var $ddl = $("select.ddl-names");
@@ -364,10 +383,18 @@
             $ddl.append($("<option />").val('').text('Выберите имя'));
 
             $.each(masterData.names, function () {
-                $ddl.append($("<option />").val(this.id).text(this.displayname));
+                $ddl.append($("<option />").val(this.id).text(this.displayname).data('filter', this
+                    .filtername));
                 masterData.names.push(this);
             });
-            refreshElement('select.ddl-names');
+            initSelect2('.ddl-names', matchByFilterName);
+        }
+
+        function initSelect2(selector, matcher) {
+            $(selector).select2({
+                matcher: matcher,
+                width: '100%'
+            });
         }
 
         function loadPraises(gender) {
