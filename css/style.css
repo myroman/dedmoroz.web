@@ -3069,6 +3069,11 @@ p.info-paragraph {
   margin: 10px 10% 0;
 }
 
+.ddl-names-holder {
+  width: 70%;
+  margin: 0 auto;
+}
+
 .select2-container--default span.select2-selection.select2-selection--single {
   height: 56px;
   font-size: 18px;
@@ -3343,6 +3348,10 @@ p.info-paragraph {
     width: 100%;
   }
   .table-2-columns .field-value {
+    width: 100%;
+  }
+
+  .ddl-names-holder {
     width: 100%;
   }
 }
