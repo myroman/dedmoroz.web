@@ -25,9 +25,11 @@
         console.log('waiting order #' + ordernumber + " for video type " + videotype);
         
         if (videotype == 1) {
+
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber='+ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
             $('.demo-info-wrapper').show();
+            $('.heading').text('Демо-видео создаётся');
         }
 
         let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;
