@@ -214,6 +214,7 @@
             }
 
             croppie.rotate(parseInt($(this).data('deg')));
+            croppie.setZoom(1);
         });
 
         //choose boy, girl
@@ -561,6 +562,7 @@
             croppie.bind({
                 url: image_url
             });
+            croppie.setZoom(1);
 
             let $parent = $(elem).parents('.pic-wrapper');
             $parent.find('.image-aspect-wrapper').show();
