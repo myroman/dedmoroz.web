@@ -3014,6 +3014,16 @@ p.info-paragraph {
   overflow-y: auto;
 }
 
+.download-wrapper {
+  width: 50%;
+  margin: 30px auto;
+  display: none;
+}
+
+.order-step a.download-video {
+  color: #134268;
+}
+
 @media screen and (max-width: 480px) {
   .main-screen {
     padding-top: 160px;

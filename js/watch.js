@@ -18,24 +18,32 @@
         let videotype = +getURLParameter('vt') ? 1 : 0;
         let videoUrl = null;
         if (Dm.settings.env == 'local') {
-           videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype; 			
+            videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype;
         } else {
-           let filename = videotype == 1 ? 'demo.mp4' : 'hd_video.mp4';
-           videoUrl = Dm.settings.bucket_uploadfiles_url + '/orders/' + ordernumber + '/' + filename;
+            let filename = videotype == 1 ? 'demo.mp4' : 'hd_video.mp4';
+            videoUrl = Dm.settings.bucket_uploadfiles_url + '/orders/' + ordernumber + '/' + filename;
         }
 
         if (videotype == 1) {
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
             $('.watch-video-heading').text('Демо-видео поздравления');
-            $('.demo-info-wrapper').show();            
+            $('.js-download-video').text('Скачать демо-версию видеопоздравления');
+            $('.demo-info-wrapper').show();
         } else {
             $('.watch-video-heading').text('Видеопоздравление');
+            $('.download-wrapper').show();
         }
 
         var video = document.querySelector('video');
         video.src = videoUrl;
         video.load();
+
+        $('.js-download-video').click(function (e) {
+            window.location.href = videoUrl;
+            e.preventDefault();
+            return false;
+        });
     });
 
 })(jQuery);

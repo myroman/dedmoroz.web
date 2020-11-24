@@ -313,3 +313,12 @@ p.info-paragraph {
 .scrollable {
     overflow-y: auto;
 }
+
+.download-wrapper {
+    width: 50%;
+    margin: 30px auto;
+    display: none;
+}
+.order-step a.download-video {
+    color: #134268;
+}
