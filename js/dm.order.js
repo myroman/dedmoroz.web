@@ -224,18 +224,6 @@
             startOrder(gender);
         });
 
-        function refreshElement(selector) {
-            setTimeout(function () {
-                $(selector).trigger('refresh');
-            }, 1)
-        }
-
-        if ($('.js-styled').length) {
-            $('.js-styled').styler({
-                selectSearch: true
-            });
-        };
-
         $("#childName").validate({
             invalidHandler: function () {
                 setTimeout(function () {
@@ -349,7 +337,8 @@
                             $ddl.first().val(defaultValue);
                         }
 
-                        refreshElement('select.ddl-comment');
+                        // refreshElement('select.ddl-comment');
+                        initSelect2('.ddl-comment');
                     })
                 .always(function () {
                     Dm.hideLoader();
@@ -418,7 +407,7 @@
                         orderState.praiseid = defaultValue;
                     }
 
-                    refreshElement('#ddlPraise');
+                    initSelect2('.ddl-praise');
                 })
                 .always(function () {
                     Dm.hideLoader();
@@ -440,10 +429,11 @@
                 }, {
                     id: 2,
                     text: 'Шкодливое'
-                }];
+                }];                
             }
 
             loadMasterdata();
+            initSelect2('.ddl-behavior');
 
             $('.order-dlg').show();
         }
