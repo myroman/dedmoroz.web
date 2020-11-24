@@ -326,18 +326,32 @@
                         $ddl.html('');
                         $ddl.append($("<option />").val('').text("-- Выберите комментарий --"));
                         let defaultValue;
+                        let groups = {};
                         $.each(resp, function () {
-                            $ddl.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
-                            masterData.comments.push(this);
-                            if (this.displayname.indexOf('чудесная фотография') > -1) {
-                                defaultValue = this.filepath;
+                            
+                            if (!groups[this.category]) {
+                                groups[this.category] = [];
                             }
+
+                            groups[this.category].push(this);
+                        });
+                        $.each(Object.keys(groups), function() {
+                            let groupName = this;
+                            let groupItems = groups[this];
+                            let $optGroup = $("<optgroup />").attr("label", groupName);
+                            $.each(groupItems, function() {                                
+                                $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
+                                if (this.displayname.indexOf('чудесная фотография') > -1) {
+                                    defaultValue = this.filepath;
+                                }
+                                masterData.comments.push(this);
+                            });
+
+                            $ddl.append($optGroup);
                         });
                         if (defaultValue) {
                             $ddl.first().val(defaultValue);
                         }
-
-                        // refreshElement('select.ddl-comment');
                         initSelect2('.ddl-comment');
                     })
                 .always(function () {
