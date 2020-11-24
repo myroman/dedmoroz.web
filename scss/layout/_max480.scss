@@ -210,4 +210,15 @@
 		font-size: 18px;
 	}
 	
+	.payment-sub-title {
+		margin-bottom: 10px;
+	}
+	.payment-list2 {
+		width: 100%;
+		.payment-list2 {
+			&__item {
+				padding: 0;
+			}
+		}
+	}
 }
