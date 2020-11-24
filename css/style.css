@@ -3006,6 +3006,14 @@ p.info-paragraph {
   padding-top: 8px;
 }
 
+.eula-page .scrollable {
+  max-height: calc(100vh - 60px - 56px);
+}
+
+.scrollable {
+  overflow-y: auto;
+}
+
 @media screen and (max-width: 480px) {
   .main-screen {
     padding-top: 160px;

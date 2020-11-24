@@ -306,3 +306,10 @@ p.info-paragraph {
     }
 
 }
+
+.eula-page .scrollable {
+    max-height: calc(100vh - 60px - 56px);
+}
+.scrollable {
+    overflow-y: auto;
+}
