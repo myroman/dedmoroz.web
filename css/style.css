@@ -3036,7 +3036,8 @@ p.info-paragraph {
 .watch-page .buy-wrapper {
   margin-top: 20px;
 }
-.watch-page .show-if-demo, .watch-page .show-if-hd {
+
+.show-if-demo, .show-if-hd {
   display: none;
 }
 

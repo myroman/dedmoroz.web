@@ -29,11 +29,14 @@
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber='+ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
             $('.demo-info-wrapper').show();
+            $('.show-if-demo').show();
             $('.heading').text('Демо-видео создаётся');
+        } else {
+            $('.show-if-hd').show();
         }
 
         let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;
-        checkAndRedirect(statusUrl, ordernumber, videotype);
+        // checkAndRedirect(statusUrl, ordernumber, videotype);
 
         function checkAndRedirect(statusUrl, ordernumber, videotype) {
             let timeout = 15000;
