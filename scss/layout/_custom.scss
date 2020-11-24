@@ -308,7 +308,8 @@ p.info-paragraph {
 
 }
 
-.eula-page .scrollable {
+.eula-page .scrollable,
+.conf-policy-page .scrollable {
     max-height: calc(100vh - 60px - 56px);
 }
 .scrollable {
