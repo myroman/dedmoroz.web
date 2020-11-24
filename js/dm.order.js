@@ -495,6 +495,7 @@
                 refreshCroppieImage(holder, imageUrl, selectedAspect);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
                 $hidFile.val(true);
+                $(input).parent().addClass('active');
                 console.log('removing input', input)
                 $(input).remove();
             });
