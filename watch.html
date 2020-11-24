@@ -19,16 +19,22 @@
         <!-- BEGIN CONTENT -->
         <main class="content inner-content">
             <div class="inner-content__tree"></div>
-            <div class="wrapper">
+            <div class="wrapper watch-page">
                 <div class="content-item">
                     <div class="content-item__bg">
-                        <h1 class="watch-video-heading">Видеопоздравление</h1>
-
+                        <h1 class="show-if-demo">Демо-видео поздравления</h1>
+                        <h1 class="show-if-hd">Видеопоздравление</h1>
                         <div class="">
-                            <div class="order-step">
+                            <div class="order-step info-prevideo show-if-demo">
                                 <p class="info-paragraph">
                                     Это сокращенная версия вашего поздравления в заниженном качестве. Пожалуйста проверьте,
                                     правильно ли вставились ваши фотографии.
+                                </p>
+                            </div>
+
+                            <div class="order-step info-prevideo show-if-hd">
+                                <p class="info-paragraph">
+                                    Спасибо за заказ! Теперь вы можете посмотреть и скачать созданный видеоролик.
                                 </p>
                             </div>
 
@@ -45,20 +51,24 @@
                             </div>
                         </div>
 
-                        <div class="order-step info-block demo-info-wrapper" style="display: none">
-                            <p class="info-paragraph download-wrapper">
-                                <a href="#" class="download-video js-download-video">Скачать видео</a>
-                            </p>
+                        <div class="order-step info-block ">
+                            <div class="central-wrapper show-if-hd">
+                                <input type="button" class="button-next download-video js-download-video"
+                                value="Скачать видео" />
+                            </div>
                            
-                            <p class="info-paragraph">
-                                После оплаты вам придёт полная версия поздравления в высоком (Ultra HD) качестве, как в
-                                <a href="prices.html" target="_blank">примере</a> на
-                                сайте.
-                            </p>
-                            <p class="info-paragraph">
-                                Если вам всё нравится, <a class="link-payment" href="payment.html">перейдите к
-                                    оплате</a>, чтобы получить полное видео.
-                            </p>
+                            <div class="demo-info-wrapper show-if-demo">
+                                <p class="info-paragraph">
+                                    После оплаты вам придёт полная версия поздравления в высоком (Ultra HD) качестве, как в
+                                    <a href="prices.html" target="_blank">примере</a> на
+                                    сайте.
+                                </p>
+
+                                <div class="text-center buy-wrapper">
+                                    <a href="#" class="button button-lg button-red link-payment">Заказать полное видео</a>
+                                    
+                                </div>
+                            </div>
                         </div>
 
                     </div>

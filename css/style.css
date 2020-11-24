@@ -2896,6 +2896,9 @@ label.error {
   margin: auto auto;
 }
 
+.demo-info-wrapper {
+  display: none;
+}
 .demo-info-wrapper .go-to-payment {
   margin-top: 12px;
 }
@@ -3020,8 +3023,21 @@ p.info-paragraph {
   display: none;
 }
 
-.order-step a.download-video {
-  color: #134268;
+.central-wrapper {
+  width: 50;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.watch-page .info-prevideo {
+  display: none;
+  margin-bottom: 20px;
+}
+.watch-page .buy-wrapper {
+  margin-top: 20px;
+}
+.watch-page .show-if-demo, .watch-page .show-if-hd {
+  display: none;
 }
 
 @media screen and (max-width: 480px) {
@@ -3270,6 +3286,10 @@ p.info-paragraph {
   }
   .btns__item {
     margin-bottom: 10px;
+  }
+
+  p.info-paragraph {
+    margin: 10px 0 0;
   }
 
   .servise-list {

@@ -179,6 +179,7 @@
 }
 
 .demo-info-wrapper {
+    display: none;
     .go-to-payment {
         margin-top: 12px;
     }
@@ -320,5 +321,25 @@ p.info-paragraph {
     display: none;
 }
 .order-step a.download-video {
-    color: #134268;
+    // color: #134268;
+}
+.central-wrapper {
+    width: 50;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.watch-page {
+    .info-prevideo {
+        display: none;
+        margin-bottom: 20px;
+    }
+    .buy-wrapper {
+        margin-top: 20px;        
+    }
+
+    .show-if-demo, .show-if-hd {
+        display: none;
+    }
+
 }

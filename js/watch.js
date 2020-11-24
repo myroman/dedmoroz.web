@@ -27,12 +27,9 @@
         if (videotype == 1) {
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
-            $('.watch-video-heading').text('Демо-видео поздравления');
-            $('.js-download-video').text('Скачать демо-версию видеопоздравления');
-            $('.demo-info-wrapper').show();
+            $('.show-if-demo').show();
         } else {
-            $('.watch-video-heading').text('Видеопоздравление');
-            $('.download-wrapper').show();
+            $('.show-if-hd').show();
         }
 
         var video = document.querySelector('video');
