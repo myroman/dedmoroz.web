@@ -1,3 +1,23 @@
+.loaded .main-wrapper {
+    opacity: 0;
+}
+
+.icon-load {
+    background: url(../img/loader.gif) no-repeat left top;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -20px;
+    margin-left: -20px;
+    display: none;
+}
+
+.loaded .icon-load {
+    display: block;
+}
+
 .my-full-page-container {
     min-height: 100%;
     height: 100%;
@@ -159,6 +179,7 @@
 }
 
 .demo-info-wrapper {
+    display: none;
     .go-to-payment {
         margin-top: 12px;
     }
@@ -173,8 +194,8 @@ p.info-paragraph {
     margin: 10px 10% 0;
 }
 
-.ddl-names-holder {
-    width: 70%;
+.select2-holder {
+    width: 50%;
     margin: 0 auto;
 }
 
@@ -285,4 +306,43 @@ p.info-paragraph {
         }
     }
 
+}
+
+.eula-page .scrollable,
+.conf-policy-page .scrollable {
+    max-height: calc(100vh - 60px - 56px);
+}
+.scrollable {
+    overflow-y: auto;
+}
+
+.download-wrapper {
+    width: 50%;
+    margin: 30px auto;
+    display: none;
+}
+
+.central-wrapper {
+    width: 50;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.watch-page {
+    .info-prevideo {
+        display: none;
+        margin-top: 60px;
+        margin-bottom: 40px;
+    }
+    .buy-wrapper {
+        margin-top: 20px;        
+    }   
+}
+
+.show-if-demo, .show-if-hd {
+    display: none;
+}
+
+.table-2-columns .comment-wrapper {
+    display: none;
 }

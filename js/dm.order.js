@@ -214,6 +214,7 @@
             }
 
             croppie.rotate(parseInt($(this).data('deg')));
+            croppie.setZoom(1);
         });
 
         //choose boy, girl
@@ -223,18 +224,6 @@
             let gender = $(this).data('gender');
             startOrder(gender);
         });
-
-        function refreshElement(selector) {
-            setTimeout(function () {
-                $(selector).trigger('refresh');
-            }, 1)
-        }
-
-        if ($('.js-styled').length) {
-            $('.js-styled').styler({
-                selectSearch: true
-            });
-        };
 
         $("#childName").validate({
             invalidHandler: function () {
@@ -338,18 +327,33 @@
                         $ddl.html('');
                         $ddl.append($("<option />").val('').text("-- Выберите комментарий --"));
                         let defaultValue;
+                        let groups = {};
                         $.each(resp, function () {
-                            $ddl.append($("<option />").val(this.filepath).text(this.category + ' - ' + this.displayname));
-                            masterData.comments.push(this);
-                            if (this.displayname.indexOf('чудесная фотография') > -1) {
-                                defaultValue = this.filepath;
+                            
+                            if (!groups[this.category]) {
+                                groups[this.category] = [];
                             }
+
+                            groups[this.category].push(this);
+                        });
+                        $.each(Object.keys(groups), function() {
+                            let groupName = this;
+                            let groupItems = groups[this];
+                            let $optGroup = $("<optgroup />").attr("label", groupName);
+                            $.each(groupItems, function() {                                
+                                $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
+                                if (this.displayname.indexOf('чудесная фотография') > -1) {
+                                    defaultValue = this.filepath;
+                                }
+                                masterData.comments.push(this);
+                            });
+
+                            $ddl.append($optGroup);
                         });
                         if (defaultValue) {
                             $ddl.first().val(defaultValue);
                         }
-
-                        refreshElement('select.ddl-comment');
+                        initSelect2('.ddl-comment');
                     })
                 .always(function () {
                     Dm.hideLoader();
@@ -418,7 +422,7 @@
                         orderState.praiseid = defaultValue;
                     }
 
-                    refreshElement('#ddlPraise');
+                    initSelect2('.ddl-praise');
                 })
                 .always(function () {
                     Dm.hideLoader();
@@ -440,10 +444,11 @@
                 }, {
                     id: 2,
                     text: 'Шкодливое'
-                }];
+                }];                
             }
 
             loadMasterdata();
+            initSelect2('.ddl-behavior');
 
             $('.order-dlg').show();
         }
@@ -490,6 +495,7 @@
                 refreshCroppieImage(holder, imageUrl, selectedAspect);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
                 $hidFile.val(true);
+                $(input).parent().addClass('active');
                 console.log('removing input', input)
                 $(input).remove();
             });
@@ -557,6 +563,7 @@
             croppie.bind({
                 url: image_url
             });
+            croppie.setZoom(1);
 
             let $parent = $(elem).parents('.pic-wrapper');
             $parent.find('.image-aspect-wrapper').show();

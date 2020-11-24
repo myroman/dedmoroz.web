@@ -198,7 +198,7 @@
         }
 	}
 	
-	.ddl-names-holder {
+	.select2-holder {
 		width: 100%;
 	}
 
@@ -209,4 +209,22 @@
 	.video__play span {
 		font-size: 18px;
 	}
+	
+	.payment-sub-title {
+		margin-bottom: 10px;
+	}
+	.payment-list2 {
+		width: 100%;
+		.payment-list2 {
+			&__item {
+				padding: 0;
+			}
+		}
+	}
+
+	.info-prevideo {
+        display: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
 }

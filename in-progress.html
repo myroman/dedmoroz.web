@@ -10,27 +10,7 @@
     <meta name="keywords" content="" />
     <link rel="icon" type="image/x-icon" href="favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        .loaded .main-wrapper {
-            opacity: 0;
-        }
-
-        .icon-load {
-            background: url(img/loader.gif) no-repeat left top;
-            width: 40px;
-            height: 40px;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            margin-left: -20px;
-            margin-left: -20px;
-            display: none;
-        }
-
-        .loaded .icon-load {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css?qr=14" />
 </head>
 
 <body class="loaded">
@@ -42,15 +22,21 @@
             <div class="wrapper">
                 <div class="content-item">
                     <div class="content-item__bg">
-                        <h1>Видео создаётся...</h1>
-                        <div class="order-step demo-info-wrapper centered-text-container" style="display: none;">                            
+                        <h1 class="heading">Видео создаётся...</h1>
+                        <div class="order-step show-if-demo demo-info-wrapper centered-text-container" style="display: none;">                            
                             <p class="wait-info">
                                 Пожалуйста, подождите несколько минут, чтобы посмотреть демо-видео вашего поздравления.
-                                Либо вы можете закрыть экран, и ссылка на поздравление придет вам на указанный email.
+                                Либо вы можете закрыть экран, ссылка на поздравление придёт вам на указанный email.
                             </p>
                             <p class="go-to-payment">
                                 Пропустите этот шаг, если вы сразу хотите перейти к <a class="link-payment"
                                     href="">оплате</a>
+                            </p>
+                        </div>
+                        <div class="order-step show-if-hd centered-text-container">                            
+                            <p class="wait-info">
+                                Видеопоздравление будет готово в течение 20 минут. Вы можете оставаться на странице или закрыть экран.
+                                Ссылка на видеопоздравление придет вам на указанный email.
                             </p>
                         </div>
 
@@ -157,14 +143,13 @@
     </div>
     <div class="icon-load"></div>
     <!-- BODY EOF   -->
-    <link rel="stylesheet" type="text/css" href="css/style.css?qr=13" />
+    
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/jquery-migrate-1.4.1.min.js"></script>
-    <script src="js/components/jquery.formstyler.js"></script>
     <script src="js/components/jquery.validate.min.js"></script>
-    <script src="js/custom.js?qr=13"></script>
-    <script src="js/dm.settings.js?qr=13"></script>
-    <script src="js/inprogress.js?qr=13"></script>
+    <script src="js/custom.js?qr=14"></script>
+    <script src="js/dm.settings.js?qr=14"></script>
+    <script src="js/inprogress.js?qr=14"></script>
 </body>
 
 </html>

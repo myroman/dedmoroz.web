@@ -14,27 +14,7 @@
         crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
-        .loaded .main-wrapper {
-            opacity: 0;
-        }
-
-        .icon-load {
-            background: url(img/loader.gif) no-repeat left top;
-            width: 40px;
-            height: 40px;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            margin-left: -20px;
-            margin-left: -20px;
-            display: none;
-        }
-
-        .loaded .icon-load {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css?qr=14" />
 </head>
 
 <body class="loaded">
@@ -80,7 +60,7 @@
                         <p class="content-item-choose__sub-title">Наш список отсортирован по алфавиту и включает полные
                             и уменьшительно-ласкательные формы имен. Если имя вашего ребенка всё же отсутствует в нашем
                             списке, воспользуйтесь заменой имени на обращение Деда Мороза: Внученька или Внучек</p>
-                        <div class="ddl-names-holder">
+                        <div class="select2-holder">
                             <select class="ddl-names" id="ddlName" data-placeholder="Имя ребенка" required>
                             </select>
                         </div>
@@ -135,9 +115,11 @@
                                         class="choose-radio__button_small delete-photo-link js-delete-photo">Заменить
                                         фотографию</a>
                                 </div>
-                                <select class="js-styled styled ddl-comment" id="ddlCommentPic0"
-                                    data-placeholder="Комментарий к фотографии" required>
-                                </select>
+                                <div class="select2-holder">
+                                    <select class="ddl-comment" id="ddlCommentPic0"
+                                        data-placeholder="Комментарий к фотографии" required>
+                                    </select>
+                                </div>
                             </div>
                             <div class="photo-list__item pic-wrapper pic-wrapper_1" data-picno="1">
                                 <label class="photo-list__label">
@@ -171,9 +153,11 @@
                                         class="choose-radio__button_small delete-photo-link js-delete-photo">Заменить
                                         фотографию</a>
                                 </div>
-                                <select class="js-styled styled ddl-comment" id="ddlCommentPic1"
-                                    data-placeholder="Комментарий к фотографии">
-                                </select>
+                                <div class="select2-holder">
+                                    <select class="ddl-comment" id="ddlCommentPic1"
+                                        data-placeholder="Комментарий к фотографии">
+                                    </select>
+                                </div>
                             </div>
                             <div class="photo-list__item pic-wrapper pic-wrapper_2" data-picno="2">
                                 <label class="photo-list__label">
@@ -207,9 +191,11 @@
                                         class="choose-radio__button_small delete-photo-link js-delete-photo">Заменить
                                         фотографию</a>
                                 </div>
-                                <select class="js-styled styled ddl-comment" id="ddlCommentPic2"
-                                    data-placeholder="Комментарий к фотографии">
-                                </select>
+                                <div class="select2-holder">
+                                    <select class="ddl-comment" id="ddlCommentPic2"
+                                        data-placeholder="Комментарий к фотографии">
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="content-item__bottom">
@@ -279,17 +265,20 @@
                     <form class="content-item__bg" id="childOptions">
                         <div class="content-item-choose__title">Как ребенок вел себя в этом году?</div>
                         <p class="content-item-choose__sub-title">Поведение ребенка</p>
-                        <select class="js-styled styled styled-sm" id="ddlBehavior" data-placeholder="Хорошее поведение"
-                            name="mark">
-                            <option></option>
-                            <option value="1" selected>Хорошее поведение</option>
-                            <option value="2">Шкодливое поведение</option>
-                        </select>
+                        <div class="select2-holder">
+                            <select class="ddl-behavior" id="ddlBehavior" data-placeholder="Хорошее поведение"
+                                name="mark">
+                                <option></option>
+                                <option value="1" selected>Хорошее поведение</option>
+                                <option value="2">Шкодливое поведение</option>
+                            </select>
+                        </div>
                         <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna</p> -->
                         <p class="content-item-choose__sub-title praise-header">Успехи ребенка</p>
-                        <select class="js-styled styled styled-sm" data-placeholder="Разные увлечения"
-                            name="achievements" id="ddlPraise">
-                        </select>
+                        <div class="select2-holder">
+                            <select class="ddl-praise" data-placeholder="Разные увлечения" name="achievements"
+                                id="ddlPraise">
+                            </select></div>
                         <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna </p> -->
                         <div class="content-item__bottom">
                             <a href="#step-4" class="button-prev js-prev">Назад</a>
@@ -355,13 +344,13 @@
                                     <span class="comment0-text"></span>
                                 </div>
                             </div>
-                            <div class="table-row">
+                            <div class="table-row comment-wrapper">
                                 <div class="field-name">Комментарий 2</div>
                                 <div class="field-value">
                                     <span class="comment1-text"></span>
                                 </div>
                             </div>
-                            <div class="table-row">
+                            <div class="table-row comment-wrapper">
                                 <div class="field-name">Комментарий 3</div>
                                 <div class="field-value">
                                     <span class="comment2-text"></span>
@@ -503,19 +492,18 @@
     </div>
     <div class="icon-load"></div>
     <!-- BODY EOF   -->
-    <link rel="stylesheet" type="text/css" href="css/style.css?qr=13" />
+    
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/jquery-migrate-1.4.1.min.js"></script>
-    <script src="js/components/jquery.formstyler.js"></script>
     <script src="js/components/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"
         integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script src="js/custom.js?qr=13"></script>
-    <script src="js/dm.settings.js?qr=13"></script>
-    <script src="js/masterdata.js?qr=13"></script>
-    <script src="js/dm.order.js?qr=13" crossorigin="anonymous"></script>
+    <script src="js/custom.js?qr=14"></script>
+    <script src="js/dm.settings.js?qr=14"></script>
+    <script src="js/masterdata.js?qr=14"></script>
+    <script src="js/dm.order.js?qr=14" crossorigin="anonymous"></script>
 </body>
 
 </html>
