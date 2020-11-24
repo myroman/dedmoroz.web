@@ -163,30 +163,126 @@
         margin-top: 12px;
     }
 }
-.video__holder > video {
-    width: 100%    !important;
-    height: auto   !important;
+
+.video__holder>video {
+    width: 100% !important;
+    height: auto !important;
 }
+
 p.info-paragraph {
     margin: 10px 10% 0;
 }
 
-@media screen and (max-width: 480px) {
-    .table-2-columns {
-        margin: 0 0 40px;
-        width: 100%;
+.ddl-names-holder {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.select2-container--default {
+    span.select2-selection.select2-selection--single {
+        height: 56px;
+        font-size: 18px;
+        line-height: 26px;
+        padding: 14px 28px 0;
+        background: #fff;
+        border-color: #fff;
+        border-radius: 26px;
         text-align: center;
+        color: #0f4d82;
+    }
 
-        .table-row {
-            flex-direction: column;
+    .select2-selection--single .select2-selection__placeholder {
+        color: #0f4d82;
+    }
+
+    .select2-selection--single .select2-selection__arrow {
+        top: 17px;
+    }
+
+    .select2-selection--single .select2-selection__arrow b {
+        border-width: 13px 8px 0 8px;
+        border-color: #9e9595 transparent transparent transparent;
+        top: 40%;
+        left: -60%;
+    }
+
+    .select2-results__option {
+        height: auto;
+        line-height: 1.3em;
+        font-size: 20px;
+    }
+
+    .select-8-results__option.select2-results__option--selectable {
+        font-family: Arial, sans-serif;
+        min-height: 18px;
+        color: #0f4d82;
+        font-size: 20px;
+        line-height: 28px;
+        padding: 5px 25px;
+    }
+
+    .select2-results__option.select2-results__option--selectable.select2-results__option--highlighted {
+        background: #0f4d82;
+        color: white;
+    }
+
+    .select2-search--dropdown.select2-search__field {
+        border: 1px silver solid;
+    }
+
+    .select2-dropdown.select2-dropdown--below {
+        border-right-width: 0;
+        border-left-width: 0;
+    }
+
+    .select2-search--dropdown .select2-search__field {
+        font-size: 18px;
+        padding: 6px;
+    }
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #888 transparent;
+    border-width: 0 8px 13px 8px;
+    top: 40%;
+    left: -60%;
+}
+
+.faq-page {
+    h2 {
+        margin-top: 40px;
+    }
+    .faq-accordion {        
+        
+        h3 {
+            font-size: 20px;
+            font-family: 'Iskra';
+            height: auto;
+            padding: 12px 4px 12px 18px;
+            line-height: 1em;
+            margin-top: 4px;
         }
-
-        .field-name {
-            width: 100%;
+        p {
+            margin: 8px 0;
+            font-size: 18px;
+            line-height: 1.4em;
+            font-family: "Nunito", sans-serif;
         }
-
-        .field-value {
-            width: 100%;
+        .ui-accordion-header.ui-state-active {
+            background: #134268;
+        }
+        .ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e,
+        .ui-state-active .ui-icon, .ui-button:active .ui-icon {
+            display: none;
+        }
+        ul {
+            padding: 25px 0;
+        }
+        ul > li {
+            font-size: 15px;
+            line-height: 1em;
+            padding-top: 8px;
         }
     }
+
 }

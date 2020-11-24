@@ -1,248 +1,283 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="format-detection" content="telephone=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
-        <title>Дарим Чудо - Главная</title>
-        <meta name='description' content="" />
-        <meta name="keywords" content="" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-        <style>
-            .loaded .main-wrapper {
-                opacity: 0;
-            }
 
-            .icon-load {
-                background: url(img/loader.gif) no-repeat left top;
-                width: 40px;
-                height: 40px;
-                position: fixed;
-                left: 50%;
-                top: 50%;
-                margin-left: -20px;
-                margin-left: -20px;
-                display: none;
-            }
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+    <title>Дарим Чудо - Главная</title>
+    <meta name='description' content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        .loaded .main-wrapper {
+            opacity: 0;
+        }
 
-            .loaded .icon-load {
-                display: block;
-            }
+        .icon-load {
+            background: url(img/loader.gif) no-repeat left top;
+            width: 40px;
+            height: 40px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-left: -20px;
+            margin-left: -20px;
+            display: none;
+        }
 
-        </style>
-    </head>
-    <body class="loaded">
-        <!-- BEGIN BODY -->
-        <div class="main-wrapper">
-            <!-- BEGIN CONTENT -->
-            <main class="content">
-                <div class="main-screen">
-                    <div class="main-screen__bg">
-                        <div class="main-screen__santa"></div>
-                    </div>
-                    <div class="wrapper">
-                        <h1>Именное видеопоздравление <br>от настоящего Деда Мороза из Великого Устюга</h1>
-                        <p>Подарите ребенку новогоднее чудо!</p>
-                        <ul class="btns main-screen__btns">
-                            <li class="btns__item"><a href="order-wizard.html" class="button button-red">Попробовать бесплатно</a></li>
-                            <li class="btns__item"><a href="prices.html" class="button button-white">Посмотреть пример</a></li>
-                        </ul>
-                    </div>
+        .loaded .icon-load {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="loaded">
+    <!-- BEGIN BODY -->
+    <div class="main-wrapper">
+        <!-- BEGIN CONTENT -->
+        <main class="content">
+            <div class="main-screen">
+                <div class="main-screen__bg">
+                    <div class="main-screen__santa"></div>
                 </div>
-                <section class="section-servise">
-                    <div class="section-servise__tree"></div>
-                    <div class="wrapper">
-                        <h2>В гостях на родине Деда Мороза в&nbsp;Великом Устюге</h2>
-                        <p>Дед Мороз покажет ребенку свой дом в Великом Устюге, познакомит со своей помощницей Снеговичкой и разгадает исчезновение Волшебной Звездочки с&nbsp;новогодней елки. </p>
-                        <div class="video">
-                            <div class="video__frame">
+                <div class="wrapper">
+                    <h1>Именное видеопоздравление <br>от настоящего Деда Мороза из Великого Устюга</h1>
+                    <p>Подарите ребенку новогоднее чудо!</p>
+                    <ul class="btns main-screen__btns">
+                        <li class="btns__item"><a href="order-wizard.html" class="button button-red">Попробовать
+                                бесплатно</a></li>
+                        <li class="btns__item"><a href="prices.html" class="button button-white">Посмотреть пример</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <section class="section-servise">
+                <div class="section-servise__tree"></div>
+                <div class="wrapper">
+                    <h2>В гостях на родине Деда Мороза в&nbsp;Великом Устюге</h2>
+                    <p>Дед Мороз покажет ребенку свой дом в Великом Устюге, познакомит со своей помощницей Снеговичкой и
+                        разгадает исчезновение Волшебной Звездочки с&nbsp;новогодней елки. </p>
+                    <div class="video video__holder">
+                        <!-- <div class="video__frame">
                                 <iframe src="https://www.youtube.com/embed/mHEn68XlJnI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div> -->
+                        <video id="videoTrailer" class="video-js" controls preload="auto" data-setup="{}">
+                            <p class="vjs-no-js">
+                                Чтобы посмотреть видео, пожалуйста включите JavaScript и желательно обновите
+                                веб-браузер, который
+                                <a href="https://videojs.com/html5-video-support/" target="_blank">поддерживает
+                                    HTML5 видео.</a>
+                            </p>
+                        </video>
+                        <a href="#" class="video__play js-play">
+                            <i class="icon-play"></i>
+                            <span>Посмотрите трейлер</span>
+                        </a>
+                    </div>
+                    <ul class="servise-list">
+                        <li class="servise-list__item">
+                            <div class="servise-list__icon"><i class="icon-childrens"></i></div>
+                            <div class="servise-list__cont">
+                                <div class="servise-list__title">Поздравление одного или двух детей</div>
+                                <p class="servise-list__desc">Вы можете выбрать между поздравлениями одного или двух
+                                    детей, примеры <a href="prices.html">здесь</a></p>
                             </div>
-                            <a href="#" class="video__play js-play">
-                                <i class="icon-play"></i>
-                                <span>Посмотрите трейлер</span>
-                            </a>
+                        </li>
+                        <li class="servise-list__item">
+                            <div class="servise-list__icon"><i class="icon-awards"></i></div>
+                            <div class="servise-list__cont">
+                                <div class="servise-list__title">Похвала за достижения</div>
+                                <p class="servise-list__desc">Дед Мороз похвалит ребенка за достижения на ваш выбор и
+                                    даст напутствие.</p>
+                            </div>
+                        </li>
+                        <li class="servise-list__item">
+                            <div class="servise-list__icon"><i class="icon-santa-claus"></i></div>
+                            <div class="servise-list__cont">
+                                <div class="servise-list__title">Личное обращение Деда Мороза</div>
+                                <p class="servise-list__desc">Дед Мороз обратится к ребенку по имени. Полный список из
+                                    2500 имен здесь</p>
+                            </div>
+                        </li>
+                        <li class="servise-list__item">
+                            <div class="servise-list__icon"><i class="icon-like"></i></div>
+                            <div class="servise-list__cont">
+                                <div class="servise-list__title">Оценка поведения</div>
+                                <p class="servise-list__desc">Дед Мороз похвалит ребенка за хорошее поведение или
+                                    немножко пожурит его за шкодливое</p>
+                            </div>
+                        </li>
+                        <li class="servise-list__item">
+                            <div class="servise-list__icon"><i class="icon-pictures"></i></div>
+                            <div class="servise-list__cont">
+                                <div class="servise-list__title">Просмотр фотографий</div>
+                                <p class="servise-list__desc">Дед Мороз полюбуется от 1 до 3 фотографиями ребенка и
+                                    прокомментирует их фразой на ваш выбор</p>
+                            </div>
+                        </li>
+                        <li class="servise-list__item">
+                            <div class="servise-list__icon"><i class="icon-letter"></i></div>
+                            <div class="servise-list__cont">
+                                <div class="servise-list__title">Просмотр письма</div>
+                                <p class="servise-list__desc">Дед Мороз посмотрит написанное ребенком письмо (если
+                                    ребенок его написал)</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <a href="order-wizard.html" class="button button-lg button-red">Попробовать бесплатно</a>
+                    </div>
+                </div>
+            </section>
+            <div class="section-cost">
+                <div class="wrapper">
+                    <div class="cost">
+                        <div class="cost__title">Стоимость видеопоздравления</div>
+                        <div class="cost__val">600 <span>руб</span></div>
+                        <p>Принимаем заказы со всего мира: <a href="prices.html">подробности здесь</a></p>
+                        <p>Перед оплатой вы получите бесплатно демо-версию вашего поздравления. Мы вернем полную
+                            стоимость, если после оплаты итоговый ролик вас разочарует - будет отличаться в худшую
+                            сторону от демо-версии или образца, размещенного выше.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-feedback">
+                <div class="section-feedback__tree"></div>
+                <div class="snowflakes">
+                    <div class="snowflake snowflake_1"></div>
+                    <div class="snowflake snowflake_2"></div>
+                    <div class="snowflake snowflake_3"></div>
+                    <div class="snowflake snowflake_4"></div>
+                    <div class="snowflake snowflake_5"></div>
+                    <div class="snowflake snowflake_6"></div>
+                    <div class="snowflake snowflake_7"></div>
+                    <div class="snowflake snowflake_8"></div>
+                    <div class="snowflake snowflake_1"></div>
+                    <div class="snowflake snowflake_2"></div>
+                    <div class="snowflake snowflake_3"></div>
+                    <div class="snowflake snowflake_4"></div>
+                    <div class="snowflake snowflake_5"></div>
+                    <div class="snowflake snowflake_6"></div>
+                    <div class="snowflake snowflake_7"></div>
+                    <div class="snowflake snowflake_8"></div>
+                </div>
+                <div class="wrapper">
+                    <div class="feedback">
+                        <div class="feedback__title">Напомнить о нас позже?</div>
+                        <a href="#" class="button button-red">Напомнить</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- CONTENT EOF   -->
+        <!-- BEGIN HEADER -->
+        <header>
+            <div class="wrapper">
+                <span class="logo"></span>
+                <a href="index.html" class="logo">
+                    <img src="img/logo-white.png" alt="">
+                </a>
+                <nav class="main-nav">
+                    <ul class="main-nav-list">
+                        <li class="main-nav-list__item"><a href="how-to-order.html" class="main-nav-list__link">Как
+                                заказать</a></li>
+                        <li class="main-nav-list__item"><a href="prices.html" class="main-nav-list__link">Цена и
+                                примеры</a></li>
+                        <li class="main-nav-list__item"><a href="faq.html" class="main-nav-list__link">Частые
+                                вопросы</a></li>
+                        <li class="main-nav-list__item"><a href="contacts.html" class="main-nav-list__link">Контакты</a>
+                        </li>
+                    </ul>
+                </nav>
+                <a href="order-wizard.html" class="button button-white">Создать свое видео</a>
+                <a href="#" class="button-nav js-button-nav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="main-mask"></div>
+        </header>
+        <!-- HEADER EOF   -->
+        <!-- BEGIN FOOTER -->
+        <footer>
+            <div class="wrapper">
+                <div class="footer-row">
+                    <div class="footer-col footer-col_1">
+                        <a href="index.html" class="logo">
+                            <img src="img/logo-white.png" alt="">
+                        </a>
+                    </div>
+                    <div class="footer-col footer-col_3">
+                        <ul class="footer-nav">
+                            <li class="footer-nav__item"><a href="how-to-order.html" class="footer-nav__link">Как
+                                    заказать</a></li>
+                            <li class="footer-nav__item"><a href="prices.html" class="footer-nav__link">Цена и
+                                    примеры</a></li>
+                            <li class="footer-nav__item"><a href="faq.html" class="footer-nav__link">Частые вопросы</a>
+                            </li>
+                            <li class="footer-nav__item"><a href="user-agreement.html"
+                                    class="footer-nav__link">Пользовательское соглашение</a></li>
+                            <li class="footer-nav__item"><a href="confidentiality-policy.html"
+                                    class="footer-nav__link">Политика конфиденциальности</a></li>
+                            <li class="footer-nav__item"><a href="wholesale-customers.html"
+                                    class="footer-nav__link">Оптовым покупателям</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col footer-col_4">
+                        <div class="footer-contact">
+                            <div class="footer-contact__item">
+                                <div class="footer-contact__txt">Напишите нам:</div>
+                                <a href="mailto:info@darimchudo.ru" class="footer-contact__link">info@darimchudo.ru</a>
+                            </div>
+                            <div class="footer-contact__item">
+                                <a href="tel:78126471856" class="footer-contact__link">+7 812 647 1856</a>
+                                <div class="footer-contact__txt">по будням с 10 до 18 по Мск</div>
+                            </div>
                         </div>
-                        <ul class="servise-list">
-                            <li class="servise-list__item">
-                                <div class="servise-list__icon"><i class="icon-childrens"></i></div>
-                                <div class="servise-list__cont">
-                                    <div class="servise-list__title">Поздравление одного или двух детей</div>
-                                    <p class="servise-list__desc">Вы можете выбрать между поздравлениями одного или двух детей, примеры <a href="prices.html">здесь</a></p>
-                                </div>
+                        <ul class="social-list">
+                            <li class="social-list__item">
+                                <a href="https://www.instagram.com/darimchudo/"
+                                    class="social-list__link social-list__link_inst" target="_blank">
+                                    <img src="img/inst.png" alt="">
+                                </a>
                             </li>
-                            <li class="servise-list__item">
-                                <div class="servise-list__icon"><i class="icon-awards"></i></div>
-                                <div class="servise-list__cont">
-                                    <div class="servise-list__title">Похвала за достижения</div>
-                                    <p class="servise-list__desc">Дед Мороз похвалит ребенка за достижения на ваш выбор и даст напутствие.</p>
-                                </div>
+                            <li class="social-list__item">
+                                <a href="https://vk.com/public200346034" class="social-list__link social-list__link_vk"
+                                    target="_blank">
+                                    <img src="img/vk.png" alt="">
+                                </a>
                             </li>
-                            <li class="servise-list__item">
-                                <div class="servise-list__icon"><i class="icon-santa-claus"></i></div>
-                                <div class="servise-list__cont">
-                                    <div class="servise-list__title">Личное обращение Деда Мороза</div>
-                                    <p class="servise-list__desc">Дед Мороз обратится к ребенку по имени. Полный список из 2500 имен здесь</p>
-                                </div>
+                            <li class="social-list__item">
+                                <a href="#" class="social-list__link social-list__link_fb" target="_blank">
+                                    <img src="img/fb.png" alt="">
+                                </a>
                             </li>
-                            <li class="servise-list__item">
-                                <div class="servise-list__icon"><i class="icon-like"></i></div>
-                                <div class="servise-list__cont">
-                                    <div class="servise-list__title">Оценка поведения</div>
-                                    <p class="servise-list__desc">Дед Мороз похвалит ребенка за хорошее поведение или немножко пожурит его за шкодливое</p>
-                                </div>
-                            </li>
-                            <li class="servise-list__item">
-                                <div class="servise-list__icon"><i class="icon-pictures"></i></div>
-                                <div class="servise-list__cont">
-                                    <div class="servise-list__title">Просмотр фотографий</div>
-                                    <p class="servise-list__desc">Дед Мороз полюбуется от 1 до 3 фотографиями ребенка и прокомментирует их фразой на ваш выбор</p>
-                                </div>
-                            </li>
-                            <li class="servise-list__item">
-                                <div class="servise-list__icon"><i class="icon-letter"></i></div>
-                                <div class="servise-list__cont">
-                                    <div class="servise-list__title">Просмотр письма</div>
-                                    <p class="servise-list__desc">Дед Мороз посмотрит написанное ребенком письмо (если ребенок его написал)</p>
-                                </div>
+                            <li class="social-list__item">
+                                <a href="https://www.youtube.com/channel/UCWcRYpamljjN21EoSOFokqw"
+                                    class="social-list__link social-list__link_youtube" target="_blank">
+                                    <img src="img/youtube.png" alt="">
+                                </a>
                             </li>
                         </ul>
-                        <div class="text-center">
-                            <a href="order-wizard.html" class="button button-lg button-red">Попробовать бесплатно</a>
-                        </div>
-                    </div>
-                </section>
-                <div class="section-cost">
-                    <div class="wrapper">
-                        <div class="cost">
-                            <div class="cost__title">Стоимость видеопоздравления</div>
-                            <div class="cost__val">600 <span>руб</span></div>
-                            <p>Принимаем заказы со всего мира: <a href="prices.html">подробности здесь</a></p>
-                            <p>Перед оплатой вы получите бесплатно демо-версию вашего поздравления. Мы вернем полную стоимость, если после оплаты итоговый ролик вас разочарует - будет отличаться в худшую сторону от демо-версии или образца, размещенного выше.</p>
-                        </div>
                     </div>
                 </div>
-                <div class="section-feedback">
-                    <div class="section-feedback__tree"></div>
-                    <div class="snowflakes">
-                        <div class="snowflake snowflake_1"></div>
-                        <div class="snowflake snowflake_2"></div>
-                        <div class="snowflake snowflake_3"></div>
-                        <div class="snowflake snowflake_4"></div>
-                        <div class="snowflake snowflake_5"></div>
-                        <div class="snowflake snowflake_6"></div>
-                        <div class="snowflake snowflake_7"></div>
-                        <div class="snowflake snowflake_8"></div>
-                        <div class="snowflake snowflake_1"></div>
-                        <div class="snowflake snowflake_2"></div>
-                        <div class="snowflake snowflake_3"></div>
-                        <div class="snowflake snowflake_4"></div>
-                        <div class="snowflake snowflake_5"></div>
-                        <div class="snowflake snowflake_6"></div>
-                        <div class="snowflake snowflake_7"></div>
-                        <div class="snowflake snowflake_8"></div>
-                    </div>
-                    <div class="wrapper">
-                        <div class="feedback">
-                            <div class="feedback__title">Напомнить о нас позже?</div>
-                            <a href="#" class="button button-red">Напомнить</a>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <!-- CONTENT EOF   -->
-            <!-- BEGIN HEADER -->
-            <header>
-                <div class="wrapper">
-                    <span class="logo"></span>
-                    <a href="index.html" class="logo">
-                        <img src="img/logo-white.png" alt="">
-                    </a>
-                    <nav class="main-nav">
-                        <ul class="main-nav-list">
-                            <li class="main-nav-list__item"><a href="how-to-order.html" class="main-nav-list__link">Как заказать</a></li>
-                            <li class="main-nav-list__item"><a href="prices.html" class="main-nav-list__link">Цена и примеры</a></li>
-                            <li class="main-nav-list__item"><a href="faq.html" class="main-nav-list__link">Частые вопросы</a></li>
-                            <li class="main-nav-list__item"><a href="contacts.html" class="main-nav-list__link">Контакты</a></li>
-                        </ul>
-                    </nav>
-                    <a href="order-wizard.html" class="button button-white">Создать свое видео</a>
-                    <a href="#" class="button-nav js-button-nav">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </a>
-                </div>
-                <div class="main-mask"></div>
-            </header>
-            <!-- HEADER EOF   -->
-            <!-- BEGIN FOOTER -->
-            <footer>
-                <div class="wrapper">
-                    <div class="footer-row">
-                        <div class="footer-col footer-col_1">
-                            <a href="index.html" class="logo">
-                                <img src="img/logo-white.png" alt="">
-                            </a>
-                        </div>
-                        <div class="footer-col footer-col_3">
-                            <ul class="footer-nav">
-                                <li class="footer-nav__item"><a href="how-to-order.html" class="footer-nav__link">Как заказать</a></li>
-                                <li class="footer-nav__item"><a href="prices.html" class="footer-nav__link">Цена и примеры</a></li>
-                                <li class="footer-nav__item"><a href="faq.html" class="footer-nav__link">Частые вопросы</a></li>
-                                <li class="footer-nav__item"><a href="user-agreement.html" class="footer-nav__link">Пользовательское соглашение</a></li>
-                                <li class="footer-nav__item"><a href="confidentiality-policy.html" class="footer-nav__link">Политика конфиденциальности</a></li>
-                                <li class="footer-nav__item"><a href="wholesale-customers.html" class="footer-nav__link">Оптовым покупателям</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer-col footer-col_4">
-                            <div class="footer-contact">
-                                <div class="footer-contact__item">
-                                    <div class="footer-contact__txt">Напишите нам:</div>
-                                    <a href="mailto:info@darimchudo.ru" class="footer-contact__link">info@darimchudo.ru</a>
-                                </div>
-                                <div class="footer-contact__item">
-                                    <a href="tel:78126471856" class="footer-contact__link">+7 812 647 1856</a>
-                                    <div class="footer-contact__txt">по будням с 10 до 18 по Мск</div>
-                                </div>
-                            </div>
-                            <ul class="social-list">
-                                <li class="social-list__item">
-                                    <a href="https://www.instagram.com/darimchudo/" class="social-list__link social-list__link_inst" target="_blank">
-                                        <img src="img/inst.png" alt="">
-                                    </a>
-                                </li>
-                                <li class="social-list__item">
-                                    <a href="https://vk.com/public200346034" class="social-list__link social-list__link_vk" target="_blank">
-                                        <img src="img/vk.png" alt="">
-                                    </a>
-                                </li>
-                                <li class="social-list__item">
-                                    <a href="#" class="social-list__link social-list__link_fb" target="_blank">
-                                        <img src="img/fb.png" alt="">
-                                    </a>
-                                </li>
-                                <li class="social-list__item">
-                                    <a href="https://www.youtube.com/channel/UCWcRYpamljjN21EoSOFokqw" class="social-list__link social-list__link_youtube" target="_blank">
-                                        <img src="img/youtube.png" alt="">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <!-- FOOTER EOF   -->
-        </div>
-        <div class="icon-load"></div>
-        <!-- BODY EOF   -->
-        <link rel="stylesheet" type="text/css" href="css/style.css?qr=12" />
-        <script src="js/jquery-3.0.0.min.js"></script>
-        <script src="js/jquery-migrate-1.4.1.min.js"></script>
-        <script src="js/components/jquery.formstyler.js"></script>
-        <script src="js/components/jquery.validate.min.js"></script>
-        <script src="js/custom.js?qr=12"></script>
-        <script src="js/dm.settings.js?qr=12"></script>
-    </body>
+            </div>
+        </footer>
+        <!-- FOOTER EOF   -->
+    </div>
+    <div class="icon-load"></div>
+    <!-- BODY EOF   -->
+    <link rel="stylesheet" type="text/css" href="css/style.css?qr=13" />
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-migrate-1.4.1.min.js"></script>
+    <script src="js/components/jquery.formstyler.js"></script>
+    <script src="js/components/jquery.validate.min.js"></script>
+    <script src="js/custom.js?qr=13"></script>
+    <script src="js/dm.settings.js?qr=13"></script>
+    <script src="js/dm.main.js?qr=13"></script>
+</body>
+
 </html>
