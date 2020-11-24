@@ -2723,6 +2723,26 @@ label.error {
     margin-top: 25px;
   }
 }
+.loaded .main-wrapper {
+  opacity: 0;
+}
+
+.icon-load {
+  background: url(../img/loader.gif) no-repeat left top;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -20px;
+  margin-left: -20px;
+  display: none;
+}
+
+.loaded .icon-load {
+  display: block;
+}
+
 .my-full-page-container {
   min-height: 100%;
   height: 100%;
