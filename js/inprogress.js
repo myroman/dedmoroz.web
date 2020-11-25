@@ -36,7 +36,7 @@
         }
 
         let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;
-        // checkAndRedirect(statusUrl, ordernumber, videotype);
+        checkAndRedirect(statusUrl, ordernumber, videotype);
 
         function checkAndRedirect(statusUrl, ordernumber, videotype) {
             let timeout = 15000;
