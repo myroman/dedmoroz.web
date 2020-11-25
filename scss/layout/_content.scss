@@ -912,6 +912,10 @@ ul{
 		border-color: #0f4d81;
 		color: #fff;
 	}
+	input:disabled~.choose-radio__button{
+		background: #c4d3de;
+		color: #0f4d81 !important;
+	}
 }
 
 .button-next{
