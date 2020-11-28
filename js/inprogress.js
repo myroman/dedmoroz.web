@@ -43,7 +43,7 @@
             $.get(statusUrl, function (resp) {
                 console.log(resp)
                 if (videotype == 1) {
-                    if (resp.is_demo_ready) {
+                    if (resp.is_demo_ready == "True") {
                         $('.waiting-info').text('Демо видео готово. Открываем плеер...');
                         setTimeout(function () {
                             window.location.replace(createWatchUrl(ordernumber, videotype));
@@ -55,7 +55,7 @@
                         }, timeout);
                     }
                 } else {
-                    if (resp.is_hd_ready) {
+                    if (resp.is_hd_ready == "True") {
                         $('.waiting-info').text('Ваше видео готово. Открываем плеер...');
                         setTimeout(function () {
                             window.location.replace(createWatchUrl(ordernumber, videotype));
