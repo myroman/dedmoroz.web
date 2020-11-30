@@ -1020,8 +1020,11 @@ ul{
 		border-color: red;
 	}
 }
-label.error{
-	display: none!important;
+
+label.error {
+	display: block;
+	color: #db1f2f;
+	padding: 6px 25px;
 }
 .styled-sm{
 	max-width: 400px;
