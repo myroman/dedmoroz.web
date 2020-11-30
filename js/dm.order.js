@@ -48,6 +48,7 @@
 
     $(function () {
         $('.image-aspect').change(onImageAspectChanged);
+        $('.comment-wrapper').hide();
 
         $('.js-next').click(function (e) {
             let currentStepId = $(this).parents('.content-item').attr('id');
@@ -733,11 +734,12 @@
             }
 
             function displayInfoAboutPhotos() {
-                let photoKeys = Object.keys(orderState.imageMap);
                 let photosUploaded = 0;
                 let i = 0;
-                for (i = 0; i < photoKeys.length; i++) {
-                    let imageInfo = orderState.imageMap[photoKeys[i]];
+                for (i = 0; i < Object.keys(orderState.imageMap).length; i++) {
+                    let key = "pic" + i;
+                    let imageInfo = orderState.imageMap[key];
+                    console.log('imageInfo',imageInfo,i);
                     if (imageInfo.name && imageInfo.commentid) {
                         photosUploaded++;
 
