@@ -2297,6 +2297,11 @@ Dm.masterdata = {
                 "filtername": "гордей"
             },
             {
+                "id": "2833",
+                "displayname": "Гоша",
+                "filtername": "гоша"
+            },
+            {
                 "id": "759",
                 "displayname": "Грант",
                 "filtername": "грант"
@@ -9464,6 +9469,11 @@ Dm.masterdata = {
                 "filtername": "анка"
             },
             {
+                "id": "2832",
+                "displayname": "Анна",
+                "filtername": "анна"
+            },
+            {
                 "id": "310",
                 "displayname": "Анне́т",
                 "filtername": "аннет"
@@ -15207,7 +15217,7 @@ Dm.masterdata = {
                 "id": "2828",
                 "displayname": "Я́сна",
                 "filtername": "ясна"
-            }
+            }            
         ]
     }
 }
