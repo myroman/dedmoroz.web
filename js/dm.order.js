@@ -259,7 +259,14 @@
                 customerName: "required",
                 customerEmail: {
                     required: true,
-                    email: true
+                    email: true,
+                    required: {
+                        depends: function () {
+                            let oldVal = $(this).val();
+                            $(this).val($.trim(oldVal));
+                            return true;
+                        }
+                    }
                 }
             },
             messages: {
@@ -329,18 +336,18 @@
                         let defaultValue;
                         let groups = {};
                         $.each(resp, function () {
-                            
+
                             if (!groups[this.category]) {
                                 groups[this.category] = [];
                             }
 
                             groups[this.category].push(this);
                         });
-                        $.each(Object.keys(groups), function() {
+                        $.each(Object.keys(groups), function () {
                             let groupName = this;
                             let groupItems = groups[this];
                             let $optGroup = $("<optgroup />").attr("label", groupName);
-                            $.each(groupItems, function() {                                
+                            $.each(groupItems, function () {
                                 $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
                                 if (this.displayname.indexOf('чудесная фотография') > -1) {
                                     defaultValue = this.filepath;
@@ -444,7 +451,7 @@
                 }, {
                     id: 2,
                     text: 'Шкодливое'
-                }];                
+                }];
             }
 
             loadMasterdata();
