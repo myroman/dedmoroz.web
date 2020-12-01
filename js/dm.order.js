@@ -492,12 +492,12 @@
         }
 
         $("#ddlGender2_1").change(function () {
-            let gender = $(this).val();
+            let gender = +$(this).val();
             orderState.gender = gender;
             loadNames('#ddlName2_1', gender)
         });
         $("#ddlGender2_2").change(function () {
-            let gender = $(this).val();
+            let gender = +$(this).val();
             orderState.gender2 = gender;
             loadNames('#ddlName2_2', gender)
         });
