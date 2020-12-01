@@ -19,23 +19,6 @@
 
     let MaxPictures = 3;
 
-    function initOrderState(gender) {
-        let result = {
-            step: 0,
-            kidname: '',
-            gender: gender,
-            praiseid: 19,
-            behaviorid: 1,
-            customername: '',
-            customeremail: '',
-
-            imageMap: {}
-        };
-        $('#ddlName').val(result.kidname)
-
-        return result;
-    }
-
     let orderState = null;
     let imageCache = {
         "0": {},
@@ -44,11 +27,44 @@
         "letter": {}
     }
 
-    let masterData = {};
+    let masterData = {
+        behaviors: [{
+            id: 1,
+            text: 'Хорошее'
+        }, {
+            id: 2,
+            text: 'Шкодливое'
+        }]
+    };
 
     $(function () {
         $('.image-aspect').change(onImageAspectChanged);
         $('.comment-wrapper').hide();
+
+        function matchByFilterName(params, data) {
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+
+            if (typeof data.text === 'undefined' || typeof data.element === 'undefined') {
+                return null;
+            }
+
+            let filterField = $(data.element).data('filter');
+            if (!filterField) {
+                return null;
+            }
+
+            if (filterField.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                return data;
+            }
+            return null;
+        }
+        initSelect2('.ddl-names', matchByFilterName);
+        initSelect2('.ddl-comment');
+        initSelect2('.ddl-praise');
+        initSelect2('.ddl-behavior');
+        initSelect2('.ddl-gender');
 
         $('.js-next').click(function (e) {
             let currentStepId = $(this).parents('.content-item').attr('id');
@@ -220,10 +236,20 @@
 
         //choose boy, girl
         $('.js-choose-radio .choose-radio__gender input').live('change', function () {
-            $(this).parents('.content-item').addClass('hide-item');
-            $(this).parents('.content-item').next().removeClass('hide-item');
             let gender = $(this).data('gender');
-            startOrder(gender);
+            switch (gender) {
+                case 0:
+                case 1:
+                    $("#step-2").removeClass('hide-item');
+
+                    startOrder(gender);
+                    break;
+                case 2:
+                    $("#step-2_2-kids").removeClass('hide-item');
+                    startOrder(null);
+                    break;
+            }
+            $("#step-1").addClass('hide-item');
         });
 
         $("#childName").validate({
@@ -235,6 +261,30 @@
             submitHandler: function (form) {
                 $("#step-3").removeClass('hide-item');
                 $("#step-2").addClass('hide-item');
+                goForward('step-3');
+            },
+        });
+        $("#twoKidsNames").validate({
+            rules: {
+                gender2_1: "required",
+                gender2_2: "required",
+                ddlName2_1: "required",
+                ddlName2_2: "required",
+            },
+            messages: {
+                gender2_1: "*Обязательное поле",
+                gender2_2: "*Обязательное поле",
+                ddlName2_1: "*Обязательное поле",
+                ddlName2_2: "*Обязательное поле",
+            },
+            invalidHandler: function () {
+                setTimeout(function () {
+                    $('input, select').trigger('refresh');
+                }, 1)
+            },
+            submitHandler: function (form) {
+                $("#step-3").removeClass('hide-item');
+                $("#step-2_2-kids").addClass('hide-item');
                 goForward('step-3');
             },
         });
@@ -361,45 +411,28 @@
                         if (defaultValue) {
                             $ddl.first().val(defaultValue);
                         }
-                        initSelect2('.ddl-comment');
+
                     })
                 .always(function () {
                     Dm.hideLoader();
                 });
         }
 
-        function loadNames(gender) {
-            function matchByFilterName(params, data) {
-                if ($.trim(params.term) === '') {
-                    return data;
-                }
+        function getNamesByGender(gender) {
+            return Dm.masterdata.names[gender + ''];
+        }
 
-                if (typeof data.text === 'undefined' || typeof data.element === 'undefined') {
-                    return null;
-                }
-
-                let filterField = $(data.element).data('filter');
-                if (!filterField) {
-                    return null;
-                }
-
-                if (filterField.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
-                    return data;
-                }
-                return null;
-            }
-            masterData.names = Dm.masterdata.names[gender + ''];
-
-            var $ddl = $("select.ddl-names");
+        function loadNames(ddlSelector, gender) {            
+            let values = Dm.masterdata.names[gender + ''];
+            
+            var $ddl = $(ddlSelector);
             $ddl.html('');
             $ddl.append($("<option />").val('').text('Выберите имя'));
-
-            $.each(masterData.names, function () {
+            
+            $.each(values, function () {
                 $ddl.append($("<option />").val(this.id).text(this.displayname).data('filter', this
                     .filtername));
-                masterData.names.push(this);
             });
-            initSelect2('.ddl-names', matchByFilterName);
         }
 
         function initSelect2(selector, matcher) {
@@ -430,35 +463,51 @@
                         orderState.praiseid = defaultValue;
                     }
 
-                    initSelect2('.ddl-praise');
+
                 })
                 .always(function () {
                     Dm.hideLoader();
                 });
         }
 
+        $("#ddlGender2_1").change(function () {
+            let gender = $(this).val();
+            orderState.gender = gender;
+            loadNames('#ddlName2_1', gender)
+        });
+        $("#ddlGender2_2").change(function () {
+            let gender = $(this).val();
+            orderState.gender2 = gender;
+            loadNames('#ddlName2_2', gender)
+        });
+
         function startOrder(gender) {
-            orderState = initOrderState(gender);
+            function initOrderState(gender) {
+                let result = {
+                    step: 0,
+                    kidname: '',
+                    kidname2: '',
+                    gender: gender,
+                    gender2: null,
+                    praiseid: 19,
+                    behaviorid: 1,
+                    customername: '',
+                    customeremail: '',
 
-            loadNames(gender);
-            loadComments(gender);
-            loadPraises(orderState.gender);
+                    imageMap: {}
+                };
+                $('.ddl-names').val('');
 
-            function loadMasterdata() {
-
-                masterData.behaviors = [{
-                    id: 1,
-                    text: 'Хорошее'
-                }, {
-                    id: 2,
-                    text: 'Шкодливое'
-                }];
+                return result;
             }
 
-            loadMasterdata();
-            initSelect2('.ddl-behavior');
+            orderState = initOrderState(gender);
 
-            $('.order-dlg').show();
+            if (gender === 0 || gender === 1) {
+                loadNames('#ddlName',gender);
+            }
+            loadComments(gender);
+            loadPraises(gender);
         }
 
         function getPicNo(elem) {
@@ -621,6 +670,12 @@
         $('#ddlName').change(function () {
             orderState.kidname = $(this).val();
         });
+        $('#ddlName2_1').change(function () {
+            orderState.kidname = $(this).val();
+        });
+        $('#ddlName2_2').change(function () {
+            orderState.kidname2 = $(this).val();
+        });
         $('#ddlPraise').change(function () {
             orderState.praiseid = $(this).val();
         });
@@ -638,13 +693,11 @@
             console.log('init review form & validation...')
 
             function getForWhom(gender) {
-                switch (gender) {
+                switch (+gender) {
                     case 0:
                         return "Мальчик";
                     case 1:
                         return "Девочка";
-                    case 2:
-                        return "Двое детей";
                 }
             }
 
@@ -655,6 +708,9 @@
                 }
                 if (orderState.gender >= 2) {
                     errors.push('пол ребенка');
+                }
+                if (orderState.gender2 != null && !orderState.kidname2 || orderState.gender2 == null && orderState.kidname2) {
+                    errors.push('пол и имя второго ребенка');
                 }
                 if (!orderState.imageMap) {
                     errors.push('фотографии');
@@ -697,15 +753,29 @@
             }
             clearReviewError();
             $('.submit-order').prop('disabled', false);
+
             let validationMsg = validateOrder(orderState);
             if (validationMsg) {
                 showReviewError(validationMsg);
                 $('.submit-order').prop('disabled', true);
-            }
-            $('.review-form .gender-text').text(getForWhom(orderState.gender));
+                return;
+            }                      
 
-            let kidname = masterData.names.find(x => x.id == orderState.kidname).displayname;
-            $('.review-form .name-text').text(kidname);
+            if (orderState.gender2 != null) {
+                //2 kids
+                let forWhom = getForWhom(orderState.gender) + ", " + getForWhom(orderState.gender2);
+                $('.review-form .gender-text').text(forWhom);
+
+                let kidname1 = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
+                let kidname2 = getNamesByGender(orderState.gender2).find(x => x.id == orderState.kidname2).displayname;
+                $('.review-form .name-text').text(kidname1 + ", " + kidname2);
+            } else {
+                //1 kid
+                $('.review-form .gender-text').text(getForWhom(orderState.gender));
+
+                let kidname = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
+                $('.review-form .name-text').text(kidname);
+            }
 
             $('.review-form .letter-text').text(orderState.letter && orderState.letter.name ? 'Да' : 'Нет');
 
@@ -739,7 +809,7 @@
                 for (i = 0; i < Object.keys(orderState.imageMap).length; i++) {
                     let key = "pic" + i;
                     let imageInfo = orderState.imageMap[key];
-                    console.log('imageInfo',imageInfo,i);
+                    console.log('imageInfo', imageInfo, i);
                     if (imageInfo.name && imageInfo.commentid) {
                         photosUploaded++;
 
@@ -760,7 +830,9 @@
 
             let orderInfo = {
                 kidname: orderState.kidname,
+                kidname2: orderState.kidname2,
                 gender: orderState.gender,
+                gender2: orderState.gender2,
                 images: {},
                 praiseid: +orderState.praiseid,
                 behaviorid: +orderState.behaviorid,
