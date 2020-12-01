@@ -12825,7 +12825,7 @@ Dm.masterdata = {
             },
             {
                 "id": "1693",
-                "displayname": "Надия́",
+                "displayname": "Нади́я",
                 "filtername": "надия"
             },
             {
