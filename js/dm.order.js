@@ -40,6 +40,7 @@
     $(function () {
         $('.image-aspect').change(onImageAspectChanged);
         $('.comment-wrapper').hide();
+        $('.praise-wrapper').hide();
 
         function matchByFilterName(params, data) {
             if ($.trim(params.term) === '') {
@@ -72,6 +73,9 @@
 
             function nextStep() {
                 var id = $(that).attr('href');
+                if (orderState.gender2 != null && (id == "#step-5")) {
+                    id += "_2-kids";
+                }
                 $(that).parents('.content-item').addClass('hide-item');
                 $(id).removeClass('hide-item');
                 goForward(id);
@@ -185,6 +189,9 @@
         $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
             var id = $(this).attr('href');
+            if (orderState.gender2 != null && (id == "#step-2" || id == "#step-5")) {
+                id += "_2-kids";
+            }
             $(id).removeClass('hide-item');
             e.preventDefault();
             return false;
@@ -301,6 +308,19 @@
             submitHandler: function (form) {
                 $("#step-6").removeClass('hide-item');
                 $("#step-5").addClass('hide-item');
+                goForward('step-6');
+            },
+        });
+        $("#childOptions2").validate({
+            rules: {
+                mark: "required"
+            },
+            messages: {
+                mark: "*Обязательное поле"
+            },
+            submitHandler: function (form) {
+                $("#step-6").removeClass('hide-item');
+                $("#step-5_2-kids").addClass('hide-item');
                 goForward('step-6');
             },
         });
@@ -425,13 +445,13 @@
             return Dm.masterdata.names[gender + ''];
         }
 
-        function loadNames(ddlSelector, gender) {            
+        function loadNames(ddlSelector, gender) {
             let values = Dm.masterdata.names[gender + ''];
-            
+
             var $ddl = $(ddlSelector);
             $ddl.html('');
             $ddl.append($("<option />").val('').text('Выберите имя'));
-            
+
             $.each(values, function () {
                 $ddl.append($("<option />").val(this.id).text(this.displayname).data('filter', this
                     .filtername));
@@ -465,8 +485,6 @@
                         $ddl.val(defaultValue);
                         orderState.praiseid = defaultValue;
                     }
-
-
                 })
                 .always(function () {
                     Dm.hideLoader();
@@ -492,7 +510,7 @@
                     kidname2: '',
                     gender: gender,
                     gender2: null,
-                    praiseid: 19,
+                    praiseid: null,
                     behaviorid: 1,
                     customername: '',
                     customeremail: '',
@@ -507,10 +525,10 @@
             orderState = initOrderState(gender);
 
             if (gender === 0 || gender === 1) {
-                loadNames('#ddlName',gender);
+                loadNames('#ddlName', gender);
+                loadPraises(gender);
             }
-            loadComments(gender);
-            loadPraises(gender);
+            loadComments(gender);            
         }
 
         function getPicNo(elem) {
@@ -737,7 +755,8 @@
                     errors.push('формат письма (вертикальный или горизонтальный)');
                 }
 
-                if (!orderState.praiseid) {
+                //praise is mandatory for 1 kid
+                if (orderState.gender2 == null && !orderState.praiseid) {
                     errors.push('похвала');
                 }
                 if (!orderState.behaviorid) {
@@ -762,7 +781,7 @@
                 showReviewError(validationMsg);
                 $('.submit-order').prop('disabled', true);
                 return;
-            }                      
+            }
 
             if (orderState.gender2 != null) {
                 //2 kids
@@ -782,9 +801,12 @@
 
             $('.review-form .letter-text').text(orderState.letter && orderState.letter.name ? 'Да' : 'Нет');
 
-            let praise = masterData.praises.find(x => x.id == orderState.praiseid);
-            if (praise) {
-                $('.review-form .praise-text').text(praise.displayname);
+            if (orderState.praiseid) {
+                let praise = masterData.praises.find(x => x.id == orderState.praiseid);
+                if (praise) {
+                    $('.review-form .praise-text').text(praise.displayname);
+                    $('.praise-wrapper').show();
+                }
             }
 
             let behavior = masterData.behaviors.find(x => x.id == orderState.behaviorid);
@@ -837,11 +859,13 @@
                 gender: orderState.gender,
                 gender2: orderState.gender2,
                 images: {},
-                praiseid: +orderState.praiseid,
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
                 customeremail: orderState.customeremail
             };
+            if (orderState.praiseid) {
+                orderInfo.praiseid = +orderState.praiseid;
+            }
 
             orderInfo.images.content = [];
             let i = 0;
