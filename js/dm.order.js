@@ -507,7 +507,7 @@
                 let result = {
                     step: 0,
                     kidname: '',
-                    kidname2: '',
+                    kidname2: null,
                     gender: gender,
                     gender2: null,
                     praiseid: null,
