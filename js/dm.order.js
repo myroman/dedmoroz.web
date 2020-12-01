@@ -379,7 +379,11 @@
         function loadComments(gender) {
             masterData.comments = [];
             Dm.showLoader();
-            $.get(Dm.settings.baseurl + '/md/photocomments?applicable_for=' + gender,
+            let url = Dm.settings.baseurl + '/md/photocomments';
+            if (gender != null) {
+                url += '?applicable_for=' + gender;
+            }
+            $.get(url,
                     function (resp) {
                         var $ddl = $("select.ddl-comment");
                         $ddl.html('');
@@ -411,7 +415,6 @@
                         if (defaultValue) {
                             $ddl.first().val(defaultValue);
                         }
-
                     })
                 .always(function () {
                     Dm.hideLoader();
