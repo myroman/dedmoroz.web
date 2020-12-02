@@ -248,11 +248,13 @@
                 case 0:
                 case 1:
                     $("#step-2").removeClass('hide-item');
+                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии ребенка')
 
                     startOrder(gender);
                     break;
                 case 2:
                     $("#step-2_2-kids").removeClass('hide-item');
+                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
                     startOrder(null);
                     break;
             }
