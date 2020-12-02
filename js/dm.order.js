@@ -700,7 +700,7 @@
         $('#ddlPraise').change(function () {
             orderState.praiseid = $(this).val();
         });
-        $('#ddlBehavior').change(function () {
+        $('.ddl-behavior').change(function () {
             orderState.behaviorid = $(this).val();
         });
         $('#txtCustomerName').change(function () {
