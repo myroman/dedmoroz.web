@@ -255,7 +255,6 @@
                 case 2:
                     $("#step-2_2-kids").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
-                    $(".pic-wrapper_letter .horizontal-format-wrapper, .pic-wrapper_letter .vertical-format-wrapper").hide();
                     startOrder(null);
                     break;
             }
