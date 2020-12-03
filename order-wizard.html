@@ -14,7 +14,7 @@
         crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="css/style.css?qr=16" />
+    <link rel="stylesheet" type="text/css" href="css/style.css?qr=19" />
 </head>
 
 <body class="loaded">
@@ -44,16 +44,10 @@
                             </li>
                             <li class="choose-radio__item choose-radio__gender">
                                 <label class="choose-radio__label">
-                                    <input type="radio" name="name_1" data-gender="2" disabled>
+                                    <input type="radio" name="name_1" data-gender="2">
                                     <span class="choose-radio__icon"><i class="icon-childrens"></i></span>
                                     <span class="choose-radio__button">для двоих детей</span>
                                 </label>
-                                <i style="
-                                text-align: center;
-                                display: inline-block;
-                                width: 100%;
-                                padding: 5px;
-                            ">Доступно с 1 декабря</i>
                             </li>
                         </ul>
                         <div class="content-item__bottom">
@@ -66,7 +60,7 @@
                         <p class="content-item-choose__sub-title">Наш список отсортирован по алфавиту и включает полные
                             и уменьшительно-ласкательные формы имен. Если имя вашего ребенка всё же отсутствует в нашем
                             списке, воспользуйтесь заменой имени на обращение Деда Мороза: Внученька или Внучек</p>
-                        <div class="select2-holder">
+                        <div class="select2-holder select2-holder_short">
                             <select class="ddl-names" id="ddlName" data-placeholder="Имя ребенка" required>
                             </select>
                         </div>
@@ -80,10 +74,67 @@
                         </div>
                     </form>
                 </div>
+                <div class="content-item content-item-choose hide-item" id="step-2_2-kids">
+                    <form class="content-item__bg" id="twoKidsNames">
+                        <div class="content-item-choose__title">Какие имена у ваших детей?</div>
+                        <p class="content-item-choose__sub-title">Наш список отсортирован по алфавиту и включает полные
+                            и уменьшительно-ласкательные формы имен. Если имя вашего ребенка всё же отсутствует в нашем
+                            списке, воспользуйтесь заменой имени на обращение Деда Мороза: Внученька или Внучек
+                        </p>
+
+                        <div class="two-kidnames-holder">
+                            <p class="content-item-choose__sub-title">Первый ребенок</p>
+
+                            <div class="select2-holder select2-holder_short">
+                                <select class="ddl-gender" id="ddlGender2_1" data-placeholder="Пол" name="gender2_1"
+                                    required>
+                                    <option></option>
+                                    <option value="1">Девочка</option>
+                                    <option value="0">Мальчик</option>
+                                </select>
+                            </div>
+                            <br>
+
+                            <div class="select2-holder select2-holder_short">
+                                <select class="ddl-names" id="ddlName2_1" name="ddlName2_1" data-placeholder="Имя"
+                                    required>
+                                </select>
+                            </div>
+
+
+                            <p class="content-item-choose__sub-title">Второй ребенок</p>
+
+                            <div class="select2-holder select2-holder_short">
+                                <select class="ddl-gender" id="ddlGender2_2" data-placeholder="Пол" name="gender2_2"
+                                    required>
+                                    <option></option>
+                                    <option value="1">Девочка</option>
+                                    <option value="0">Мальчик</option>
+                                </select>
+                            </div>
+                            <br>
+
+                            <div class="select2-holder select2-holder_short">
+                                <select class="ddl-names" id="ddlName2_2" name="ddlName2_2" data-placeholder="Имя"
+                                    required>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="content-item__bottom">
+                            <a href="#step-1" class="button-prev js-prev">Назад</a>
+                            <div class="content-item__bottom-text">
+                                <p>Личные данные используются исключительно в целях изготовления заказа и ни при каких
+                                    обстоятельствах не будут переданы третьим лицам.</p>
+                            </div>
+                            <input type="submit" class="button-next" value="Дальше">
+                        </div>
+                    </form>
+                </div>
                 <div class="content-item content-item-choose hide-item" id="step-3">
                     <div class="content-item__bg" id="childPhoto">
                         <div class="content-item-choose__title">Добавьте фотографии ребенка</div>
-                        <p class="content-item-choose__sub-title">Загрузите от 1 до 3 фотографий ребенка в формате JPG
+                        <p class="content-item-choose__sub-title">Загрузите от 1 до 3 фотографий в формате JPG
                             или PNG и выберите к ним комментарии</p>
 
                         <p class="content-item-choose__sub-title content-item-choose__sub-title_error photo-error"></p>
@@ -234,14 +285,14 @@
                                     <div class="image-toolbox-item rotate-button js-image-rotate" data-deg="-90">
                                         <i class="dm-icon dm-icon_redo"></i>
                                     </div>
-                                    <div class="image-toolbox-item">
+                                    <div class="image-toolbox-item vertical-format-wrapper">
                                         <label>
                                             <input type="radio" name="aspect_letter" value="portrait"
                                                 class="image-aspect" checked>
                                             <i class="dm-icon dm-icon_vertical-format"></i>
                                         </label>
                                     </div>
-                                    <div class="image-toolbox-item">
+                                    <div class="image-toolbox-item horizontal-format-wrapper">
                                         <label>
                                             <input type="radio" name="aspect_letter" value="landscape"
                                                 class="image-aspect">
@@ -271,7 +322,7 @@
                     <form class="content-item__bg" id="childOptions">
                         <div class="content-item-choose__title">Как ребенок вел себя в этом году?</div>
                         <p class="content-item-choose__sub-title">Поведение ребенка</p>
-                        <div class="select2-holder">
+                        <div class="select2-holder select2-holder_short">
                             <select class="ddl-behavior" id="ddlBehavior" data-placeholder="Хорошее поведение"
                                 name="mark">
                                 <option></option>
@@ -281,11 +332,34 @@
                         </div>
                         <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna</p> -->
                         <p class="content-item-choose__sub-title praise-header">Успехи ребенка</p>
-                        <div class="select2-holder">
+                        <div class="select2-holder select2-holder_short">
                             <select class="ddl-praise" data-placeholder="Разные увлечения" name="achievements"
                                 id="ddlPraise">
                             </select></div>
                         <!-- <p class="select-sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna </p> -->
+                        <div class="content-item__bottom">
+                            <a href="#step-4" class="button-prev js-prev">Назад</a>
+                            <div class="content-item__bottom-text">
+                                <p>Личные данные используются исключительно в целях изготовления заказа и ни при каких
+                                    обстоятельствах не будут переданы третьим лицам.</p>
+                            </div>
+                            <input type="submit" class="button-next" value="Дальше">
+                        </div>
+                    </form>
+                </div>
+                <div class="content-item content-item-choose hide-item" id="step-5_2-kids">
+                    <form class="content-item__bg" id="childOptions2">
+                        <div class="content-item-choose__title">Как дети вели себя в этом году?</div>
+                        <p class="content-item-choose__sub-title">Выберите поведение</p>
+                        <div class="select2-holder select2-holder_short">
+                            <select class="ddl-behavior" id="ddlBehavior2" data-placeholder="Хорошее поведение"
+                                name="mark">
+                                <option></option>
+                                <option value="1" selected>Хорошее поведение</option>
+                                <option value="2">Шкодливое поведение</option>
+                            </select>
+                        </div>
+
                         <div class="content-item__bottom">
                             <a href="#step-4" class="button-prev js-prev">Назад</a>
                             <div class="content-item__bottom-text">
@@ -370,7 +444,7 @@
                                 <div class="field-name">Поведение</div>
                                 <div class="field-value"><span class="behavior-text"></span></div>
                             </div>
-                            <div class="table-row">
+                            <div class="table-row praise-wrapper">
                                 <div class="field-name">Похвала</div>
                                 <div class="field-value"><span class="praise-text"></span></div>
                             </div>
@@ -498,7 +572,7 @@
     </div>
     <div class="icon-load"></div>
     <!-- BODY EOF   -->
-    
+
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/jquery-migrate-1.4.1.min.js"></script>
     <script src="js/components/jquery.validate.min.js"></script>
@@ -506,10 +580,10 @@
         integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script src="js/custom.js?qr=16"></script>
-    <script src="js/dm.settings.js?qr=16"></script>
-    <script src="js/masterdata.js?qr=16"></script>
-    <script src="js/dm.order.js?qr=16" crossorigin="anonymous"></script>
+    <script src="js/custom.js?qr=19"></script>
+    <script src="js/dm.settings.js?qr=19"></script>
+    <script src="js/masterdata.js?qr=19"></script>
+    <script src="js/dm.order.js?qr=19" crossorigin="anonymous"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-035H4FTX1D"></script>

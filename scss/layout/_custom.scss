@@ -195,8 +195,11 @@ p.info-paragraph {
 }
 
 .select2-holder {
-    width: 50%;
+    width: 70%;
     margin: 0 auto;
+}
+.select2-holder_short {
+    width: 50%;
 }
 
 .select2-container--default {
@@ -343,6 +346,16 @@ p.info-paragraph {
     display: none;
 }
 
-.table-2-columns .comment-wrapper {
-    display: none;
+.two-kidnames-holder {
+    // display: flex;
+    // justify-content: space-around;
+    margin: 0 0 40px;
+
+    // .select2-holder.select2-holder_short {
+    //     width: 80%;
+    // }
 }
+
+// .two-kidnames-holder > div {
+//     flex-grow: 1;
+// }

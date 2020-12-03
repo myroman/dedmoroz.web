@@ -1265,7 +1265,7 @@ label.error {
 
 .box-field {
 	display: flex;
-	max-width: 593px;
+	max-width: 700px;
 	margin: 0 auto 40px;
 	width: 100%;
 
@@ -1322,6 +1322,9 @@ label.error {
 }
 
 @media screen and (max-width: 1500px) {
+	.main-screen h1 {
+		font-size: 50px;
+	}
 	.portfolio-list{
 		margin: 0 -25px 85px;
 		&__item{
@@ -1333,7 +1336,7 @@ label.error {
 	}
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1400px) {	
 	.portfolio-list__title{
 		font-size: 29px;
 		line-height: 34px;
@@ -1431,9 +1434,9 @@ label.error {
 		margin-top: 36px;
 	}
 	.main-screen h1{
-		font-size: 56px;
+		font-size: 46px;
 		line-height: 68px;
-		max-width: 830px;
+		max-width: 650px;
 	}
 	.main-screen p{
 		font-size: 32px;
