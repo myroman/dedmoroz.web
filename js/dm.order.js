@@ -26,6 +26,12 @@
         "2": {},
         "letter": {}
     }
+    let kidtypes = {
+        'boy': 0,
+        'girl': 1,
+        '2kids': 2,
+        'group': 10
+    };
 
     let masterData = {
         behaviors: [{
@@ -73,11 +79,16 @@
 
             function nextStep() {
                 var id = $(that).attr('href');
-                if (orderState.gender2 != null && (id == "#step-5")) {
+                if (orderState.kidtype == kidtypes['2kids'] && (id == "#step-5")) {
+                    id += "_2-kids";
+                }
+                if (orderState.kidtype == kidtypes['group'] && (id == "#step-5")) {
                     id += "_2-kids";
                 }
                 $(that).parents('.content-item').addClass('hide-item');
                 $(id).removeClass('hide-item');
+                scrollUp();
+                
                 goForward(id);
             }
             if (currentStepId == 'step-3') {
@@ -189,10 +200,15 @@
         $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
             var id = $(this).attr('href');
-            if (orderState.gender2 != null && (id == "#step-2" || id == "#step-5")) {
+            if (orderState.kidtype == kidtypes["2kids"] && (id == "#step-2" || id == "#step-5")) {
+                id += "_2-kids";
+            }
+
+            if (orderState.kidtype == kidtypes['group'] && (id == '#step-5')) {
                 id += "_2-kids";
             }
             $(id).removeClass('hide-item');
+            scrollUp();
             e.preventDefault();
             return false;
         });
@@ -245,20 +261,29 @@
         $('.js-choose-radio .choose-radio__gender input').live('change', function () {
             let gender = $(this).data('gender');
             switch (gender) {
-                case 0:
-                case 1:
+                case kidtypes['boy']:
+                case kidtypes['girl']:
                     $("#step-2").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии ребенка')
 
                     startOrder(gender);
                     break;
-                case 2:
+                case kidtypes['2kids']:
                     $("#step-2_2-kids").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
-                    startOrder(null);
+                    startOrder(gender);
+                    break;
+                case kidtypes['group']:
+                    // $("#step-2_group").removeClass('hide-item');
+                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
+                    $("#step-3").removeClass('hide-item');
+                    $("#step-2_group").addClass('hide-item');
+
+                    startOrder(gender);
                     break;
             }
             $("#step-1").addClass('hide-item');
+            scrollUp();
         });
 
         $("#childName").validate({
@@ -271,6 +296,7 @@
                 $("#step-3").removeClass('hide-item');
                 $("#step-2").addClass('hide-item');
                 goForward('step-3');
+                scrollUp();
             },
         });
         $("#twoKidsNames").validate({
@@ -295,6 +321,7 @@
                 $("#step-3").removeClass('hide-item');
                 $("#step-2_2-kids").addClass('hide-item');
                 goForward('step-3');
+                scrollUp();
             },
         });
 
@@ -311,6 +338,7 @@
                 $("#step-6").removeClass('hide-item');
                 $("#step-5").addClass('hide-item');
                 goForward('step-6');
+                scrollUp();
             },
         });
         $("#childOptions2").validate({
@@ -324,6 +352,7 @@
                 $("#step-6").removeClass('hide-item');
                 $("#step-5_2-kids").addClass('hide-item');
                 goForward('step-6');
+                scrollUp();
             },
         });
 
@@ -353,6 +382,7 @@
                 $("#step-7").removeClass('hide-item');
                 $("#step-6").addClass('hide-item');
                 goForward('step-7');
+                scrollUp();
             }
         });
 
@@ -392,9 +422,10 @@
             $('.review-form .error-block').hide();
         }
 
-        function scrollUp() {
+        function scrollUp(top) {
+            if (!top) top = 0;
             $("html, body").animate({
-                scrollTop: 0
+                scrollTop: top
             }, 300);
         }
 
@@ -426,9 +457,16 @@
                             let $optGroup = $("<optgroup />").attr("label", groupName);
                             $.each(groupItems, function () {
                                 $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
-                                if (this.displayname.indexOf('чудесная фотография') > -1) {
-                                    defaultValue = this.filepath;
+                                if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                                    if (this.displayname.indexOf('Твоя улыбка светится искорками счастья') > -1) {
+                                        defaultValue = this.filepath;
+                                    }
+                                } else {
+                                    if (this.displayname.indexOf('Ваши улыбки светятся искорками счастья') > -1) {
+                                        defaultValue = this.filepath;
+                                    }
                                 }
+                                
                                 masterData.comments.push(this);
                             });
 
@@ -504,14 +542,15 @@
             loadNames('#ddlName2_2', gender)
         });
 
-        function startOrder(gender) {
-            function initOrderState(gender) {
+        function startOrder(kidtype) {
+            function initOrderState(kidtype) {
                 let result = {
                     step: 0,
-                    kidname: '',
+                    kidname: null,
                     kidname2: null,
-                    gender: gender,
+                    gender: null,
                     gender2: null,
+                    kidtype: kidtype,
                     praiseid: null,
                     behaviorid: 1,
                     customername: '',
@@ -519,18 +558,38 @@
 
                     imageMap: {}
                 };
-                $('.ddl-names').val('');
+                if (kidtype == 0 || kidtype == 1) {
+                    result.gender = kidtype;
+                }                
 
                 return result;
             }
 
-            orderState = initOrderState(gender);
-
-            if (gender === 0 || gender === 1) {
-                loadNames('#ddlName', gender);
-                loadPraises(gender);
+            orderState = initOrderState(kidtype);
+            
+            $('.ddl-names').val('');
+            
+            switch (kidtype) {
+                case kidtypes['boy']:
+                case kidtypes['girl']:
+                    loadNames('#ddlName', kidtype);
+                    loadPraises(kidtype);
+                    loadComments(kidtype);
+                    break;
+                case kidtypes['2kids']:
+                    $('.photo-section__comment-info').show();
+                    $('.letter-step .content-item-choose__title').text('Добавьте письмо детей Деду Морозу');
+                    $('.letter-step .general-info').text('Если дети не написали письмо, просто пропустите этот шаг');
+                    loadComments(kidtypes['2kids']);
+                    break;
+                case kidtypes['group']:
+                    $('.photo-section__comment-info').show();
+                    $('.letter-step .content-item-choose__title').text('Добавьте письмо детей Деду Морозу');
+                    $('.letter-step .general-info').text('Если дети не написали письмо, просто пропустите этот шаг');
+                    loadComments(kidtypes['2kids']);
+                    orderState.kidname = '663';
+                    break;
             }
-            loadComments(gender);            
         }
 
         function getPicNo(elem) {
@@ -729,12 +788,25 @@
                 if (!orderState.kidname) {
                     errors.push('имя ребенка');
                 }
-                if (orderState.gender >= 2) {
-                    errors.push('пол ребенка');
+                
+                if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                    if (orderState.gender >= 2) {
+                        errors.push('пол ребенка');
+                    }
+                    //praise is mandatory for 1 kid
+                    if (!orderState.praiseid) {
+                        errors.push('похвала');
+                    }
                 }
-                if (orderState.gender2 != null && !orderState.kidname2 || orderState.gender2 == null && orderState.kidname2) {
-                    errors.push('пол и имя второго ребенка');
+                if (orderState.kidtype == kidtypes['2kids']) {                    
+                    if (orderState.gender >= 2) {
+                        errors.push('пол ребенка');
+                    }
+                    if (orderState.gender2 != null && !orderState.kidname2 || orderState.gender2 == null && orderState.kidname2) {
+                        errors.push('пол и имя второго ребенка');
+                    }
                 }
+
                 if (!orderState.imageMap) {
                     errors.push('фотографии');
                 } else {
@@ -757,10 +829,6 @@
                     errors.push('формат письма (вертикальный или горизонтальный)');
                 }
 
-                //praise is mandatory for 1 kid
-                if (orderState.gender2 == null && !orderState.praiseid) {
-                    errors.push('похвала');
-                }
                 if (!orderState.behaviorid) {
                     errors.push('поведение');
                 }
@@ -785,7 +853,14 @@
                 return;
             }
 
-            if (orderState.gender2 != null) {
+            if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                //1 kid
+                $('.review-form .gender-text').text(getForWhom(orderState.gender));
+
+                let kidname = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
+                $('.review-form .name-text').text(kidname);
+
+            } else if (orderState.kidtype == kidtypes['2kids']) {
                 //2 kids
                 let forWhom = getForWhom(orderState.gender) + ", " + getForWhom(orderState.gender2);
                 $('.review-form .gender-text').text(forWhom);
@@ -793,12 +868,9 @@
                 let kidname1 = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
                 let kidname2 = getNamesByGender(orderState.gender2).find(x => x.id == orderState.kidname2).displayname;
                 $('.review-form .name-text').text(kidname1 + ", " + kidname2);
-            } else {
-                //1 kid
-                $('.review-form .gender-text').text(getForWhom(orderState.gender));
-
-                let kidname = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
-                $('.review-form .name-text').text(kidname);
+            } else if (orderState.kidtype == kidtypes['group']) {
+                $('.review-form .gender-row').hide();
+                $('.review-form .name-text').text('Группа детей');
             }
 
             $('.review-form .letter-text').text(orderState.letter && orderState.letter.name ? 'Да' : 'Нет');
@@ -860,6 +932,7 @@
                 kidname2: orderState.kidname2,
                 gender: orderState.gender,
                 gender2: orderState.gender2,
+                kidtype: orderState.kidtype,
                 images: {},
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
