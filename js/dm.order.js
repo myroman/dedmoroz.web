@@ -275,7 +275,7 @@
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
                     $("#step-3").removeClass('hide-item');
                     $("#step-2_group").addClass('hide-item');
-                    
+
                     startOrder(gender);
                     break;
             }
@@ -447,9 +447,16 @@
                             let $optGroup = $("<optgroup />").attr("label", groupName);
                             $.each(groupItems, function () {
                                 $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
-                                if (this.displayname.indexOf('чудесная фотография') > -1) {
-                                    defaultValue = this.filepath;
+                                if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                                    if (this.displayname.indexOf('Твоя улыбка светится искорками счастья') > -1) {
+                                        defaultValue = this.filepath;
+                                    }
+                                } else {
+                                    if (this.displayname.indexOf('Ваши улыбки светятся искорками счастья') > -1) {
+                                        defaultValue = this.filepath;
+                                    }
                                 }
+                                
                                 masterData.comments.push(this);
                             });
 
@@ -529,7 +536,7 @@
             function initOrderState(kidtype) {
                 let result = {
                     step: 0,
-                    kidname: '',
+                    kidname: null,
                     kidname2: null,
                     gender: null,
                     gender2: null,
@@ -543,19 +550,36 @@
                 };
                 if (kidtype == 0 || kidtype == 1) {
                     result.gender = kidtype;
-                }
-                $('.ddl-names').val('');
+                }                
 
                 return result;
             }
 
             orderState = initOrderState(kidtype);
-
-            if (kidtype === 0 || kidtype === 1) {
-                loadNames('#ddlName', kidtype);
-                loadPraises(kidtype);
+            
+            $('.ddl-names').val('');
+            
+            switch (kidtype) {
+                case kidtypes['boy']:
+                case kidtypes['girl']:
+                    loadNames('#ddlName', kidtype);
+                    loadPraises(kidtype);
+                    loadComments(kidtype);
+                    break;
+                case kidtypes['2kids']:
+                    $('.photo-section__comment-info').show();
+                    $('.letter-step .content-item-choose__title').text('Добавьте письмо детей Деду Морозу');
+                    $('.letter-step .general-info').text('Если дети не написали письмо, просто пропустите этот шаг');
+                    loadComments(kidtypes['2kids']);
+                    break;
+                case kidtypes['group']:
+                    $('.photo-section__comment-info').show();
+                    $('.letter-step .content-item-choose__title').text('Добавьте письмо детей Деду Морозу');
+                    $('.letter-step .general-info').text('Если дети не написали письмо, просто пропустите этот шаг');
+                    loadComments(kidtypes['2kids']);
+                    orderState.kidname = '663';
+                    break;
             }
-            loadComments(kidtype);            
         }
 
         function getPicNo(elem) {
@@ -754,12 +778,25 @@
                 if (!orderState.kidname) {
                     errors.push('имя ребенка');
                 }
-                if (orderState.gender >= 2) {
-                    errors.push('пол ребенка');
+                
+                if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                    if (orderState.gender >= 2) {
+                        errors.push('пол ребенка');
+                    }
+                    //praise is mandatory for 1 kid
+                    if (!orderState.praiseid) {
+                        errors.push('похвала');
+                    }
                 }
-                if (orderState.gender2 != null && !orderState.kidname2 || orderState.gender2 == null && orderState.kidname2) {
-                    errors.push('пол и имя второго ребенка');
+                if (orderState.kidtype == kidtypes['2kids']) {                    
+                    if (orderState.gender >= 2) {
+                        errors.push('пол ребенка');
+                    }
+                    if (orderState.gender2 != null && !orderState.kidname2 || orderState.gender2 == null && orderState.kidname2) {
+                        errors.push('пол и имя второго ребенка');
+                    }
                 }
+
                 if (!orderState.imageMap) {
                     errors.push('фотографии');
                 } else {
@@ -782,10 +819,6 @@
                     errors.push('формат письма (вертикальный или горизонтальный)');
                 }
 
-                //praise is mandatory for 1 kid
-                if ((orderState.kidtype == 0 || orderState.kidtype == 1) && !orderState.praiseid) {
-                    errors.push('похвала');
-                }
                 if (!orderState.behaviorid) {
                     errors.push('поведение');
                 }
@@ -810,7 +843,14 @@
                 return;
             }
 
-            if (orderState.kidtype == kidtypes['2kids']) {
+            if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                //1 kid
+                $('.review-form .gender-text').text(getForWhom(orderState.gender));
+
+                let kidname = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
+                $('.review-form .name-text').text(kidname);
+
+            } else if (orderState.kidtype == kidtypes['2kids']) {
                 //2 kids
                 let forWhom = getForWhom(orderState.gender) + ", " + getForWhom(orderState.gender2);
                 $('.review-form .gender-text').text(forWhom);
@@ -818,12 +858,9 @@
                 let kidname1 = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
                 let kidname2 = getNamesByGender(orderState.gender2).find(x => x.id == orderState.kidname2).displayname;
                 $('.review-form .name-text').text(kidname1 + ", " + kidname2);
-            } else if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
-                //1 kid
-                $('.review-form .gender-text').text(getForWhom(orderState.gender));
-
-                let kidname = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
-                $('.review-form .name-text').text(kidname);
+            } else if (orderState.kidtype == kidtypes['group']) {
+                $('.review-form .gender-row').hide();
+                $('.review-form .name-text').text('Группа детей');
             }
 
             $('.review-form .letter-text').text(orderState.letter && orderState.letter.name ? 'Да' : 'Нет');

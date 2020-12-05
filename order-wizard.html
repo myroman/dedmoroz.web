@@ -17,24 +17,42 @@
     <link rel="stylesheet" type="text/css" href="css/style.css?qr=20" />
 
     <!-- Facebook Pixel Code -->
-<script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '871354276967747');
-    fbq('track', 'PageView');
+    <script>
+        ! function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '871354276967747');
+        fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=871354276967747&ev=PageView&noscript=1"
-    /></noscript>
+            src="https://www.facebook.com/tr?id=871354276967747&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
 
-    <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?168",t.onload=function(){VK.Retargeting.Init("VK-RTRG-569999-2oXEn"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-569999-2oXEn" style="position:fixed; left:-999px;" alt=""/></noscript>
+    <script type="text/javascript">
+        ! function () {
+            var t = document.createElement("script");
+            t.type = "text/javascript", t.async = !0, t.src = "https://vk.com/js/api/openapi.js?168", t.onload =
+                function () {
+                    VK.Retargeting.Init("VK-RTRG-569999-2oXEn"), VK.Retargeting.Hit()
+                }, document.head.appendChild(t)
+        }();
+    </script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-569999-2oXEn" style="position:fixed; left:-999px;"
+            alt="" /></noscript>
 </head>
 
 <body class="loaded">
@@ -158,25 +176,13 @@
                         </div>
                     </form>
                 </div>
-                <!-- <div class="content-item content-item-choose hide-item" id="step-2_group">
-                    <form class="content-item__bg" id="manyKidsNames">
-                        <p class="content-item-choose__sub-title">Дед Мороз обратится к детям как "Внучата"</p>
-                        
-                        <div class="content-item__bottom">
-                            <a href="#step-1" class="button-prev js-prev">Назад</a>
-                            <div class="content-item__bottom-text">
-                                <p>Личные данные используются исключительно в целях изготовления заказа и ни при каких
-                                    обстоятельствах не будут переданы третьим лицам.</p>
-                            </div>
-                            <input type="submit" class="button-next" value="Дальше">
-                        </div>
-                    </form>
-                </div> -->
                 <div class="content-item content-item-choose hide-item" id="step-3">
                     <div class="content-item__bg" id="childPhoto">
                         <div class="content-item-choose__title">Добавьте фотографии ребенка</div>
                         <p class="content-item-choose__sub-title">Загрузите от 1 до 3 фотографий в формате JPG
-                            или PNG и выберите к ним комментарии</p>
+                            или PNG и выберите к ним комментарии. <span class="photo-section__comment-info">Комментарии доступны как во множественном числе,
+                                так и в единственном, в зависимости от того, сколько детей изображено на
+                                фотографии.</span></p>
 
                         <p class="content-item-choose__sub-title content-item-choose__sub-title_error photo-error"></p>
 
@@ -306,10 +312,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-item content-item-choose hide-item" id="step-4">
+                <div class="content-item content-item-choose hide-item letter-step" id="step-4">
                     <div class="content-item__bg">
                         <div class="content-item-choose__title">Добавьте письмо ребенка Деду Морозу</div>
-                        <p class="content-item-choose__sub-title">Если ребенок не написал письмо, просто пропустите этот
+                        <p class="content-item-choose__sub-title general-info">Если ребенок не написал письмо, просто пропустите этот
                             шаг
                         </p>
                         <p class="content-item-choose__sub-title content-item-choose__sub-title_error letter-error"></p>
@@ -443,7 +449,7 @@
                         <div class="content-item-choose__title">Проверьте данные заказа</div>
                         <p class="content-item-choose__sub-title content-item-choose__sub-title_error error-block"></p>
                         <div class="table-2-columns">
-                            <div class="table-row">
+                            <div class="table-row gender-row">
                                 <div class="field-name">Пол</div>
                                 <div class="field-value">
                                     <span class="gender-text"></span>
