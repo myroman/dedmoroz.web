@@ -73,7 +73,7 @@
 
             function nextStep() {
                 var id = $(that).attr('href');
-                if (orderState.gender2 != null && (id == "#step-5")) {
+                if (orderState.kidtype == 2 && (id == "#step-5")) {
                     id += "_2-kids";
                 }
                 $(that).parents('.content-item').addClass('hide-item');
@@ -189,7 +189,7 @@
         $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
             var id = $(this).attr('href');
-            if (orderState.gender2 != null && (id == "#step-2" || id == "#step-5")) {
+            if (orderState.kidtype == 2 && (id == "#step-2" || id == "#step-5")) {
                 id += "_2-kids";
             }
             $(id).removeClass('hide-item');
@@ -255,7 +255,15 @@
                 case 2:
                     $("#step-2_2-kids").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
-                    startOrder(null);
+                    startOrder(2);
+                    break;
+                case 3:
+                    // $("#step-2_many-kids").removeClass('hide-item');
+                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
+                    $("#step-3").removeClass('hide-item');
+                    $("#step-2_many-kids").addClass('hide-item');
+                    
+                    startOrder(3);
                     break;
             }
             $("#step-1").addClass('hide-item');
@@ -504,14 +512,15 @@
             loadNames('#ddlName2_2', gender)
         });
 
-        function startOrder(gender) {
-            function initOrderState(gender) {
+        function startOrder(kidtype) {
+            function initOrderState(kidtype) {
                 let result = {
                     step: 0,
                     kidname: '',
                     kidname2: null,
-                    gender: gender,
+                    gender: null,
                     gender2: null,
+                    kidtype: kidtype,
                     praiseid: null,
                     behaviorid: 1,
                     customername: '',
@@ -519,18 +528,21 @@
 
                     imageMap: {}
                 };
+                if (kidtype == 0 || kidtype == 1) {
+                    result.gender = kidtype;
+                }
                 $('.ddl-names').val('');
 
                 return result;
             }
 
-            orderState = initOrderState(gender);
+            orderState = initOrderState(kidtype);
 
-            if (gender === 0 || gender === 1) {
-                loadNames('#ddlName', gender);
-                loadPraises(gender);
+            if (kidtype === 0 || kidtype === 1) {
+                loadNames('#ddlName', kidtype);
+                loadPraises(kidtype);
             }
-            loadComments(gender);            
+            loadComments(kidtype);            
         }
 
         function getPicNo(elem) {
@@ -758,7 +770,7 @@
                 }
 
                 //praise is mandatory for 1 kid
-                if (orderState.gender2 == null && !orderState.praiseid) {
+                if ((orderState.kidtype == 0 || orderState.kidtype == 1) && !orderState.praiseid) {
                     errors.push('похвала');
                 }
                 if (!orderState.behaviorid) {
@@ -785,7 +797,7 @@
                 return;
             }
 
-            if (orderState.gender2 != null) {
+            if (orderState.kidtype == 2) {
                 //2 kids
                 let forWhom = getForWhom(orderState.gender) + ", " + getForWhom(orderState.gender2);
                 $('.review-form .gender-text').text(forWhom);
@@ -860,6 +872,7 @@
                 kidname2: orderState.kidname2,
                 gender: orderState.gender,
                 gender2: orderState.gender2,
+                kidtype: orderState.kidtype,
                 images: {},
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
