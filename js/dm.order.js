@@ -87,6 +87,8 @@
                 }
                 $(that).parents('.content-item').addClass('hide-item');
                 $(id).removeClass('hide-item');
+                scrollUp();
+                
                 goForward(id);
             }
             if (currentStepId == 'step-3') {
@@ -206,6 +208,7 @@
                 id += "_2-kids";
             }
             $(id).removeClass('hide-item');
+            scrollUp();
             e.preventDefault();
             return false;
         });
@@ -280,6 +283,7 @@
                     break;
             }
             $("#step-1").addClass('hide-item');
+            scrollUp();
         });
 
         $("#childName").validate({
@@ -292,6 +296,7 @@
                 $("#step-3").removeClass('hide-item');
                 $("#step-2").addClass('hide-item');
                 goForward('step-3');
+                scrollUp();
             },
         });
         $("#twoKidsNames").validate({
@@ -316,6 +321,7 @@
                 $("#step-3").removeClass('hide-item');
                 $("#step-2_2-kids").addClass('hide-item');
                 goForward('step-3');
+                scrollUp();
             },
         });
 
@@ -332,6 +338,7 @@
                 $("#step-6").removeClass('hide-item');
                 $("#step-5").addClass('hide-item');
                 goForward('step-6');
+                scrollUp();
             },
         });
         $("#childOptions2").validate({
@@ -345,6 +352,7 @@
                 $("#step-6").removeClass('hide-item');
                 $("#step-5_2-kids").addClass('hide-item');
                 goForward('step-6');
+                scrollUp();
             },
         });
 
@@ -374,6 +382,7 @@
                 $("#step-7").removeClass('hide-item');
                 $("#step-6").addClass('hide-item');
                 goForward('step-7');
+                scrollUp();
             }
         });
 
@@ -413,9 +422,10 @@
             $('.review-form .error-block').hide();
         }
 
-        function scrollUp() {
+        function scrollUp(top) {
+            if (!top) top = 0;
             $("html, body").animate({
-                scrollTop: 0
+                scrollTop: top
             }, 300);
         }
 
