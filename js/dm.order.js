@@ -26,6 +26,12 @@
         "2": {},
         "letter": {}
     }
+    let kidtypes = {
+        'boy': 0,
+        'girl': 1,
+        '2kids': 2,
+        'group': 10
+    };
 
     let masterData = {
         behaviors: [{
@@ -73,7 +79,10 @@
 
             function nextStep() {
                 var id = $(that).attr('href');
-                if (orderState.kidtype == 2 && (id == "#step-5")) {
+                if (orderState.kidtype == kidtypes['2kids'] && (id == "#step-5")) {
+                    id += "_2-kids";
+                }
+                if (orderState.kidtype == kidtypes['group'] && (id == "#step-5")) {
                     id += "_2-kids";
                 }
                 $(that).parents('.content-item').addClass('hide-item');
@@ -189,7 +198,11 @@
         $('.js-prev').click(function (e) {
             $(this).parents('.content-item').addClass('hide-item');
             var id = $(this).attr('href');
-            if (orderState.kidtype == 2 && (id == "#step-2" || id == "#step-5")) {
+            if (orderState.kidtype == kidtypes["2kids"] && (id == "#step-2" || id == "#step-5")) {
+                id += "_2-kids";
+            }
+
+            if (orderState.kidtype == kidtypes['group'] && (id == '#step-5')) {
                 id += "_2-kids";
             }
             $(id).removeClass('hide-item');
@@ -245,25 +258,25 @@
         $('.js-choose-radio .choose-radio__gender input').live('change', function () {
             let gender = $(this).data('gender');
             switch (gender) {
-                case 0:
-                case 1:
+                case kidtypes['boy']:
+                case kidtypes['girl']:
                     $("#step-2").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии ребенка')
 
                     startOrder(gender);
                     break;
-                case 2:
+                case kidtypes['2kids']:
                     $("#step-2_2-kids").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
-                    startOrder(2);
+                    startOrder(gender);
                     break;
-                case 3:
-                    // $("#step-2_many-kids").removeClass('hide-item');
+                case kidtypes['group']:
+                    // $("#step-2_group").removeClass('hide-item');
                     $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
                     $("#step-3").removeClass('hide-item');
-                    $("#step-2_many-kids").addClass('hide-item');
+                    $("#step-2_group").addClass('hide-item');
                     
-                    startOrder(3);
+                    startOrder(gender);
                     break;
             }
             $("#step-1").addClass('hide-item');
@@ -797,7 +810,7 @@
                 return;
             }
 
-            if (orderState.kidtype == 2) {
+            if (orderState.kidtype == kidtypes['2kids']) {
                 //2 kids
                 let forWhom = getForWhom(orderState.gender) + ", " + getForWhom(orderState.gender2);
                 $('.review-form .gender-text').text(forWhom);
@@ -805,7 +818,7 @@
                 let kidname1 = getNamesByGender(orderState.gender).find(x => x.id == orderState.kidname).displayname;
                 let kidname2 = getNamesByGender(orderState.gender2).find(x => x.id == orderState.kidname2).displayname;
                 $('.review-form .name-text').text(kidname1 + ", " + kidname2);
-            } else {
+            } else if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
                 //1 kid
                 $('.review-form .gender-text').text(getForWhom(orderState.gender));
 
