@@ -39,7 +39,7 @@
         checkAndRedirect(statusUrl, ordernumber, videotype);
 
         function checkAndRedirect(statusUrl, ordernumber, videotype) {
-            let timeout = 15000;
+            let timeout = 60000;
             $.get(statusUrl, function (resp) {
                 console.log(resp)
                 if (videotype == 1) {
