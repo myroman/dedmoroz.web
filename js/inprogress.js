@@ -38,8 +38,24 @@
         let statusUrl = Dm.settings.baseurl + '/orders/' + ordernumber;
         checkAndRedirect(statusUrl, ordernumber, videotype);
 
+        var totalTimeWaited = 0;
+        var waitTimeout = 1000 * 60;
+        var maxTimeWaitMs = 1000 * 60 * 60 * 3;
+        var maxDemoTimeWaitMs = 1000 * 60 * 60;
+
         function checkAndRedirect(statusUrl, ordernumber, videotype) {
-            let timeout = 60000;
+            if (videotype == 1) {
+                if (totalTimeWaited > maxDemoTimeWaitMs) {
+                    $('.waiting-info').text('Ваше демо скоро будет приготовлено, и ссылка придет на указанный вами электронный адрес.');
+                    return;
+                }
+            } else {
+                if (totalTimeWaited > maxTimeWaitMs) {
+                    $('.waiting-info').text('Ваше видеопоздравление скоро будет приготовлено, и ссылка придет на указанный вами электронный адрес.');
+                    return;
+                }
+            }
+            
             $.get(statusUrl, function (resp) {
                 console.log(resp)
                 if (videotype == 1) {
@@ -49,10 +65,12 @@
                             window.location.replace(createWatchUrl(ordernumber, videotype));
                         }, 300);
                     } else {
-                        $('.waiting-info').text('Мы сейчас создаём демо видео, пожалуйста подождите.');
+                        totalTimeWaited += waitTimeout;
+                        console.log('wait',totalTimeWaited, videotype);
+                        $('.waiting-info').text('Мы сейчас создаём ваше демо видеопоздравление, пожалуйста подождите.');
                         setTimeout(function () {
                             checkAndRedirect(statusUrl, ordernumber, videotype);
-                        }, timeout);
+                        }, waitTimeout);
                     }
                 } else {
                     if (resp.is_hd_ready === true) {
@@ -61,11 +79,13 @@
                             window.location.replace(createWatchUrl(ordernumber, videotype));
                         }, 300);
                     } else {
-                        $('.waiting-info').text('Мы сейчас создаём видео, пожалуйста подождите.');
+                        totalTimeWaited += waitTimeout;
+                        console.log('wait',totalTimeWaited, videotype);
+                        $('.waiting-info').text('Мы сейчас создаём ваше видео поздравление, пожалуйста подождите.');
 
                         setTimeout(function () {
                             checkAndRedirect(statusUrl, ordernumber, videotype);
-                        }, timeout);
+                        }, waitTimeout);
                     }
                 }
             });
