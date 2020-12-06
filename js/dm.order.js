@@ -264,18 +264,15 @@
                 case kidtypes['boy']:
                 case kidtypes['girl']:
                     $("#step-2").removeClass('hide-item');
-                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии ребенка')
-
+                    
                     startOrder(gender);
                     break;
                 case kidtypes['2kids']:
-                    $("#step-2_2-kids").removeClass('hide-item');
-                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
+                    $("#step-2_2-kids").removeClass('hide-item');                    
                     startOrder(gender);
                     break;
                 case kidtypes['group']:
                     // $("#step-2_group").removeClass('hide-item');
-                    $("#childPhoto .content-item-choose__title").text('Добавьте фотографии детей')
                     $("#step-3").removeClass('hide-item');
                     $("#step-2_group").addClass('hide-item');
 
@@ -568,6 +565,9 @@
             orderState = initOrderState(kidtype);
             
             $('.ddl-names').val('');
+
+            $('.group-extra-info').hide();
+            $('.photo-section__comment-info').hide();
             
             switch (kidtype) {
                 case kidtypes['boy']:
@@ -575,15 +575,19 @@
                     loadNames('#ddlName', kidtype);
                     loadPraises(kidtype);
                     loadComments(kidtype);
+                    $("#childPhoto .add-pictures").text('Добавьте фотографии ребенка');
                     break;
                 case kidtypes['2kids']:
                     $('.photo-section__comment-info').show();
+                    $("#childPhoto .add-pictures").text('Добавьте фотографии детей')
                     $('.letter-step .content-item-choose__title').text('Добавьте письмо детей Деду Морозу');
                     $('.letter-step .general-info').text('Если дети не написали письмо, просто пропустите этот шаг');
                     loadComments(kidtypes['2kids']);
                     break;
                 case kidtypes['group']:
                     $('.photo-section__comment-info').show();
+                    $('.group-extra-info').show();
+                    $("#childPhoto .add-pictures").text('Добавьте фотографии детей')
                     $('.letter-step .content-item-choose__title').text('Добавьте письмо детей Деду Морозу');
                     $('.letter-step .general-info').text('Если дети не написали письмо, просто пропустите этот шаг');
                     loadComments(kidtypes['2kids']);
