@@ -206,8 +206,12 @@
                 id += "_2-kids";
             }
 
-            if (orderState.kidtype == kidtypes['group'] && (id == '#step-5')) {
-                id += "_2-kids";
+            if (orderState.kidtype == kidtypes['group']) {
+                if (id == '#step-5') {
+                    id += "_2-kids";
+                } else if (id == '#step-2') {
+                    id = '#step-1';
+                }                
             }
             $(id).removeClass('hide-item');
             scrollUp();
