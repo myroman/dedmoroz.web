@@ -16,7 +16,7 @@
         reducCoef: 0.25,
         boundaryWidth: 200,
         boundaryHeight: 200,
-        enableResize: false
+        enableResize: true
     }
 
     let MaxPictures = 3;
