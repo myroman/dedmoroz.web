@@ -5,7 +5,8 @@
         shortSide: 600,
         reducCoef: 0.15,
         boundaryWidth: 200,
-        boundaryHeight: 200
+        boundaryHeight: 200,
+        enableResize: true
     }
     let croppieResultLongSide = 1200;
 
@@ -14,7 +15,8 @@
         shortSide: 600,
         reducCoef: 0.25,
         boundaryWidth: 200,
-        boundaryHeight: 200
+        boundaryHeight: 200,
+        enableResize: false
     }
 
     let MaxPictures = 3;
@@ -734,7 +736,8 @@
                 }
                 return new Croppie(elem, {
                     viewport: viewport,
-                    enableOrientation: true
+                    enableOrientation: true,
+                    enableResize: croppieSettings.enableResize
                 });
             }
         }
