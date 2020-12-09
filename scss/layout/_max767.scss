@@ -31,8 +31,44 @@
 		}
 	}
 
+	p.blue-text{
+		font-size: 18px;
+		line-height: 24px;
+	}
+
+	.section-feedback{
+		padding: 140px 0 150px;
+
+		&__tree{
+			width: 170px;			
+		}
+	}
+
 	.feedback {
 		display: block;
+		max-width: 100%;		
+
+		&__title {
+			color: #0f4d82;
+			font-size: 26px;
+			font-weight: 600;
+			line-height: 32px;
+			margin-bottom: 10px;
+		}
+
+		&__extra-info {
+			margin-bottom: 120px;
+		}
+	
+		.social-list {
+			justify-content: center;
+			.social-list__link > img {
+				width: 46px;
+			}
+			&__item {
+				padding: 0 9px;
+			}
+		}
 	}
 
 	.video {
