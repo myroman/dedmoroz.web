@@ -68,16 +68,40 @@
                         </div>
 
                         <div class="submit-order-form">
-                            <p>Загрузите реквизиты и укажите ваши контактные данные</p>
-
-                            
+                            <p>Загрузите реквизиты и укажите ваши контактные данные</p>                            
 
                             <label class="photo-list__label">
-                                <input type="file" class="input-photo input-photo_hidden" id="photo-0">
-                                <input type="hidden" class="photo-hidden" name="hidPhoto0" id="hidPhoto0" />
+                                <input type="file" class="file-reqs" id="fileReqs">
+                                
                                 <span class="photo-list__photo"></span>
                                 <i class="icon-upload"></i>
                             </label>
+
+                            <div class="form-wrapper">
+                                <form>
+                                    <input type="hidden" class="photo-hidden" name="hidPhoto0" id="hidPhoto0" />
+
+                                    <div class="box-field">
+                                        <label for="txtCustomerEmail" class="box-field__label">Ваш email:</label>
+                                        <div class="box-field__input">
+                                            <input type="text" id="txtCustomerEmail" name="customerEmail" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="box-field">
+                                        <label for="txtCustomerName" class="box-field__label">Контактное лицо:</label>
+                                        <div class="box-field__input">
+                                            <input type="text" id="txtCustomerName" name="customerName" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="content-item__bottom">
+                                        <input type="submit" class="button-next" value="Отправить">
+                                    </div>
+                                </form>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
