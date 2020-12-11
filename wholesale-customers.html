@@ -10,6 +10,7 @@
     <meta name="keywords" content="" />
     <link rel="icon" type="image/x-icon" href="favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="css/style.css?qr=24" />
 </head>
 
@@ -24,16 +25,57 @@
                     <div class="content-item__bg">
                         <h1>Оптовым покупателям</h1>
 
-                        <ol class="order-step">
-                            <li>
-                                <p>
-                                    <strong>Как что-то сделать?</strong>
-                                </p>
-                                <p>
-                                    Come here and do this
-                                </p>
-                            </li>
-                        </ol>
+                        <p>Эта таблица соорентирует вас по скидочкам</p>
+
+                        <div class="discount-table-wrapper">
+                            <table>
+                                <thead>
+                                    <th>Количество промокодов</th>
+                                    <th>Скидка, %</th>
+                                    <th>Стоимость одного поздравления, руб</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>5</td>
+                                        <td>570</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>10</td>
+                                        <td>540</td>
+                                    </tr>
+                                    <tr>
+                                        <td>от 150</td>
+                                        <td>по договоренности</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="documents-wrapper">
+                            <p>
+                                Скачайте документы
+                            </p>
+                            <div>
+                                <a href="#">Документ 1</a>
+                            </div>
+
+                            <div>
+                                <a href="#">Документ 2</a>
+                            </div>
+                        </div>
+
+                        <div class="submit-order-form">
+                            <p>Загрузите реквизиты и укажите ваши контактные данные</p>
+                            <label class="photo-list__label">
+                                <input type="file" class="input-photo input-photo_hidden" id="photo-0">
+                                <input type="hidden" class="photo-hidden" name="hidPhoto0" id="hidPhoto0" />
+                                <span class="photo-list__photo"></span>
+                                <i class="icon-upload"></i>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
