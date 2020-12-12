@@ -172,6 +172,7 @@ a {
 	color: $link-color;
 	transition: $default-transition;
 	text-decoration: none;
+	text-underline-offset: 4px;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

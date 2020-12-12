@@ -502,10 +502,14 @@
         }
 
         function initSelect2(selector, matcher) {
-            $(selector).select2({
+            let opts = {
                 matcher: matcher,
                 width: '100%'
-            });
+            };
+            if (selector == '.ddl-comment' || selector == '.ddl-praise' || selector == '.ddl-behavior' || selector == '.ddl-gender') {
+                opts.minimumResultsForSearch = Infinity;
+            }
+            $(selector).select2(opts);
         }
 
         function loadPraises(gender) {

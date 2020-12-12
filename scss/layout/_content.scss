@@ -417,6 +417,22 @@ ul{
 	}
 }
 
+p.blue-text{
+	color: #0f4d82;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 22px;
+	font-weight: 400;
+	line-height: 32px;
+	letter-spacing: -0.2px;
+	a.white-text{
+		color: #0f4d82;
+		text-decoration: underline;
+		&:hover{
+			text-decoration: none;
+		}
+	}
+}
+
 
 .section-feedback {
 	background-image: url(../img/feedback-bg.jpg);
@@ -459,15 +475,29 @@ ul{
 	display: inline-block;
 	position: relative;
 	z-index: 4;
+	max-width: 50%;
 	&__title {
 		color: #0f4d82;
 		font-size: 41px;
 		font-weight: 600;
 		line-height: 55px;
-		margin-bottom: 93px;
+		margin-bottom: 10px;
 	}
 	.button{
 		min-width: 290px;
+	}
+	&__extra-info {
+		margin-bottom: 30px;
+	}
+
+	.social-list {
+		justify-content: center;
+		.social-list__link > img {
+			width: 62px;
+		}
+		&__item {
+			padding:0 19px;
+		}
 	}
 }
 

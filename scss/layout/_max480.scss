@@ -8,7 +8,7 @@
 		line-height: 36px;
 	}
 	.main-screen p{
-		font-size: 18px;
+		font-size: 20px;
 		line-height: 26px;
 	}
 
@@ -42,10 +42,15 @@
 	}
 
 	.section-feedback{
-		padding: 200px 0 150px;
+		padding: 170px 0 150px;
 	}
 	.section-feedback__tree{
 		width: 180px;
+	}
+	.feedback {
+		&__extra-info {
+			margin-bottom: 80px;
+		}
 	}
 
 	.order-step > li:before{
