@@ -1,7 +1,7 @@
 @media screen and (max-width: 480px) {
     
 	.main-screen{
-		padding-top: 160px;
+		padding-top: 200px;
 	}
 	.main-screen h1{
 		font-size: 28px;
@@ -223,5 +223,14 @@
         display: none;
         margin-top: 20px;
         margin-bottom: 0px;
+	}
+	
+
+header {
+
+    .top-line-ad {
+        font-size: 17px;
     }
+}
+
 }
