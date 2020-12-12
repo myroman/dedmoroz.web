@@ -362,3 +362,23 @@ p.info-paragraph {
 .group-extra-info {
     margin-bottom: 40px;
 }
+
+
+header {
+    padding-top: 0;
+
+    .top-line-ad {
+        background: #db1f2f;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        font-size: 20px;
+        line-height: 1.3em;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .wrapper {
+        padding-top: 8px;
+    }
+}
