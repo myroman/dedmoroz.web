@@ -372,7 +372,7 @@ header {
         color: white;
         width: 100%;
         padding: 10px;
-        font-size: 16px;
+        font-size: 20px;
         line-height: 1.3em;
         font-weight: 600;
         text-align: center;
@@ -380,5 +380,34 @@ header {
 
     .wrapper {
         padding-top: 8px;
+    }
+}
+
+.alert {
+    display: none;
+}
+.bootstrap-page {
+    .container {
+        width: 80%;
+    }
+    p {
+        font-size: 16px;
+    }
+    label {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+    input.form-control {
+        border-radius: 6px;
+        height: 1.5em;
+        padding: 20px 10px;
+        font-size: 16px;
+        line-height: 1em;
+    }
+}
+.submit-order-form {
+    
+    input.form-control {
+        width: 50%;
     }
 }

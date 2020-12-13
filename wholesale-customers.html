@@ -6,34 +6,147 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     <title>Дарим Чудо - Оптовым покупателям</title>
-    <meta name='description' content="Именное видеопоздравление для ребенка от самого настоящего Деда Мороза из Великого Устюга! Выберите имя, добавьте фотографии и через несколько минут видеоподарок придет вам на электронную почту!" />
+    <meta name='description'
+        content="Именное видеопоздравление для ребенка от самого настоящего Деда Мороза из Великого Устюга! Выберите имя, добавьте фотографии и через несколько минут видеоподарок придет вам на электронную почту!" />
     <meta name="keywords" content="" />
     <link rel="icon" type="image/x-icon" href="favicon.png" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css?qr=25" />
 </head>
 
 <body class="loaded">
     <!-- BEGIN BODY -->
-    <div class="main-wrapper inner-page">
+    <div class="main-wrapper inner-page bootstrap-page">
         <!-- BEGIN CONTENT -->
         <main class="content inner-content">
             <div class="inner-content__tree"></div>
             <div class="wrapper">
                 <div class="content-item">
                     <div class="content-item__bg">
-                        <h1>Оптовым покупателям</h1>
+                        <div class="container">
+                            <h1>Оптовым покупателям</h1>
 
-                        <ol class="order-step">
-                            <li>
-                                <p>
-                                    <strong>Как что-то сделать?</strong>
-                                </p>
-                                <p>
-                                    Come here and do this
-                                </p>
-                            </li>
-                        </ol>
+                            <h2>Таблица скидок</h2>
+
+                            <div class="panel panel-default discount-table-wrapper">
+
+                                <table class="table table-hover table-condensed">
+                                    <thead>
+                                        <th>Количество промокодов</th>
+                                        <th>Скидка, %</th>
+                                        <th>Цена одного поздравления, руб</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>от 5 до 10</td>
+                                            <td>5%</td>
+                                            <td>570 р., без НДС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>от 11 до 25</td>
+                                            <td>10%</td>
+                                            <td>540 р., без НДС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>от 26 до 50</td>
+                                            <td>15%</td>
+                                            <td>510 р., без НДС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>от 51 до 100</td>
+                                            <td>20%</td>
+                                            <td>480 р., без НДС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>от 101 до 150</td>
+                                            <td>25%</td>
+                                            <td>450 р., без НДС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>от 151 до 250</td>
+                                            <td>30%</td>
+                                            <td>420 р., без НДС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>от 251</td>
+                                            <td>договорная</td>
+                                            <td>договорная, без НДС</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <!-- <h2>Документы</h2>
+
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="#">Документ 123</a></li>
+                                <li class="list-group-item"><a href="#">Документ 156723</a></li>
+                            </ul> -->
+
+                            <h2>Отправить реквизиты</h2>
+
+                            <div class="alert alert-danger alert-dismissible error-block" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <span class="alert-text"></span>
+                            </div>
+
+                            <div class="alert alert-success alert-dismissible success-block" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <span class="alert-text"></span>
+                            </div>
+
+                            <div class="submit-order-form">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <form name="wholesaledetails" method="POST" action="" id="wholesaledetails">
+                                            <p>Для выставления счета и оформления договора просим вас указать ваш
+                                                электронный адрес, а также загрузить и отправить нам
+                                                реквизиты своей организации.</p>
+                                            <div class="form-group">
+                                                <label for="txtContactEmail">Ваш email *:</label>
+                                                <input type="email" class="form-control" id="txtContactEmail"
+                                                    name="contactemail">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="txtContactName">Контактное лицо:</label>
+                                                <input type="text" class="form-control" id="txtContactName"
+                                                    name="contactname">
+                                            </div>
+
+                                            <!-- <div class="form-group">
+                                            <label for="txtPhone">Телефон:</label>
+                                            <input type="phone" class="form-control" id="txtPhone" name="phone">
+                                        </div> -->
+
+                                            <div class="form-group">
+                                                <label for="fileReqs">Файл с реквизитами *:</label>
+                                                <input type="file" class="file-reqs" id="fileReqs" name='fileReqs'
+                                                    data-hiddenid="file1Name" />
+                                                <p class="help-block">Поддерживаемые форматы: pdf, png, jpg, jpeg, bmp,
+                                                    doc, docx,
+                                                    xls, xlsx.</p>
+                                                <input type="hidden" class="photo-hidden" name="file1Name"
+                                                    id="file1Name" />
+
+                                            </div>
+                                            <div class="content-item__bottom">
+                                                <input type="submit" class="btn btn-default submit-reqs"
+                                                    value="Отправить">
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,22 +219,26 @@
                         </div>
                         <ul class="social-list">
                             <li class="social-list__item">
-                                <a href="https://www.instagram.com/darimchudo/" class="social-list__link social-list__link_inst" target="_blank">
+                                <a href="https://www.instagram.com/darimchudo/"
+                                    class="social-list__link social-list__link_inst" target="_blank">
                                     <img src="img/inst.png" alt="">
                                 </a>
                             </li>
                             <li class="social-list__item">
-                                <a href="https://vk.com/public200346034" class="social-list__link social-list__link_vk" target="_blank">
+                                <a href="https://vk.com/public200346034" class="social-list__link social-list__link_vk"
+                                    target="_blank">
                                     <img src="img/vk.png" alt="">
                                 </a>
                             </li>
                             <li class="social-list__item">
-                                <a href="https://www.facebook.com/darim.chudo" class="social-list__link social-list__link_fb" target="_blank">
+                                <a href="https://www.facebook.com/darim.chudo"
+                                    class="social-list__link social-list__link_fb" target="_blank">
                                     <img src="img/fb.png" alt="">
                                 </a>
                             </li>
                             <li class="social-list__item">
-                                <a href="https://www.youtube.com/channel/UCWcRYpamljjN21EoSOFokqw" class="social-list__link social-list__link_youtube" target="_blank">
+                                <a href="https://www.youtube.com/channel/UCWcRYpamljjN21EoSOFokqw"
+                                    class="social-list__link social-list__link_youtube" target="_blank">
                                     <img src="img/youtube.png" alt="">
                                 </a>
                             </li>
@@ -134,12 +251,17 @@
     </div>
     <div class="icon-load"></div>
     <!-- BODY EOF   -->
-    
+
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/jquery-migrate-1.4.1.min.js"></script>
     <script src="js/components/jquery.validate.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
+
     <script src="js/custom.js?qr=25"></script>
     <script src="js/dm.settings.js?qr=25"></script>
+    <script src="js/dm.wholesale.js?qr=25"></script>
 </body>
 
 </html>
