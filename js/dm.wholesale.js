@@ -27,7 +27,8 @@
 
 
                 uploadFile(fileContent, function (savedFileResp) {
-                    hideFileError();
+                    showSuccess('Реквизиты загружены')
+
                     let details = {
                         'files': [{
                             'filename': savedFileResp.resp.filename
@@ -35,7 +36,7 @@
                     }
                     $hidFile.val(JSON.stringify(details));
                 }, function (resp) {
-                    showFileLoadError(resp.resp.responseJSON.error);
+                    showError(resp.resp.responseJSON.error);
                 });
             });
         }
@@ -66,25 +67,63 @@
             });
         }
 
-        $('input[type=submit]').click(function (e) {
-            submitForm();
-            e.preventDefault();
-            return false;
-        })
+        $('#txtContactEmail').keyup(function () {
+            checkAndEnableSubmitButton();
+        });
+
+        $("#wholesaledetails").validate({
+            rules: {
+                fileReqs: "required",
+                contactemail: {
+                    required: true,
+                    email: true,
+                    required: {
+                        depends: function () {
+                            let oldVal = $(this).val();
+                            $(this).val($.trim(oldVal));
+                            return true;
+                        }
+                    }
+                }
+            },
+            messages: {
+                fileReqs: "*Загрузите реквизиты",
+                contactemail: {
+                    required: "*Обязательное поле",
+                    email: "Введите корректный email"
+                },
+            },
+            submitHandler: function (form) {
+                submitForm();
+            }
+        });
 
         function submitForm() {
             createWholesaleRequest(function (resp) {
                 console.log('success:', resp);
-                hideRequestError();
+                // hideError();
+                showSuccess("Спасибо за предоставленную информацию. Мы напишем вам на email который вы указали.");
             }, function (resp) {
                 console.log('error:', resp);
-                showRequestError('Ошибка при создании запроса! Для оперативного разрешения проблемы, пожалуйста, позвоните по +7 812 647 1856 или отправьте нам email на info@darimchudo.ru');
+                showError('Ошибка при создании запроса! Для оперативного разрешения проблемы, пожалуйста, позвоните по +7 812 647 1856 или отправьте нам email на info@darimchudo.ru');
             });
+        }
+
+        function checkAndEnableSubmitButton() {
+            //if email and file are provided
+            if ($('#txtContactEmail').val() == '') {
+                $('.submit-reqs').prop('disabled', true);
+            }
+
+            $('.submit-reqs').prop('disabled', false);
         }
 
         function createWholesaleRequest(onSuccess, onError) {
             let url = Dm.settings.baseurl + '/wholesalerequests';
             let fileValue = $('#file1Name').val();
+            if (!fileValue) {
+                showError('Пожалуйста, загрузите реквизиты');
+            }
             let data = {
                 contactname: $('input[name=contactname]').val(),
                 contactemail: $('input[name=contactemail]').val(),
@@ -112,18 +151,16 @@
             });
         };
 
-        function showRequestError(message) {
-            $('.request-error-block').text(message).show();
-        }
-        function hideRequestError() {
-            $('.request-error-block').hide();
+        function showSuccess(message) {
+            $('.alert').hide();
+            $('.success-block .alert-text').text(message);
+            $('.success-block').show();
         }
 
-        function showFileLoadError(message) {
-            $('.file-error-block').text(message).show();
-        }
-        function hideFileError() {
-            $('.file-error-block').hide();
+        function showError(message) {
+            $('.alert').hide();
+            $('.error-block .alert-text').text(message);
+            $('.error-block').show();
         }
     });
 })(jQuery);
