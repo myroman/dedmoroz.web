@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Видеопоздравление от Деда Мороза: демо готово</title>
+    <meta charset="utf-8">
+    <style>
+        .content-item {
+            border: 9px solid #c4d3de;
+            border-radius: 38px;
+            padding: 16px;
+            max-width: 1127px;
+            margin: 0 auto;
+        }
+
+        .content-item__bg {
+            border-radius: 33px;
+            background: #c4d3de;
+            padding: 39px 0 82px 0;
+        }
+
+        .email-wrapper {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .top-banner {
+            text-align: center;
+        }
+
+        p {
+            font-family: Tahoma, Geneva, sans-serif;
+            font-size: 16px;
+        }
+
+        .text_larger {
+            font-size: 20px;
+        }
+
+        .top-margin_med {
+            margin-top: 40px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .content-item__bg {
+                padding: 39px 0 82px 0;
+            }
+
+            .email-wrapper {
+                width: 80%;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .text_larger {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-item">
+        <div class="content-item__bg">
+            <div class="email-wrapper">
+                <!-- <div class="top-banner">
+                    <img src="email-top.png" width="320" alt="top banner" />
+                </div> -->
+
+                <p class="text_larger">Здравствуйте, $customer_name,</p>
+
+                <p>Добро пожаловать в новогоднюю сказку! Дедушка Мороз уже создал для вас сокращенную демо-версию
+                    волшебного
+                    именного видеопоздравления "В гостях на родине Деда Мороза в Великом Устюге". Чтобы посмотреть ее,
+                    перейдите по ссылке: <a href="$order_url">$order_number</a></p>
+
+                <p class="top-margin_med">Полное видеопоздравление в формате HD будет готово после оплаты заказа на
+                    сайте. 
+                    Номер заказа: $order_number</p>
+                <p>
+                    <span>Важно: </span>Если после просмотра демо-версии вы хотите внести изменения в видеопоздравление
+                    (замена или добавление фото и комментариев), то необходимо вернуться на главную страницу сайта и
+                    вновь
+                    создать демо-версию.
+                </p>
+
+                <p class="top-margin_med">Пусть новогоднее чудо случится с каждым! А если у Вас возникли вопросы, мы
+                    будем рады на них ответить, для
+                    этого просто ответьте на данное письмо.</p>
+
+
+                <p>С самыми добрыми пожеланиями, <br>
+                    Дед Мороз и его помощники - студия "Дарим Чудо"</p>
+
+                <div class="bottom-logo">
+                    <img src="../img/logo-black.png" width="200" alt="logo" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
