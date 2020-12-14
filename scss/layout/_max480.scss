@@ -1,169 +1,200 @@
 @media screen and (max-width: 480px) {
-    
-	.main-screen{
+
+	.main-screen {
 		padding-top: 200px;
 	}
-	.main-screen h1{
+
+	.main-screen h1 {
 		font-size: 28px;
 		line-height: 36px;
 	}
-	.main-screen p{
+
+	.main-screen p {
 		font-size: 20px;
 		line-height: 26px;
 	}
 
-	.button{
+	.button {
 		font-size: 18px;
 		line-height: 22px;
 	}
-	
-	.main-screen__btns{
+	.button-sm {
+		height: 44px;
+		padding: 15px 31px;
+		font-size: 16px;
+		line-height: 1em;
+	}
+
+	.main-screen__btns {
 		margin-top: 40px;
 	}
-	.section-servise h2{
+
+	.section-servise h2 {
 		font-size: 24px;
 		line-height: 31px;
 		margin-bottom: 7px;
 	}
+
 	.feedback__title,
-	.cost__title{
+	.cost__title {
 		font-size: 24px;
 		line-height: 31px;
 	}
 
-	.cost__val{
+	.cost__val {
 		font-size: 45px;
 		line-height: 55px;
 	}
 
-	.cost p{
+	.cost p {
 		font-size: 16px;
 		line-height: 22px;
 	}
 
-	.section-feedback{
+	.section-feedback {
 		padding: 170px 0 150px;
 	}
-	.section-feedback__tree{
+
+	.section-feedback__tree {
 		width: 180px;
 	}
+
 	.feedback {
 		&__extra-info {
 			margin-bottom: 80px;
 		}
 	}
 
-	.order-step > li:before{
+	.order-step>li:before {
 		font-size: 27px;
 	}
-	.order-step > li{
+
+	.order-step>li {
 		padding-left: 25px;
 	}
-	.order-step ul > li:before{
+
+	.order-step ul>li:before {
 		width: 17px;
 		height: 17px;
 	}
-	.order-step ul > li {
+
+	.order-step ul>li {
 		padding-left: 25px;
 	}
-	.content-item h1{
+
+	.content-item h1 {
 		font-size: 31px;
 		line-height: 37px;
 		margin-bottom: 20px;
 	}
 
-	.content-item-choose__title{
+	.content-item-choose__title {
 		font-size: 22px;
 		line-height: 25px;
 	}
 
-	.button-next{
+	.button-next {
 		font-size: 16px;
 		line-height: 20px;
 		padding: 4px 20px;
 		height: 33px;
 	}
 
-	.portfolio-prices h1{
+	.portfolio-prices h1 {
 		font-size: 30px;
 		line-height: 38px;
 		margin-bottom: 20px;
 	}
-	.portfolio-list__title{
+
+	.portfolio-list__title {
 		font-size: 22px;
 		line-height: 27px;
 	}
 
-	.portfolio-list__video{
+	.portfolio-list__video {
 		height: 200px;
 		margin-bottom: 15px;
 	}
-	.portfolio-list__bottom{
+
+	.portfolio-list__bottom {
 		display: block;
 		text-align: center;
 	}
-	.portfolio-list__price{
+
+	.portfolio-list__price {
 		margin-bottom: 10px;
 	}
-	.portfolio-list{
+
+	.portfolio-list {
 		margin-bottom: 50px;
 	}
 
-	.portfolio-prices h2{
+	.portfolio-prices h2 {
 		font-size: 24px;
 		line-height: 26px;
 	}
-	.payment-list{
+
+	.payment-list {
 		flex-wrap: wrap;
-		&__item{
+
+		&__item {
 			width: 50%;
 			margin-bottom: 20px;
 		}
 	}
-	.section-cost::before{
+
+	.section-cost::before {
 		clip-path: ellipse(170% 100% at 50% 0%);
 	}
-	.section-cost{
+
+	.section-cost {
 		clip-path: ellipse(170% 100% at 50% 0%);
 	}
+
 	.main-screen__santa {
 		width: 129%;
 		right: -29%;
 	}
-	.main-screen{
+
+	.main-screen {
 		padding-bottom: 40px;
 	}
-	.main-screen h1{
+
+	.main-screen h1 {
 		max-width: 279px;
 	}
-	.main-screen p{
+
+	.main-screen p {
 		max-width: 250px;
 	}
+
 	.main-screen__btns {
 		margin-top: 115px;
 	}
-	.section-servise{
+
+	.section-servise {
 		padding-top: 150px;
 	}
 
-	.content-item-choose__sub-title{
+	.content-item-choose__sub-title {
 		font-size: 14px;
 		line-height: 22px;
 	}
-	.styled{
+
+	.styled {
 		margin: 15px auto;
 	}
 
-	.select-sub-title{
+	.select-sub-title {
 		margin: 20px 10px;
 	}
 
-	.content-item__bottom-text p{
+	.content-item__bottom-text p {
 		font-size: 13px;
 		line-height: 17px;
 	}
 
-	.button-prev{
+	.button-prev {
 		font-size: 16px;
 		line-height: 20px;
 		padding: 4px 20px;
@@ -173,36 +204,36 @@
 	}
 
 	.photo-list {
-		&__photo{
+		&__photo {
 			width: 90%;
 			left: 5%;
 		}
 	}
 
-	.photo-list__label{
+	.photo-list__label {
 		height: 170px;
 		margin-bottom: 0;
 	}
 
-    
-    .table-2-columns {
-        margin: 0 0 40px;
-        width: 100%;
-        text-align: center;
 
-        .table-row {
-            flex-direction: column;
-        }
+	.table-2-columns {
+		margin: 0 0 40px;
+		width: 100%;
+		text-align: center;
 
-        .field-name {
-            width: 100%;
-        }
+		.table-row {
+			flex-direction: column;
+		}
 
-        .field-value {
-            width: 100%;
-        }
+		.field-name {
+			width: 100%;
+		}
+
+		.field-value {
+			width: 100%;
+		}
 	}
-	
+
 	.select2-holder {
 		width: 100%;
 	}
@@ -210,8 +241,10 @@
 	.payment-sub-title {
 		margin-bottom: 10px;
 	}
+
 	.payment-list2 {
 		width: 100%;
+
 		.payment-list2 {
 			&__item {
 				padding: 0;
@@ -220,17 +253,39 @@
 	}
 
 	.info-prevideo {
-        display: none;
-        margin-top: 20px;
-        margin-bottom: 0px;
+		display: none;
+		margin-top: 20px;
+		margin-bottom: 0px;
+	}
+
+
+	header {
+
+		.top-line-ad {
+			font-size: 17px;
+		}
+	}
+
+	.dm-popup-overlay {
+		padding-top: 80px;
+
+		.dm-popup {
+			width: 70%;
+
+			&__close {
+				top: 10px;
+				right: 15px;
+			}
+			h2 {
+				font-size: 1.5em;
+			}
+			&__content {
+				margin-bottom: 10px;
+			}
+			&__content-para {
+				font-size: 1.2em;
+			}
+		}
 	}
 	
-
-header {
-
-    .top-line-ad {
-        font-size: 17px;
-    }
-}
-
 }

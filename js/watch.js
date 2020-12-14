@@ -25,9 +25,17 @@
         }
 
         if (videotype == 1) {
+            //if demo
             let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
             $('.link-payment').attr('href', paymentPageUrl);
             $('.show-if-demo').show();
+
+            document.getElementById('my-video').addEventListener('ended', myHandler, false);
+
+            function myHandler(e) {
+                // checkAndShowPopup();
+            }
+            
         } else {
             $('.show-if-hd').show();
         }
@@ -41,6 +49,28 @@
             e.preventDefault();
             return false;
         });
+
+        function checkAndShowPopup(){
+            if (localStorage['demoPopupShown'] != 'shown') {
+                setTimeout(function () {
+                    showPopup();
+                    localStorage['demoPopupShown'] = 'shown';
+                }, 2000);
+            }
+        }
+
+        function showPopup() {
+            $('.dm-popup-overlay').addClass('dm-popup-overlay_visible');
+        }
+
+        function hidePopup() {
+            $('.dm-popup-overlay').removeClass('dm-popup-overlay_visible');
+        }
+        $('a.dm-popup__close').click(function () {
+            hidePopup();
+        });
+
+        // showPopup()
     });
 
 })(jQuery);
