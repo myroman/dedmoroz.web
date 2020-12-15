@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url(http://www.shukatsu-note.com/wp-content/uploads/2014/12/computer-564136_1280.jpg) no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    color: #06D85F;
+    margin: 80px 0;
+}
+
+.box {
+    width: 40%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 35px;
+    border: 2px solid #fff;
+    border-radius: 20px/50px;
+    background-clip: padding-box;
+    text-align: center;
+}
+
+.button {
+    font-size: 1em;
+    padding: 10px;
+    color: #fff;
+    border: 2px solid #06D85F;
+    border-radius: 20px/50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.button:hover {
+    background: #06D85F;
+}
+
+
+
+
+
+.dm-popup-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.dm-popup-overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.dm-popup-overlay_visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.dm-popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 40%;
+    position: relative;
+    /* transition: all 5s ease-in-out; */
+}
+
+.dm-popup h2 {
+    /* margin-top: 0;
+    color: #333;
+    font-family: 'Nunito', sans-serif; */
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.8em;
+    text-align: center;
+    text-transform: none;
+    font-weight: 700;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    line-height: initial;
+    margin: 0px 0px 15px;
+
+}
+
+.dm-popup__content-para {
+    color: rgb(0, 0, 0);
+    font-size: 1.1em;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    text-transform: none;
+    text-decoration: none;
+    line-height: initial;
+    margin: 0px;
+}
+
+.action-btn {
+    background-color: rgb(21, 21, 21);
+    color: rgb(255, 255, 255);
+    border-radius: 0px;
+    border-color: rgb(0, 0, 0);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    text-transform: none;
+    text-decoration: none;
+    transition: opacity 0.3s ease 0s;
+    width: 100%;
+    letter-spacing: 1.3px;
+    padding: 10px 15px;
+    margin-top: 15px;
+}
+
+.dm-popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.dm-popup .close:hover {
+    color: #06D85F;
+}
+
+.dm-popup__content {
+    max-height: 30%;
+    overflow: auto;
+}
+
+@media screen and (max-width: 700px) {
+    .box {
+        width: 70%;
+    }
+
+    .dm-popup {
+        width: 70%;
+    }
+}
