@@ -127,6 +127,7 @@
             let data = {
                 contactname: $('input[name=contactname]').val(),
                 contactemail: $('input[name=contactemail]').val(),
+                requested_promocodes: +$('#txtRequestedPromocodes').val(),
                 details: JSON.parse(fileValue)
             };
             $.ajax({
