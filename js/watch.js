@@ -15,7 +15,15 @@
 
     $(function () {
         let ordernumber = getURLParameter('ordernumber');
-        let videotype = +getURLParameter('vt') ? 1 : 0;
+        let videotype = +getURLParameter('vt') ? 1 : 0;  
+
+        let currentPromocode = "SNEG27";
+        let currentDiscount = "27";
+        $('#popupPromocodeText').text(currentPromocode);
+        $('#popupPromocodeDiscount').text(currentDiscount);
+        $('#formApplyPromocode input[name=txtPromocode]').val(currentPromocode);
+        $('#formApplyPromocode').attr('action', createPaymentPageUrl(ordernumber));
+              
         let videoUrl = null;
         if (Dm.settings.env == 'local') {
             videoUrl = Dm.settings.baseurl + '/orders/' + ordernumber + '/videos?vt=' + videotype;
@@ -25,15 +33,14 @@
         }
 
         if (videotype == 1) {
-            //if demo
-            let paymentPageUrl = Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
-            $('.link-payment').attr('href', paymentPageUrl);
+            //if demo            
+            $('.link-payment').attr('href', createPaymentPageUrl(ordernumber));
             $('.show-if-demo').show();
 
             document.getElementById('my-video').addEventListener('ended', myHandler, false);
 
             function myHandler(e) {
-                // checkAndShowPopup();
+                checkAndShowPopup();
             }
             
         } else {
@@ -50,12 +57,16 @@
             return false;
         });
 
+        function createPaymentPageUrl(ordernumber) {
+            return Dm.settings.baseurl + '/pages/payment?ordernumber=' + ordernumber;
+        }
+
         function checkAndShowPopup(){
             if (localStorage['demoPopupShown'] != 'shown') {
                 setTimeout(function () {
                     showPopup();
                     localStorage['demoPopupShown'] = 'shown';
-                }, 2000);
+                }, 500);
             }
         }
 
@@ -69,7 +80,6 @@
         $('a.dm-popup__close').click(function () {
             hidePopup();
         });
-
         // showPopup()
     });
 

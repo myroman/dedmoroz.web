@@ -97,20 +97,21 @@
 
             <div id="popup1" class="dm-popup-overlay">
                 <div class="dm-popup">
-                  <h2>Закажите сейчас и получите скидку 25%!</h2>
+                  <h2>Дарим <span id="popupPromocodeDiscount"></span>% скидку!</h2>
                   <a class="dm-popup__close" href="#">&times;</a>
                   <div class="dm-popup__content">
                     <p class="dm-popup__content-para">
-    Используйте промокод <strong>SNEG1214</strong>
+                        Закажите поздравление в течение 24 часов 
+                         с промокодом 
+                        <strong id="popupPromocodeText"></strong>
                     </p>
                     
                   </div>
                   <div class="dm-popup__btn-wrapper">
-                    
-                    <a href="#" class="button button_snow2 button-sm">Получить скидку</a>
-                    <!-- <div class="centerer">
-                        <a href="#" class="button">Christmas Button</a>                        
-                    </div> -->
+                    <form method="POST" action="" name="formApplyPromocode" id="formApplyPromocode">
+                        <input type="hidden" value="" name="txtPromocode"/>
+                        <button class="button button_snow button-sm">Получить скидку</button>
+                    </form>
                   </div>
                 </div>
               </div>

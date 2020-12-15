@@ -534,7 +534,7 @@ header {
     font-weight: bold;
 }
 
-.button_snow2 {
+.button_snow {
     display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -561,7 +561,7 @@ header {
     transition: 500ms linear;
 }
 
-.button_snow2::before {
+.button_snow::before {
     content: '';
     display: block;
     position: absolute;
@@ -575,12 +575,12 @@ header {
 
 }
 
-.button_snow2:focus {
+.button_snow:focus {
     outline: none;
     /*FF*/
 }
 
-.button_snow2:hover{
+.button_snow:hover{
     background: transparent;
     color: #db1f2f;
 }
@@ -590,4 +590,15 @@ header {
     line-height: 1em;
     padding: 16px 40px;
     height: 53px;
+}
+
+.button-red {
+	background: #db1f2f;
+	border: 2px solid #db1f2f;
+	color: #fff;
+	position: relative;
+	overflow: hidden;
+	&::before{
+        height: 0;
+    }
 }
