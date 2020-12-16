@@ -17,7 +17,7 @@
         let ordernumber = getURLParameter('ordernumber');
         let videotype = +getURLParameter('vt') ? 1 : 0;  
 
-        let currentPromocode = "SNEG27";
+        let currentPromocode = "ELKA27";
         let currentDiscount = "27";
         $('#popupPromocodeText').text(currentPromocode);
         $('#popupPromocodeDiscount').text(currentDiscount);
