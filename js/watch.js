@@ -62,7 +62,7 @@
         }
 
         function checkAndShowPopup(){
-            let lskey = 'demoPopupShown'+ordernumber;
+            let lskey = 'demoPopupShown';
             if (localStorage[lskey] != 'shown') {
                 setTimeout(function () {
                     showPopup();
