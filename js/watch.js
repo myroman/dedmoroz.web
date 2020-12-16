@@ -62,10 +62,11 @@
         }
 
         function checkAndShowPopup(){
-            if (localStorage['demoPopupShown'] != 'shown') {
+            let lskey = 'demoPopupShown'+ordernumber;
+            if (localStorage[lskey] != 'shown') {
                 setTimeout(function () {
                     showPopup();
-                    localStorage['demoPopupShown'] = 'shown';
+                    localStorage[lskey] = 'shown';
                 }, 500);
             }
         }
