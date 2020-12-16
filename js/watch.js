@@ -17,7 +17,7 @@
         let ordernumber = getURLParameter('ordernumber');
         let videotype = +getURLParameter('vt') ? 1 : 0;  
 
-        let currentPromocode = "SNEG27";
+        let currentPromocode = "ELKA27";
         let currentDiscount = "27";
         $('#popupPromocodeText').text(currentPromocode);
         $('#popupPromocodeDiscount').text(currentDiscount);
@@ -62,10 +62,11 @@
         }
 
         function checkAndShowPopup(){
-            if (localStorage['demoPopupShown'] != 'shown') {
+            let lskey = 'demoPopupShown';
+            if (localStorage[lskey] != 'shown') {
                 setTimeout(function () {
                     showPopup();
-                    localStorage['demoPopupShown'] = 'shown';
+                    localStorage[lskey] = 'shown';
                 }, 500);
             }
         }
