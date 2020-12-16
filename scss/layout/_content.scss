@@ -1324,6 +1324,10 @@ label.error {
 			letter-spacing: -0.15px;
 			display: block;
 		}
+
+		&>span.box-field__input__important-info {
+			color: #db1f2f;
+		}
 	}
 	&+.button-next{
 		margin: 33px auto 4px;
