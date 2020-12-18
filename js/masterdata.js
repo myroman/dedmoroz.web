@@ -15217,7 +15217,17 @@ Dm.masterdata = {
                 "id": "2828",
                 "displayname": "Я́сна",
                 "filtername": "ясна"
-            }            
+            },
+            {
+                "id": "2834",
+                "displayname": "Тальяна",
+                "filtername": "тальяна"
+            },
+            {
+                "id": "2835",
+                "displayname": "Тея",
+                "filtername": "тея"
+            },            
         ]
     }
 }
