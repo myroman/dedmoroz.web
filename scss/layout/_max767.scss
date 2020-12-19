@@ -185,6 +185,11 @@
 	.photo-list__item {
 		width: 100%;
 	}
+	.photo-list {
+		&__photo-error {
+			max-width: 80%;
+		}
+	}
 
 	.photo-list__label {
 		height: 200px;
