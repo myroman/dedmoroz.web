@@ -36,7 +36,7 @@
 
 <body class="loaded">
     <!-- BEGIN BODY -->
-    <div class="main-wrapper inner-page">
+    <div class="main-wrapper inner-page inprogress-page">
         <!-- BEGIN CONTENT -->
         <main class="content inner-content">
             <div class="inner-content__tree"></div>
@@ -46,17 +46,18 @@
                         <h1 class="heading">Видео создаётся...</h1>
                         <div class="order-step show-if-demo demo-info-wrapper centered-text-container"
                             style="display: none;">
-                            <p class="wait-info">
-                                Пожалуйста, подождите несколько минут, чтобы посмотреть демо-видео вашего поздравления.
-                                Либо вы можете закрыть экран, ссылка на поздравление придёт вам на указанный email.
+                            <p class="wait-info" style="text-align: center;">
+                                Демо-версия вашего поздравления будет готова через пару минут.
+                                Ссылка на демо также придет вам на электронную почту.
                             </p>
-                            <p class="go-to-payment">
+                            <br>
+                            <p class="go-to-payment" style="text-align: center;">
                                 Пропустите этот шаг, если вы сразу хотите перейти к <a class="link-payment"
                                     href="">оплате</a>
                             </p>
                         </div>
                         <div class="order-step show-if-hd centered-text-container">
-                            <p class="wait-info">
+                            <p class="wait-info" style="text-align: center;">
                                 Видеопоздравление будет готово в течение 20 минут. Вы можете оставаться на странице или
                                 закрыть экран.
                                 Ссылка на видеопоздравление придет вам на указанный email.
@@ -66,6 +67,23 @@
                     </div>
                 </div>
             </div>
+
+            <div id="popup1" class="dm-popup-overlay">
+                <div class="dm-popup">
+                  <h2>Дарим <span id="popupPromocodeDiscount"></span>% скидку!</h2>
+                  <a class="dm-popup__close" href="#">&times;</a>
+                  <div class="dm-popup__content">
+                    <p class="dm-popup__content-para">
+                        Закажите поздравление до 25 декабря с промокодом 
+                        <br>
+                        <strong id="popupPromocodeText"></strong> 
+                        <br>
+                        и получите скидку!                        
+                    </p>
+                    
+                  </div>                  
+                </div>
+              </div>
         </main>
         <!-- CONTENT EOF   -->
         <!-- BEGIN HEADER -->

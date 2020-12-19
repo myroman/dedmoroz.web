@@ -42,6 +42,13 @@
         var waitTimeout = 1000 * 60;
         var maxTimeWaitMs = 1000 * 60 * 60 * 3;
         var maxDemoTimeWaitMs = 1000 * 60 * 60;
+        var popupShowTimeoutMs = 1000 * 5;
+        var isPopupShown = false;
+
+        let currentPromocode = "ELKA27";
+        let currentDiscount = "27";
+        $('#popupPromocodeText').text(currentPromocode);
+        $('#popupPromocodeDiscount').text(currentDiscount);        
 
         function checkAndRedirect(statusUrl, ordernumber, videotype) {
             if (videotype == 1) {
@@ -71,6 +78,14 @@
                         setTimeout(function () {
                             checkAndRedirect(statusUrl, ordernumber, videotype);
                         }, waitTimeout);
+
+                        //just in case if localstorage doesn't catch it
+                        if (!isPopupShown) {
+                            isPopupShown = true;
+                            setTimeout(function() {
+                                showPopup();
+                            }, popupShowTimeoutMs);
+                        }                        
                     }
                 } else {
                     if (resp.is_hd_ready === true) {
@@ -89,7 +104,17 @@
                     }
                 }
             });
-
+    
+            function showPopup() {
+                $('.dm-popup-overlay').addClass('dm-popup-overlay_visible');
+            }
+    
+            function hidePopup() {
+                $('.dm-popup-overlay').removeClass('dm-popup-overlay_visible');
+            }
+            $('a.dm-popup__close').click(function () {
+                hidePopup();
+            });
         }
     });
 
