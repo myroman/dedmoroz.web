@@ -20,6 +20,7 @@
     }
 
     let MaxPictures = 3;
+    let MaxFilesize = 10000000;
 
     let orderState = null;
     let imageCache = {
@@ -631,8 +632,18 @@
             let $parent = $(input).parents('.pic-wrapper');
 
             let holder = $parent.find('.photo-list__photo')[0];
-            readFile(input, holder, function (imageUrl) {
+            readFile(input, holder, function (imageUrl) {               
+
                 let picNo = getPicNo(input);
+                $(input).parent().addClass('active');
+
+                let $errorLabel =  $(input).parents('.pic-wrapper').find('.photo-list__photo-error');
+                if (input.files[0].size > MaxFilesize) {
+                    $errorLabel.show().text('Изображение слишком большое, пожалуйста выберите размер до 10 Мб');
+                    return;
+                }
+                $errorLabel.hide();
+
                 console.log('refreshing image for', picNo)
                 imageCache[picNo].imageUrl = imageUrl;
                 if (picNo == 'letter') {
@@ -648,7 +659,7 @@
                 refreshCroppieImage(holder, imageUrl, selectedAspect);
                 let $hidFile = $(input).parent().find('input[type=hidden]');
                 $hidFile.val(true);
-                $(input).parent().addClass('active');
+                
                 console.log('removing input', input)
                 $(input).remove();
             });
