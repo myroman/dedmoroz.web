@@ -211,13 +211,11 @@
 		&__photo-error {
 			max-width: 80%;
 		}
+		&__label {
+			height: 170px;
+			margin-bottom: 40px;
+		}
 	}
-
-	.photo-list__label {
-		height: 170px;
-		margin-bottom: 0;
-	}
-
 
 	.table-2-columns {
 		margin: 0 0 40px;
