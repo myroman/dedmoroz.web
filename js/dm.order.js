@@ -65,7 +65,7 @@
                 return null;
             }
 
-            if (filterField.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+            if (filterField.toLowerCase().indexOf(params.term.toLowerCase()) == 0) {
                 return data;
             }
             return null;
