@@ -131,6 +131,7 @@
                 // hideError();
                 showSuccess("Спасибо за предоставленную информацию. Мы напишем вам на email который вы указали.");
                 $(".submit-reqs").prop('disabled', true);
+                $('#wholesaledetails')[0].reset();
                 scrollUp(500);
             }, function (resp) {
                 console.log('error:', resp);
