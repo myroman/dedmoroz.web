@@ -205,15 +205,19 @@
 
 	.photo-list {
 		&__photo {
-			width: 90%;
-			left: 5%;
+			width: 98%;
+			left: 1%;
 		}
 		&__photo-error {
 			max-width: 80%;
 		}
 		&__label {
-			height: 170px;
+			height: 220px;
 			margin-bottom: 40px;
+		}
+		&__item {
+			padding: 0 0px;
+			margin-bottom: 100px;
 		}
 	}
 

@@ -495,7 +495,7 @@
             var $ddl = $(ddlSelector);
             $ddl.html('');
             $ddl.append($("<option />").val('').text('Выберите имя'));
-
+            
             $.each(values, function () {
                 $ddl.append($("<option />").val(this.id).text(this.displayname).data('filter', this
                     .filtername));
@@ -756,7 +756,8 @@
                 return new Croppie(elem, {
                     viewport: viewport,
                     enableOrientation: true,
-                    enableResize: croppieSettings.enableResize
+                    enableResize: croppieSettings.enableResize,
+                    customClass: "dm-croppie"
                 });
             }
         }
@@ -990,5 +991,8 @@
                 error: onError
             });
         }
+
+        // $('#step-3').removeClass('hide-item');
+        // $('#step-1').addClass('hide-item');
     });
 })(jQuery);
