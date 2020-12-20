@@ -4,7 +4,6 @@
             onFileChanged(this);
         });
 
-        // var url = Dm.settings.baseurl + '/files/base64';
         var url = Dm.settings.baseurl + '/wholesalerequests';
         $('form[name=wholesaledetails]').attr('action', url);
 
@@ -157,7 +156,6 @@
                 requested_promocodes: +$('#txtRequestedPromocodes').val(),
                 details: JSON.parse(fileValue)
             };
-            debugger;
             
             $.ajax({
                 type: 'POST',
