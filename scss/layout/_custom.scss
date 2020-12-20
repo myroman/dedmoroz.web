@@ -608,3 +608,25 @@ header {
         height: 0;
     }
 }
+
+.croppie-container.dm-croppie {
+    .cr-resizer-horisontal {
+        right: -3px;
+
+        &::after {
+            width: 16px;
+            height: 30px;
+            border-radius: 5px;
+            margin-top: -15px;
+        }
+    }
+    .cr-resizer-vertical{
+        bottom: -3px;
+        &::after {
+            width: 30px;
+            height: 16px;
+            border-radius: 5px;
+            margin-left: -15px;
+        }
+    }
+}
