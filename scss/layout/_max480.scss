@@ -272,10 +272,11 @@
 	}
 
 	.dm-popup-overlay {
-		padding-top: 80px;
+		padding-top: 80px;		
 
 		.dm-popup {
 			width: 70%;
+			border-radius: 16px;
 
 			&__close {
 				top: 10px;
@@ -289,6 +290,10 @@
 			}
 			&__content-para {
 				font-size: 1.2em;
+
+				strong {
+					width: 90%;
+				}
 			}
 		}
 	}
