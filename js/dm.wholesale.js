@@ -4,7 +4,7 @@
             onFileChanged(this);
         });
 
-        var url = Dm.settings.baseurl + '/files/base64';
+        var url = Dm.settings.baseurl + '/wholesalerequests';
         $('form[name=wholesaledetails]').attr('action', url);
 
         function onFileChanged(input) {
@@ -45,12 +45,14 @@
             let data = {
                 'content': fileEncoded
             }
+            Dm.showLoader();
             $.ajax({
                 type: 'POST',
                 url: Dm.settings.baseurl + '/files/base64',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
                 success: function (resp) {
+                    Dm.hideLoader();
                     if (onSuccess) {
                         onSuccess({
                             resp: resp
@@ -58,6 +60,7 @@
                     }
                 },
                 error: function (resp) {
+                    Dm.hideLoader();
                     if (onError) {
                         onError({
                             resp: resp
@@ -70,10 +73,28 @@
         $('#txtContactEmail').keyup(function () {
             checkAndEnableSubmitButton();
         });
+        $.validator.addMethod('fileReqsUploaded', function(value, element) {
+            let selectedFile = value;
+            if (!selectedFile) {
+                return false;
+            }
 
-        $("#wholesaledetails").validate({
+            let uploadedFile = $('#file1Name').val();
+            if (!uploadedFile) {
+                return false;
+            }
+
+            return true;
+        }, "Загрузите реквизиты");
+
+        $("#wholesaledetails").submit(function(e) {
+            e.preventDefault();
+        }).validate({
             rules: {
-                fileReqs: "required",
+                fileReqs: {
+                    required: true,
+                    fileReqsUploaded: true,
+                },                
                 contactemail: {
                     required: true,
                     email: true,
@@ -87,7 +108,11 @@
                 }
             },
             messages: {
-                fileReqs: "*Загрузите реквизиты",
+                ignore: "",
+                fileReqs: {
+                    required: "*Загрузите реквизиты",
+                    fileReqsUploaded: "*Загрузите реквизиты"
+                },
                 contactemail: {
                     required: "*Обязательное поле",
                     email: "Введите корректный email"
@@ -95,6 +120,7 @@
             },
             submitHandler: function (form) {
                 submitForm();
+                return false;
             }
         });
 
@@ -103,11 +129,15 @@
                 console.log('success:', resp);
                 // hideError();
                 showSuccess("Спасибо за предоставленную информацию. Мы напишем вам на email который вы указали.");
+                $(".submit-reqs").prop('disabled', true);
+                $('#wholesaledetails')[0].reset();
+                scrollUp(500);
             }, function (resp) {
                 console.log('error:', resp);
                 showError('Ошибка при создании запроса! Для оперативного разрешения проблемы, пожалуйста, позвоните по +7 812 647 1856 или отправьте нам email на info@darimchudo.ru');
             });
         }
+
 
         function checkAndEnableSubmitButton() {
             //if email and file are provided
@@ -119,17 +149,14 @@
         }
 
         function createWholesaleRequest(onSuccess, onError) {
-            let url = Dm.settings.baseurl + '/wholesalerequests';
             let fileValue = $('#file1Name').val();
-            if (!fileValue) {
-                showError('Пожалуйста, загрузите реквизиты');
-            }
             let data = {
                 contactname: $('input[name=contactname]').val(),
                 contactemail: $('input[name=contactemail]').val(),
                 requested_promocodes: +$('#txtRequestedPromocodes').val(),
                 details: JSON.parse(fileValue)
             };
+            
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -143,7 +170,7 @@
                     }
                 },
                 error: function (resp) {
-                    if (onError) {
+                    if (onError) {                        
                         onError({
                             resp: resp
                         })
@@ -151,6 +178,12 @@
                 }
             });
         };
+        function scrollUp(top) {
+            if (!top) top = 0;
+            $("html, body").animate({
+                scrollTop: top
+            }, 300);
+        }
 
         function showSuccess(message) {
             $('.alert').hide();
