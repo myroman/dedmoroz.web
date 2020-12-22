@@ -1,7 +1,6 @@
 Dm.masterdata = {
     names: {
-        '0': [
-            {
+        '0': [{
                 "id": "1",
                 "displayname": "Ааро́н",
                 "filtername": "аарон"
@@ -8640,10 +8639,24 @@ Dm.masterdata = {
                 "id": "2831",
                 "displayname": "Яша́р",
                 "filtername": "яшар"
+            },
+            {
+                "id": "2838",
+                "displayname": "Му́хамад",
+                "filtername": "мухамад"
+            },
+            {
+                "id": "2839",
+                "displayname": "Бронисла́вас",
+                "filtername": "брониславас"
+            },
+            {
+                "id": "2840",
+                "displayname": "Акба́р",
+                "filtername": "акбар"
             }
         ],
-        '1': [
-            {
+        '1': [{
                 "id": "9",
                 "displayname": "Абели́на",
                 "filtername": "абелина"
@@ -15227,7 +15240,38 @@ Dm.masterdata = {
                 "id": "2835",
                 "displayname": "Тея",
                 "filtername": "тея"
-            },            
+            },
+
+            {
+                "id": "2836",
+                "displayname": "Есе́ния",
+                "filtername": "есения"
+            },
+            {
+                "id": "2837",
+                "displayname": "Хади́жа",
+                "filtername": "хадижа"
+            },
+            {
+                "id": "2841",
+                "displayname": "Ида́лья",
+                "filtername": "идалья"
+            },
+            {
+                "id": "2842",
+                "displayname": "Рани́я",
+                "filtername": "рания"
+            },
+            {
+                "id": "2843",
+                "displayname": "Рания́",
+                "filtername": "рания"
+            },
+            {
+                "id": "2844",
+                "displayname": "Василя́",
+                "filtername": "василя"
+            }
         ]
     }
 }
