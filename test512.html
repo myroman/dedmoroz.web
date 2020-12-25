@@ -1,266 +1,124 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
-    <title>Дарим Чудо - Смотреть видео</title>
-    <meta name='description' content="Именное видеопоздравление для ребенка от самого настоящего Деда Мороза из Великого Устюга! Выберите имя, добавьте фотографии и через несколько минут видеоподарок придет вам на электронную почту!" />
-    <meta name="keywords" content="" />
-    <link rel="icon" type="image/x-icon" href="favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css?qr=36" />
+    <title>Дед Мороз в каждый дом. Дарим скидки!! :)</title>
+    <meta charset="utf-8">
+    <style>
+        .content-item {
+            border: 9px solid #c4d3de;
+            border-radius: 38px;
+            padding: 16px;
+            max-width: 1127px;
+            margin: 0 auto;
+        }
 
-    <!-- Facebook Pixel Code -->
-<script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '871354276967747');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=871354276967747&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Facebook Pixel Code -->
+        .content-item__bg {
+            border-radius: 33px;
+            background: #c4d3de;
+            padding: 39px 0 82px 0;
+        }
 
-    <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?168",t.onload=function(){VK.Retargeting.Init("VK-RTRG-569999-2oXEn"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-569999-2oXEn" style="position:fixed; left:-999px;" alt=""/></noscript>
+        .email-wrapper {
+            width: 80%;
+            margin: 0 auto;
+        }
 
-    <script src="//code.jivosite.com/widget/K79lux45rD" async></script>
+        .top-banner {
+            text-align: center;
+        }
+
+        p,
+        a {
+            font-family: Tahoma, Geneva, sans-serif;
+            font-size: 14px;
+        }
+
+        .text_larger {
+            font-size: 18px;
+        }
+
+        .top-margin_med {
+            margin-top: 40px;
+        }
+
+        .unsubscribe-block p {
+            font-size: 11px;
+            margin-top: 40px;
+            color: rgb(146, 143, 143);
+        }
+
+        .unsubscribe-block a {
+            font-size: 11px;
+            color: rgb(146, 143, 143);
+        }
+
+        @media screen and (max-width: 480px) {
+            .content-item__bg {
+                padding: 39px 0 82px 0;
+            }
+
+            .email-wrapper {
+                width: 80%;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .text_larger {
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 
-<body class="loaded">
-    <!-- BEGIN BODY -->
-    <div class="main-wrapper inner-page">
-        <!-- BEGIN CONTENT -->
-        <main class="content inner-content">
-            <div class="inner-content__tree"></div>
-            <div class="wrapper watch-page">
-                <div class="content-item">
-                    <div class="content-item__bg">
-                        <h1 class="show-if-demo">Демо-видео поздравления</h1>
-                        <h1 class="show-if-hd">Видеопоздравление</h1>
-                        <div class="">
-                            <div class="order-step info-prevideo show-if-demo">
-                                <p class="info-paragraph">
-                                    Это сокращенная версия вашего поздравления в заниженном качестве. Пожалуйста проверьте,
-                                    правильно ли вставились ваши фотографии.
-                                </p>
-                            </div>
+<body>
+    <div class="content-item">
+        <div class="content-item__bg">
+            <div class="email-wrapper">
+                <p class="text_larger">Здравствуйте, $customer_name,</p>
 
-                            <div class="order-step info-prevideo show-if-hd">
-                                <p class="info-paragraph">
-                                    Спасибо за заказ! Теперь вы можете посмотреть и скачать созданный видеоролик.
-                                </p>
-                            </div>
+                <p>Спасибо, что начали создавать новогоднее чудо с нами!</p>
 
-                            <div class="video__holder">
-                                <video id="my-video" class="video-js" controls preload="auto" data-setup="{}" 
-                                >
-                                    <p class="vjs-no-js">
-                                        Чтобы посмотреть видео, пожалуйста включите JavaScript и желательно обновите
-                                        веб-браузер, который
-                                        <a href="https://videojs.com/html5-video-support/" target="_blank">поддерживает
-                                            HTML5 видео.</a>
-                                    </p>
-                                </video>
-                            </div>
-                        </div>
+                <p>Мы заметили, что вы еще не заказали наше полное видео поздравление: 10 минутную сказку от
+                    настоящего Деда Мороза из Великого Устюга.
+                    Постарайтесь не откладывать заказ поздравления на последний день! 
+                    <br>
+                    <br>
+                    <strong>Закажите видео прямо сейчас, чтобы
+                        ваши детки точно смогли получить волшебное послание от Дедушки Мороза вовремя!</strong>
+                </p>
+                <p>
+                    Ваша демо версия находится здесь: <a href="$order_url">$order_number</a>.
+                    <br>
+                    Перейдите по этой ссылке и закажите полное видео поздравление в отличном HD качестве.
+                </p>
 
-                        <div class="order-step info-block ">
-                            <div class="central-wrapper show-if-hd">
-                                <input type="button" class="button-next download-video js-download-video"
-                                value="Скачать видео" />
-                            </div>
-                           
-                            <div class="show-if-demo">
-                                <p class="info-paragraph">
-                                    После оплаты вам придёт полная версия поздравления в высоком (Ultra HD) качестве, как в
-                                    <a href="prices.html" target="_blank">примере</a> на
-                                    сайте.
-                                </p>
+                <p>
+                    Мы искренне желаем, чтобы чудо случилось с каждым, и поэтому 
+                    <strong>дарим вам скидку $promocode_discount</strong>
+                    по промокоду <strong>$promocode</strong>. Таким образом, стоимость видео со скидкой составит
+                    всего <strong>430 рублей</strong>.
+                </p>
 
-                                <div class="text-center buy-wrapper">
-                                    <a href="#" class="button button-lg button-red link-payment">Заказать полное видео</a>
-                                    
-                                </div>
-                            </div>
-                        </div>
+                <p>С наступающим Новым Годом!</p>
 
-                    </div>
-                </div>
-            </div>
+                <p>С самыми добрыми пожеланиями, <br>
+                    Дед Мороз и его помощники - студия "Дарим Чудо"</p>
 
-            <div id="popup1" class="dm-popup-overlay">
-                <div class="dm-popup">
-                  <h2>Дарим <span id="popupPromocodeDiscount"></span>% скидку!</h2>
-                  <a class="dm-popup__close" href="#">&times;</a>
-                  <div class="dm-popup__content">
-                    <p class="dm-popup__content-para">
-                        Закажите поздравление в течение 24 часов 
-                         с промокодом 
-                        <strong id="popupPromocodeText"></strong>
+
+
+                <div class="unsubscribe-block">
+                    <p>
+                        Если вы хотите отказаться от получения подобных рассылок по электронной почте, нажмите
+                        <a href='mailto:info@darimchudo.ru?Subject=Unsubscribe'>отписаться от рассылки</a>
                     </p>
-                    
-                  </div>
-                  <div class="dm-popup__btn-wrapper">
-                    <form method="POST" action="" name="formApplyPromocode" id="formApplyPromocode">
-                        <input type="hidden" value="" name="txtPromocode"/>
-                        <button class="button button_snow button-sm">Получить скидку</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-        </main>
-        <!-- CONTENT EOF   -->
-        <!-- BEGIN HEADER -->
-        <header>
-            <div class="wrapper">
-                <span class="logo"></span>
-                <a href="index.html" class="logo">
-                    <img src="img/logo-white.png" alt="">
-                </a>
-                <nav class="main-nav">
-                    <ul class="main-nav-list">
-                        <li class="main-nav-list__item"><a href="how-to-order.html" class="main-nav-list__link">Как
-                                заказать</a></li>
-                        <li class="main-nav-list__item"><a href="prices.html" class="main-nav-list__link">Цена и
-                                примеры</a></li>
-                        <li class="main-nav-list__item"><a href="faq.html" class="main-nav-list__link">Частые
-                                вопросы</a></li>
-                        <li class="main-nav-list__item"><a href="contacts.html" class="main-nav-list__link">Контакты</a>
-                        </li>
-                    </ul>
-                </nav>
-                <a href="order-wizard.html" class="button button-white">Создать свое видео</a>
-                <a href="#" class="button-nav js-button-nav">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </a>
-            </div>
-            <div class="main-mask"></div>
-        </header>
-        <!-- HEADER EOF   -->
-        <!-- BEGIN FOOTER -->
-        <footer>
-            <div class="wrapper">
-                <div class="footer-row">
-                    <div class="footer-col footer-col_1">
-                        <a href="index.html" class="logo">
-                            <img src="img/logo-white.png" alt="">
-                        </a>
-                    </div>
-                    <div class="footer-col footer-col_3">
-                        <ul class="footer-nav">
-                            <li class="footer-nav__item"><a href="how-to-order.html" class="footer-nav__link">Как
-                                    заказать</a></li>
-                            <li class="footer-nav__item"><a href="prices.html" class="footer-nav__link">Цена и
-                                    примеры</a></li>
-                            <li class="footer-nav__item"><a href="faq.html" class="footer-nav__link">Частые вопросы</a>
-                            </li>
-                            <li class="footer-nav__item"><a href="user-agreement.html"
-                                    class="footer-nav__link">Пользовательское соглашение</a></li>
-                            <li class="footer-nav__item"><a href="confidentiality-policy.html"
-                                    class="footer-nav__link">Политика конфиденциальности</a></li>
-                            <li class="footer-nav__item"><a href="wholesale-customers.html"
-                                    class="footer-nav__link">Оптовым покупателям</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col footer-col_4">
-                        <div class="footer-contact">
-                            <div class="footer-contact__item">
-                                <div class="footer-contact__txt">Напишите нам:</div>
-                                <a href="mailto:info@darimchudo.ru" class="footer-contact__link">info@darimchudo.ru</a>
-                            </div>
-                            <div class="footer-contact__item">
-                                <a href="tel:78126471856" class="footer-contact__link">+7 812 647 1856</a>
-                                <div class="footer-contact__txt">по будням с 10 до 18 по Мск</div>
-                            </div>
-                        </div>
-                        <ul class="social-list">
-                            <li class="social-list__item">
-                                <a href="https://www.instagram.com/darimchudo/"
-                                    class="social-list__link social-list__link_inst" target="_blank">
-                                    <img src="img/inst.png" alt="">
-                                </a>
-                            </li>
-                            <li class="social-list__item">
-                                <a href="https://vk.com/public200346034" class="social-list__link social-list__link_vk"
-                                    target="_blank">
-                                    <img src="img/vk.png" alt="">
-                                </a>
-                            </li>
-                            <li class="social-list__item">
-                                <a href="https://www.facebook.com/darim.chudo" class="social-list__link social-list__link_fb" target="_blank">
-                                    <img src="img/fb.png" alt="">
-                                </a>
-                            </li>
-                            <li class="social-list__item">
-                                <a href="https://www.youtube.com/channel/UCWcRYpamljjN21EoSOFokqw"
-                                    class="social-list__link social-list__link_youtube" target="_blank">
-                                    <img src="img/youtube.png" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
-        </footer>
-        <!-- FOOTER EOF   -->
+
+        </div>
     </div>
-    <div class="icon-load"></div>
-    <!-- BODY EOF   -->
-    
-    <script src="js/jquery-3.0.0.min.js"></script>
-    <script src="js/jquery-migrate-1.4.1.min.js"></script>
-    <script src="js/components/jquery.validate.min.js"></script>
-    <script src="js/custom.js?qr=36"></script>
-    <script src="js/dm.settings.js?qr=36"></script>
-    <script src="js/watch.js?qr=36"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-035H4FTX1D"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-035H4FTX1D');
-    </script>
-
-     <!-- Yandex.Metrika counter -->
-     <script type="text/javascript">
-        (function (m, e, t, r, i, k, a) {
-            m[i] = m[i] || function () {
-                (m[i].a = m[i].a || []).push(arguments)
-            };
-            m[i].l = 1 * new Date();
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode
-                .insertBefore(k, a)
-        })
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(69910198, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true,
-            webvisor: true
-        });
-    </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/69910198" style="position:absolute; left:-9999px;" alt="" /></div>
-    </noscript>
-    <!-- /Yandex.Metrika counter -->
 </body>
 
 </html>
