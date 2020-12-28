@@ -45,8 +45,8 @@
         var popupShowTimeoutMs = 1000 * 5;
         var isPopupShown = false;
 
-        let currentPromocode = "ELKA27";
-        let currentDiscount = "27";
+        let currentPromocode = "SNEG15";
+        let currentDiscount = "15";
         $('#popupPromocodeText').text(currentPromocode);
         $('#popupPromocodeDiscount').text(currentDiscount);        
 
