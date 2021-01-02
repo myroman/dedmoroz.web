@@ -80,12 +80,12 @@
                         }, waitTimeout);
 
                         //just in case if localstorage doesn't catch it
-                        if (!isPopupShown) {
-                            isPopupShown = true;
-                            setTimeout(function() {
-                                showPopup();
-                            }, popupShowTimeoutMs);
-                        }                        
+                        // if (!isPopupShown) {
+                        //     isPopupShown = true;
+                        //     setTimeout(function() {
+                        //         showPopup();
+                        //     }, popupShowTimeoutMs);
+                        // }                        
                     }
                 } else {
                     if (resp.is_hd_ready === true) {
