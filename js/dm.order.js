@@ -440,49 +440,53 @@
             if (gender != null) {
                 url += '?applicable_for=' + gender;
             }
-            $.get(url,
-                    function (resp) {
-                        var $ddl = $("select.ddl-comment");
-                        $ddl.html('');
-                        $ddl.append($("<option />").val('').text("-- Выберите комментарий --"));
-                        let defaultValue;
-                        let groups = {};
-                        $.each(resp, function () {
+            
+            $.get(url, function (resp) {
+                bindComments(resp);
+            })
+            .always(function () {
+                Dm.hideLoader();
+            });
+        }
 
-                            if (!groups[this.category]) {
-                                groups[this.category] = [];
-                            }
+        function bindComments(resp) {
+            var $ddl = $("select.ddl-comment");
+            $ddl.html('');
+            $ddl.append($("<option />").val('').text("-- Выберите комментарий --"));
+            let defaultValue;
+            let groups = {};
+            $.each(resp, function () {
 
-                            groups[this.category].push(this);
-                        });
-                        $.each(Object.keys(groups), function () {
-                            let groupName = this;
-                            let groupItems = groups[this];
-                            let $optGroup = $("<optgroup />").attr("label", groupName);
-                            $.each(groupItems, function () {
-                                $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
-                                if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
-                                    if (this.displayname.indexOf('Твоя улыбка светится искорками счастья') > -1) {
-                                        defaultValue = this.filepath;
-                                    }
-                                } else {
-                                    if (this.displayname.indexOf('Ваши улыбки светятся искорками счастья') > -1) {
-                                        defaultValue = this.filepath;
-                                    }
-                                }
-                                
-                                masterData.comments.push(this);
-                            });
+                if (!groups[this.category]) {
+                    groups[this.category] = [];
+                }
 
-                            $ddl.append($optGroup);
-                        });
-                        if (defaultValue) {
-                            $ddl.first().val(defaultValue);
+                groups[this.category].push(this);
+            });
+            $.each(Object.keys(groups), function () {
+                let groupName = this;
+                let groupItems = groups[this];
+                let $optGroup = $("<optgroup />").attr("label", groupName);
+                $.each(groupItems, function () {
+                    $optGroup.append($("<option />").val(this.filepath).text(this.displayname));
+                    if (orderState.kidtype == kidtypes['boy'] || orderState.kidtype == kidtypes['girl']) {
+                        if (this.displayname.indexOf('Твоя улыбка светится искорками счастья') > -1) {
+                            defaultValue = this.filepath;
                         }
-                    })
-                .always(function () {
-                    Dm.hideLoader();
+                    } else {
+                        if (this.displayname.indexOf('Ваши улыбки светятся искорками счастья') > -1) {
+                            defaultValue = this.filepath;
+                        }
+                    }
+                    
+                    masterData.comments.push(this);
                 });
+
+                $ddl.append($optGroup);
+            });
+            if (defaultValue) {
+                $ddl.first().val(defaultValue);
+            }
         }
 
         function getNamesByGender(gender) {
@@ -517,26 +521,30 @@
             masterData.praises = [];
             Dm.showLoader();
             $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
-                    var $ddl = $("#ddlPraise");
-                    $ddl.html('');
-                    $ddl.append($("<option />").val('').text('-- Выберите похвалу --'));
+                bindPraises(resp);
+            })
+            .always(function () {
+                Dm.hideLoader();
+            });
+        }
 
-                    let defaultValue;
-                    $.each(resp, function () {
-                        $ddl.append($("<option />").val(this.id).text(this.displayname));
-                        masterData.praises.push(this);
-                        if (this.displayname.indexOf('Разные увлечения') > -1) {
-                            defaultValue = this.id;
-                        }
-                    });
-                    if (defaultValue) {
-                        $ddl.val(defaultValue);
-                        orderState.praiseid = defaultValue;
-                    }
-                })
-                .always(function () {
-                    Dm.hideLoader();
-                });
+        function bindPraises(resp) {
+            var $ddl = $("#ddlPraise");
+            $ddl.html('');
+            $ddl.append($("<option />").val('').text('-- Выберите похвалу --'));
+
+            let defaultValue;
+            $.each(resp, function () {
+                $ddl.append($("<option />").val(this.id).text(this.displayname));
+                masterData.praises.push(this);
+                if (this.displayname.indexOf('Разные увлечения') > -1) {
+                    defaultValue = this.id;
+                }
+            });
+            if (defaultValue) {
+                $ddl.val(defaultValue);
+                orderState.praiseid = defaultValue;
+            }
         }
 
         $("#ddlGender2_1").change(function () {
