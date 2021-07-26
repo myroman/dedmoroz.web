@@ -15273,5 +15273,26 @@ Dm.masterdata = {
                 "filtername": "василя"
             }
         ]
-    }
+    },
+    praises: [{
+        id: 1,
+        displayname: 'Умение мастерить'
+    },
+    {
+        id: 2,
+        displayname: 'Чтение'
+    },
+    {
+        id: 3,
+        displayname: 'Музыка'
+    }],
+    photocomments: [{
+        category: 'druzia',
+        filepath: 'path1',
+        displayname: 'Какая чудесная фотография, а как ты здесь улыбаешься! Твоя улыбка светится искорками счастья!'
+    },{
+        category: 'druzia',
+        filepath: 'path2',
+        displayname: 'А эта моя любимая фотография, не могу оторвать глаз!!'
+    }]
 }
