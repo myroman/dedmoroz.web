@@ -10,6 +10,7 @@ function createDmSettings() {
 
 
 Dm = {};
+Dm.mockApiRequests = true;
 
 //env can be local, test, prod
 // Dm.settings = createDmSettings('local');

@@ -388,7 +388,7 @@
                 goForward('step-7');
                 scrollUp();
             }
-        });
+        });        
 
         $('.submit-order').click(function () {
             submitOrder(function (data) {
@@ -699,28 +699,37 @@
                 let data = {
                     'content': imgEncoded
                 }
-                $.ajax({
-                    type: 'POST',
-                    url: Dm.settings.baseurl + '/images/base64',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (resp) {
-                        if (onSuccess) {
-                            onSuccess({
-                                resp: resp,
-                                picNo: picNo
-                            });
+                if (Dm.mockApiRequests) {
+                    onSuccess({
+                        resp: {
+                            filename: 'test_image.jpg'
+                        },
+                        picNo: picNo
+                    });
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: Dm.settings.baseurl + '/images/base64',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (resp) {
+                            if (onSuccess) {
+                                onSuccess({
+                                    resp: resp,
+                                    picNo: picNo
+                                });
+                            }
+                        },
+                        error: function (resp) {
+                            if (onError) {
+                                onError({
+                                    resp: resp,
+                                    picNo: picNo
+                                })
+                            }
                         }
-                    },
-                    error: function (resp) {
-                        if (onError) {
-                            onError({
-                                resp: resp,
-                                picNo: picNo
-                            })
-                        }
-                    }
-                });
+                    });
+                }                
             });
         }
 
@@ -885,7 +894,11 @@
                 }
             }
             clearReviewError();
-            $('.submit-order').prop('disabled', false);
+            if (Dm.mockApiRequests) {
+                $('.submit-order').prop('disabled', true);
+            } else {
+                $('.submit-order').prop('disabled', false);
+            }            
 
             let validationMsg = validateOrder(orderState);
             if (validationMsg) {
