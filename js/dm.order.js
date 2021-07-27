@@ -441,15 +441,17 @@
                 url += '?applicable_for=' + gender;
             }
 
-            bindComments(Dm.masterdata.photocomments);
-            Dm.hideLoader();
-            //TODO: uncomment when API is up
-            // $.get(url, function (resp) {
-            //     bindComments(resp);
-            // })
-            // .always(function () {
-            //     Dm.hideLoader();
-            // });
+            if (Dm.mockApiRequests) {
+                bindComments(Dm.masterdata.photocomments);
+                Dm.hideLoader();
+            } else {
+                $.get(url, function (resp) {
+                    bindComments(resp);
+                })
+                .always(function () {
+                    Dm.hideLoader();
+                });
+            }
         }
 
         function bindComments(resp) {
@@ -523,15 +525,18 @@
         function loadPraises(gender) {
             masterData.praises = [];
             Dm.showLoader();
-            bindPraises(Dm.masterdata.praises);
-            Dm.hideLoader();
-            //TODO: uncomment when API is up
-            // $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
-            //     bindPraises(resp);
-            // })
-            // .always(function () {
-            //     Dm.hideLoader();
-            // });
+
+            if (Dm.mockApiRequests) {
+                bindPraises(Dm.masterdata.praises);
+                Dm.hideLoader();
+            } else {
+                $.get(Dm.settings.baseurl + '/md/praises?applicable_for=' + gender, function (resp) {
+                    bindPraises(resp);
+                })
+                .always(function () {
+                    Dm.hideLoader();
+                });
+            }
         }
 
         function bindPraises(resp) {
