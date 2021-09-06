@@ -10,7 +10,7 @@ function createDmSettings() {
 
 
 Dm = {};
-
+Dm.mockApiRequests = true;
 Dm.settings = createDmSettings();
 
 Dm.showLoader = function() {

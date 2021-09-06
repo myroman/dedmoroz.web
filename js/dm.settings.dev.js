@@ -10,6 +10,7 @@ function createDmSettings() {
 
 
 Dm = {};
+Dm.mockApiRequests = true;
 
 Dm.settings = createDmSettings();
 

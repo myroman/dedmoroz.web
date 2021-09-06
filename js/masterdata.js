@@ -15273,5 +15273,37 @@ Dm.masterdata = {
                 "filtername": "василя"
             }
         ]
-    }
+    },
+    praises: [{
+        id: 1,
+        displayname: 'Разные увлечения'
+    },{
+        id: 2,
+        displayname: 'Умение мастерить'
+    },
+    {
+        id: 3,
+        displayname: 'Чтение'
+    },
+    {
+        id: 4,
+        displayname: 'Музыка'
+    }],
+    photocomments: [{
+        category: 'Общее',
+        filepath: 'path1',
+        displayname: 'Какая чудесная фотография, а как ты здесь улыбаешься! Твоя улыбка светится искорками счастья!'
+    },{
+        category: 'Общее',
+        filepath: 'path2',
+        displayname: 'А эта моя любимая фотография, не могу оторвать глаз!'
+    },{
+        category: 'Общее',
+        filepath: 'path3',
+        displayname: 'Какая ты красавица на этой фотографии, настоящая принцесса!'
+    },{
+        category: 'Общее',
+        filepath: 'path4',
+        displayname: 'Ого, как много вас здесь и все такие радостные и счастливые!'
+    }]
 }
