@@ -995,7 +995,10 @@
                 images: {},
                 behaviorid: +orderState.behaviorid,
                 customername: orderState.customername,
-                customeremail: orderState.customeremail
+                customeremail: orderState.customeremail,
+
+                //TODO: change product
+                productid: 1
             };
             if (orderState.praiseid) {
                 orderInfo.praiseid = +orderState.praiseid;
